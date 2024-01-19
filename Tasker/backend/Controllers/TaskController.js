@@ -1,5 +1,5 @@
 const taskModel = require('../Models/taskModel');
-const UserModule = require('../Models/UserModel')
+
 exports.getTasks = async (req, res) => {
     try {
         const alltask = await taskModel.findAll({
@@ -30,8 +30,8 @@ exports.deleteTasks = async (req, res) => {
 }
 
 exports.addTasks = async (req, res) => {
-    console.log(req.body.Id_user)
     try {
+        console.log(req.body)
         taskModel.create({
             Task_name: req.body.Task_name,
             Task_description: req.body.Task_description,

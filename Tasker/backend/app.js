@@ -1,30 +1,34 @@
 const express = require('express');
 const userRoute = require('./routes/user')
 const taskRoute = require('./routes/task')
+const archivedRoute = require('./routes/Archive')
 const parser = require('body-parser')
 const cors = require('cors')
 const Db = require('./util/DatabaseConnection')
-const UserModule =require('./Models/UserModel')
 const TaskModel = require('./Models/TaskModel')
+const UserModule = require('./Models/UserModel')
+const ArchivedModel = require('./Models/ArchiveModel')
 const constants = require("constants");
+const { arch } = require('os');
 const app = express();
 
 app.use(parser.json())
 app.use(cors())
 
 // routes
-app.use('/api',userRoute)
-app.use('/api',taskRoute)
-
+app.use('/api', userRoute)
+app.use('/api', taskRoute)
+app.use('/api', archivedRoute)
 
 UserModule.hasMany(TaskModel)
-TaskModel.belongsTo(UserModule,{constraints:true,onDelete:'CASCADE'})
+ArchivedModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
+TaskModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
 
-Db.sync().then(result=>{
+Db.sync().then(result => {
 
-app.listen(3000)
+    app.listen(3000)
 
-}).catch(err=>{
+}).catch(err => {
     console.log(err)
 })
 

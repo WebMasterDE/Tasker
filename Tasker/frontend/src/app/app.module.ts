@@ -18,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatTableModule} from "@angular/material/table";
 import { MatDialogModule} from "@angular/material/dialog";
+import { TasksArchiveComponent } from './Pages/tasks-archive/tasks-archive.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatDialogModule} from "@angular/material/dialog";
     SidenavComponent,
     TasksComponent,
     SignupComponent,
+    TasksArchiveComponent,
 
   ],
   imports: [

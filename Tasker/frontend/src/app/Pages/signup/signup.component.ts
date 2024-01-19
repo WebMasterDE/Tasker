@@ -1,26 +1,24 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {User_serviceService} from "../../Services/auth.service";
-import {User} from "../../../Model/User";
-import {Router} from "@angular/router";
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { User_serviceService } from "../../Services/auth.service";
+import { User } from "../../../Model/User";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit{
-  constructor(private http_user: User_serviceService,private route:Router) {
+export class SignupComponent implements OnInit {
+  constructor(private http_user: User_serviceService, private route: Router) {
 
   }
 
   ngOnInit(): void {
     this.http_user.IsloggedIn()
-    }
+  }
 
 
-
-
-  User: User = {Name: '', Email: '', Password: ''};
+  User: User = { Name: '', Email: '', Password: '' };
 
 
   SendSignup() {

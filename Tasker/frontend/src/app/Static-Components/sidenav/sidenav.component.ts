@@ -1,7 +1,7 @@
-import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
-import {MatSidenav} from "@angular/material/sidenav";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {NavigationEnd, Router} from "@angular/router";
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { MatSidenav } from "@angular/material/sidenav";
+import { BreakpointObserver } from "@angular/cdk/layout";
+import { NavigationEnd, Router } from "@angular/router";
 
 @Component({
   selector: 'app-sidenav',
@@ -12,16 +12,16 @@ export class SidenavComponent {
   title = 'material-responsive-sidenav';
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-  isMobile= true;
-  currentRoute:any;
+  isMobile = true;
+  currentRoute: any;
   isCollapsed = true;
-  constructor(private observer: BreakpointObserver,private route: Router) {
-    this.currentRoute=this.route.url
+  constructor(private observer: BreakpointObserver, private route: Router) {
+    this.currentRoute = this.route.url
   }
 
   ngOnInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
-      if(screenSize.matches){
+      if (screenSize.matches) {
         this.isMobile = true;
       } else {
         this.isMobile = false;
@@ -46,7 +46,7 @@ export class SidenavComponent {
     }
   }
 
-  logout(){
+  logout() {
     this.route.navigate(['/signup'])
     localStorage.removeItem('data')
   }
