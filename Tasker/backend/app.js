@@ -7,6 +7,7 @@ const cors = require('cors')
 const Db = require('./util/DatabaseConnection')
 const TaskModel = require('./Models/TaskModel')
 const UserModule = require('./Models/UserModel')
+const HoursModel = require('./Models/HourModel')
 const ArchivedModel = require('./Models/ArchiveModel')
 const constants = require("constants");
 const { arch } = require('os');
@@ -23,6 +24,7 @@ app.use('/api', archivedRoute)
 UserModule.hasMany(TaskModel)
 ArchivedModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
 TaskModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
+HoursModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
 
 Db.sync().then(result => {
 

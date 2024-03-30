@@ -8,7 +8,8 @@ const UserController = require('../Controllers/UserController')
  * @returns all users in the table user
  */
 route.get('/:id/user', UserController.getAllUser)
-route.post('/user/auth/signup',UserController.signup);
-route.post('/user/auth/login',UserController.login);
+route.post('/user/auth/signup', UserController.signup);
+route.post('/user/auth/login', UserController.login);
+route.get('/user/hours', UserController.getallHours);
 
 module.exports = route
