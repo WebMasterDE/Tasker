@@ -1,41 +1,55 @@
-
-<div (click)="openDialog()" class="add-button d-flex align-items-center">
+<div
+  (click)="openDialog()"
+  style="width: 140px"
+  class="add-button d-flex align-items-center"
+>
   <i class="fa-solid fa-plus"></i>
-  <p class="my-0 mx-2">Add Task</p>
+  <p class="my-0 mx-2">Aggiungi task</p>
 </div>
-<table style="margin-top:50px " mat-table [dataSource]="datatable" class="mat-elevation-z8 custom-table">
-
-
+<table
+  style="margin-top: 50px"
+  mat-table
+  [dataSource]="datatable"
+  class="mat-elevation-z8 custom-table"
+>
   <ng-container matColumnDef="Task_name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.Task_name}}</td>
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let element">{{ element.Task_name }}</td>
   </ng-container>
-
   <ng-container matColumnDef="Task_description">
-    <th mat-header-cell *matHeaderCellDef> Description </th>
-    <td mat-cell *matCellDef="let element"> {{element.Task_description}} </td>
+    <th mat-header-cell *matHeaderCellDef>Descrizione</th>
+    <td mat-cell *matCellDef="let element">{{ element.Task_description }}</td>
   </ng-container>
   <ng-container matColumnDef="Task_creation">
-    <th mat-header-cell *matHeaderCellDef> Date of creation </th>
-    <td mat-cell *matCellDef="let element"> {{element.Task_creation}} </td>
+    <th mat-header-cell *matHeaderCellDef>Data di inizio</th>
+    <td mat-cell *matCellDef="let element">{{ element.Task_creation }}</td>
   </ng-container>
-  <ng-container matColumnDef="Manage" >
-    <th  mat-header-cell *matHeaderCellDef > Manage </th>
-    <td mat-cell *matCellDef="let element"> <i *ngIf="route === '/tasks'" class="fa-solid fa-check" (click)="archiveRecord(element)"></i> <i *ngIf="route === '/tasks'" class="fa-solid fa-pen mx-2"></i> <i *ngIf="route === '/tasks'" (click)="delete(element)" class="fa-solid fa-trash-can"></i> </td>
+  <ng-container matColumnDef="Task_end">
+    <th mat-header-cell *matHeaderCellDef>Data di consegna</th>
+    <td mat-cell *matCellDef="let element">{{ element.Task_end }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Manage">
+    <th mat-header-cell *matHeaderCellDef>Manage</th>
+    <td mat-cell *matCellDef="let element">
+      <i
+        *ngIf="route === '/tasks'"
+        class="fa-solid fa-check"
+        (click)="archiveRecord(element)"
+      ></i>
+      <i *ngIf="route === '/tasks'" class="fa-solid fa-pen mx-2"></i>
+      <i
+        *ngIf="route === '/tasks'"
+        (click)="delete(element)"
+        class="fa-solid fa-trash-can"
+      ></i>
+    </td>
   </ng-container>
   <ng-container matColumnDef="Task_hours">
-    <th mat-header-cell *matHeaderCellDef> Hours </th>
-    <td mat-cell *matCellDef="let element"> {{element.Task_hours}} </td>
+    <th mat-header-cell *matHeaderCellDef>Ore impiegate</th>
+    <td mat-cell *matCellDef="let element">{{ element.Task_hours }}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-<div class="d-flex justify-content-end mx-5 my-5">
-  <div>
-    <h1>TOT: {{totalHours}}</h1>
-  </div>
-</div>
-
-
-
+<div class="d-flex justify-content-end mx-5 my-5"></div>

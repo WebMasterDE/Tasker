@@ -31,7 +31,6 @@ export class TableComponent {
       this.datatable = this.route === '/tasks' ? this.tasks : this.archive;
     }, 500);
 
-    console.log(this.route)
   }
   constructor(private http: TasksService, public dialog: MatDialog, private http_user: User_serviceService, private http_archive: ArchiveService, private router: Router) {
     this.getroute()
@@ -109,21 +108,45 @@ export class TableComponent {
   selector: 'app-dialog',
   template: `
       <div style="width: 500px" class="d-flex justify-content-center flex-column p-3">
-          <h1>Create task</h1>
+          <h1>Crea una task</h1>
           <form class="d-flex flex-column">
-              <label>Task Name</label>
-              <input class="my-2" type="text" name="Task_name"  [(ngModel)]="singletask.Task_name">
-              <label>Task Description</label>
-              <input class="my-2" type="text" name="Task_description" [(ngModel)]="singletask.Task_description">
-              <label>Task Hours</label>
-              <input class="my-2" type="number" min="1"  name="Task_hour" [(ngModel)]="singletask.Task_hours">
-              <label>Date of creation</label>
-              <input class="my-2" type="date" name="Task_creation" [(ngModel)]="singletask.Task_creation">
-              <label>Date of ending</label>
-              <input class="my-2" type="date" name="Task_end" [(ngModel)]="singletask.Task_end">
-              <button type="submit" (click)="createTask()"
-                      style=" background-color: forestgreen;color: white;padding: 5px;border-radius: 10px">Create
-              </button>
+          <div class="input-group mb-3 d-flex flex-column">
+          <label>Nome della task</label>
+          <input type="text" class="form-control w-100" name="Task_name"  [(ngModel)]="singletask.Task_name" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
+
+        <div class="input-group mb-3 d-flex flex-column">
+        <label>Descrizione</label>
+          <input type="text" class="form-control w-100" name="Task_description" [(ngModel)]="singletask.Task_description" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
+
+        <div class="input-group mb-3 d-flex flex-column">
+        <label>Ore da impiegare</label>
+          <input type="text" class="form-control w-100" name="Task_description" [(ngModel)]="singletask.Task_hours" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
+
+        <div class="input-group mb-3 d-flex flex-column">
+        <label>Data di creazione</label>
+          <input type="date" class="form-control w-100"  name="Task_creation" [(ngModel)]="singletask.Task_creation" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
+
+        <div class="input-group mb-3 d-flex flex-column">
+          <label>Data di consegna</label>
+          <input type="date" class="form-control w-100"  name="Task_end" [(ngModel)]="singletask.Task_end" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
+
+        <button type="submit" (click)="createTask()"class="btn btn-success" >Crea task</button>
+
           </form>
       </div>
   `,
