@@ -2,12 +2,24 @@
 <div class="page">
   <div class="signup-box d-flex flex-column  justify-content-center">
 <form class="d-flex flex-column align-items-center" action="" method="POST">
-  <label class="fs-4" style="color: white">Email</label>
-  <input style="width: 100%; border-radius: 20px; border:none; margin: 10px" type="text" name="Email" [(ngModel)]="User.Email">
-  <label class="mt-3 fs-4" style="color: white">Password</label>
-  <input style="width: 100%; border-radius: 20px; border:none; margin: 10px" type="password" name="Password" [(ngModel)]="User.Password">
-  <button class="btnon my-4 fs-4" (click)="login()" type="submit">Invia</button>
-</form>
+  <div class="input-group mb-3 d-flex flex-column">
+    <div class="input-group-prepend">
+    </div>
+    <label class="fs-4 my-2" style="color: rgb(0, 0, 0)">Email</label>
+    <input type="text" class="form-control w-100" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1"  name="Email" [(ngModel)]="User.Email">
+  </div>
 
+
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+    </div>
+    <label class="fs-4 my-2" style="color: rgb(0, 0, 0)">Password</label>
+    <input type="password" class="form-control w-100" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"  name="Password" [(ngModel)]="User.Password">
+  </div>
+  <button class="btn btn-primary my-4 fs-4" (click)="login()" type="submit">Accedi</button>
+</form>
   </div>
 </div>
+
+
