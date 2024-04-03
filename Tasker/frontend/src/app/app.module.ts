@@ -21,6 +21,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { TasksArchiveComponent } from './Pages/tasks-archive/tasks-archive.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { OreComponent } from './Pages/ore/ore.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     SignupComponent,
     TasksArchiveComponent,
     HomeComponent,
+    OreComponent,
 
   ],
   imports: [

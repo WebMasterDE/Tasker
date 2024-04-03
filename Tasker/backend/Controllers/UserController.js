@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
 
 exports.getallHours = async (req, res) => {
     try {
-        const Hours = await HoursModel.findOne()
+        const Hours = await HoursModel.findOne({ where: { userIdUser: req.params.id } })
         return res.json(Hours)
     } catch (error) {
         console.log(error)

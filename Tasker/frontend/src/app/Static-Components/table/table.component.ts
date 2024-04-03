@@ -36,7 +36,7 @@ export class TableComponent {
     this.getroute()
 
   }
-  displayedColumns: string[] = ['Task_name', 'Task_description', 'Task_creation', 'Task_hours', 'Manage'];
+  displayedColumns: string[] = ['Operator', 'Description', 'Date', 'Hour', 'Manage'];
 
   archiveRecord(element) {
     element.Id_user = JSON.parse(localStorage.getItem("data")).id
@@ -79,7 +79,6 @@ export class TableComponent {
         });
       }
 
-      console.log(this.totalHours);
     });
   }
   delete(element) {

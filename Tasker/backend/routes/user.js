@@ -10,6 +10,6 @@ const UserController = require('../Controllers/UserController')
 route.get('/:id/user', UserController.getAllUser)
 route.post('/user/auth/signup', UserController.signup);
 route.post('/user/auth/login', UserController.login);
-route.get('/user/hours', UserController.getallHours);
+route.get('/:id/hours', UserController.getallHours);
 
 module.exports = route
