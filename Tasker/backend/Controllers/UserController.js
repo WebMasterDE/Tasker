@@ -69,9 +69,26 @@ exports.login = async (req, res) => {
 
 exports.getallHours = async (req, res) => {
     try {
-        const Hours = await HoursModel.findOne({ where: { userIdUser: req.params.id } })
+        const Hours = await HoursModel.findAll({ where: { userIdUser: req.params.id } })
         return res.json(Hours)
     } catch (error) {
         console.log(error)
+    }
+}
+
+exports.addHours = async (req, res) => {
+    try {
+        console.log(req.body)
+        HoursModel.create({
+            Operator: req.body.Operator,
+            Description: req.body.Description,
+            Hour: req.body.Hour,
+            Date: req.body.Date,
+            userIdUser: req.body.userIdUser
+        })
+
+        res.status(201).send("Ore inserite inserite correttamente!")
+    } catch (err) {
+        console.log(err)
     }
 }

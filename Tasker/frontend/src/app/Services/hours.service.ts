@@ -12,4 +12,8 @@ export class HoursService {
   getHours(id: string) {
     return this.http.get<Hours[]>(`http://localhost:3000/api/${id}/hours`);
   }
+
+  addHours(data: Hours) {
+    return this.http.post<Hours>(`http://localhost:3000/api/create/hours`, data);
+  }
 }

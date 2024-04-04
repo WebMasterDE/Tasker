@@ -1,7 +1,6 @@
 export interface Hours {
-  Id_hour: number;
   Operator: string;
-  Description: number;
+  Description: string;
   Hour: number;
   Date: string;
   userIdUser: number | null

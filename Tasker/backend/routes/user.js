@@ -11,5 +11,6 @@ route.get('/:id/user', UserController.getAllUser)
 route.post('/user/auth/signup', UserController.signup);
 route.post('/user/auth/login', UserController.login);
 route.get('/:id/hours', UserController.getallHours);
+route.post('/create/hours', UserController.addHours);
 
 module.exports = route
