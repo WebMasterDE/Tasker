@@ -1,0 +1,15 @@
+services:
+  securecapita:
+    container_name: tasker_frontend
+    build: .
+    image: tasker_frontend
+    ports:
+      - 4201:4200
+    expose:
+      - 4201
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    driver: bridge
