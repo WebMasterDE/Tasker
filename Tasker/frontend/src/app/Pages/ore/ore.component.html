@@ -30,6 +30,12 @@
       <th mat-header-cell *matHeaderCellDef>Note</th>
       <td mat-cell *matCellDef="let element">{{ element.Description }}</td>
     </ng-container>
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef>Azioni</th>
+      <td mat-cell *matCellDef="let element">
+        <i (click)="delete(element)" style="cursor: pointer; color: red;" class="fa-solid fa-circle-xmark fs-4"></i>
+      </td>
+    </ng-container>
 
 
 

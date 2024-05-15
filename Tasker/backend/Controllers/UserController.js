@@ -78,7 +78,6 @@ exports.getallHours = async (req, res) => {
 
 exports.addHours = async (req, res) => {
     try {
-        console.log(req.body)
         HoursModel.create({
             Operator: req.body.Operator,
             Description: req.body.Description,
@@ -88,6 +87,19 @@ exports.addHours = async (req, res) => {
         })
 
         res.status(201).send("Ore inserite inserite correttamente!")
+    } catch (err) {
+        console.log(err)
+    }
+}
+exports.deleteHours = async (req, res) => {
+    try {
+        console.log(req.body)
+        HoursModel.destroy({ where: { Id_hour: req.body.Id_hour } })
+        if (result === 1) {
+            res.status(200).json({ message: 'Record deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'Record not found' });
+        }
     } catch (err) {
         console.log(err)
     }
