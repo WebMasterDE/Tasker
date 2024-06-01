@@ -50,8 +50,10 @@ function generateToken(data) {
 }
 
 exports.login = async (req, res) => {
+
     const checkuser = await ModelUser.findOne({ where: { Email: req.body.Email } })
     if (checkuser) {
+        console.log(req.body.Password, checkuser.Password)
         const isthesamepass = await bcrypt.compare(req.body.Password, checkuser.Password);
         if (isthesamepass) {
 

@@ -37,13 +37,10 @@ export class SidenavComponent {
   }
 
   toggleMenu() {
-    if (this.isMobile) {
-      this.sidenav.toggle();
-      this.isCollapsed = false; // On mobile, the menu can never be collapsed
-    } else {
-      this.sidenav.toggle(); // On desktop/tablet, toggle the menu
-      this.isCollapsed = !this.isCollapsed;
-    }
+
+    this.sidenav.toggle(); // On desktop/tablet, toggle the menu
+    this.isCollapsed = !this.isCollapsed;
+
   }
 
   logout() {

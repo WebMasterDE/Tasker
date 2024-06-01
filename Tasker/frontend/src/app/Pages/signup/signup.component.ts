@@ -31,7 +31,6 @@ export class SignupComponent implements OnInit {
   login() {
     this.http_user.loginUser(this.User).subscribe(resp => {
       if (resp) {
-        console.log(`benvenuto ${resp.email}`)
         localStorage.setItem("data", JSON.stringify(resp))
         this.route.navigate(['/tasks'])
       } else {
