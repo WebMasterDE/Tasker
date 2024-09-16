@@ -1,7 +1,7 @@
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 
-const Dbsequelize = new Sequelize('nodeDb','root','',{
-    host:'localhost',
-    dialect:'mysql'
+const Dbsequelize = new Sequelize('taskerdb', 'root', '', {
+    host: 'localhost',
+    dialect: 'mysql'
 })
 module.exports = Dbsequelize

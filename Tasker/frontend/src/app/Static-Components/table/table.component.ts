@@ -36,7 +36,7 @@ export class TableComponent {
     this.getroute()
 
   }
-  displayedColumns: string[] = ['Operator', 'Description', 'Date', 'Hour', 'Manage'];
+  displayedColumns: string[] = ['Task_name', 'Task_description', 'Task_creation', 'Task_end', 'Manage'];
 
   archiveRecord(element) {
     element.Id_user = JSON.parse(localStorage.getItem("data")).id
