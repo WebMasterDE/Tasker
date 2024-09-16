@@ -1,0 +1,45 @@
+<div style="width: 500px" class="d-flex justify-content-center flex-column p-3">
+  <h1>Crea una task</h1>
+  <form class="d-flex flex-column">
+  <div class="input-group mb-3 d-flex flex-column">
+  <label>Data</label>
+  <input type="date" class="form-control w-100" [(ngModel)]="hourData.Date" name="data"  placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+  </div>
+</div>
+
+<div class="input-group mb-3 d-flex flex-column">
+<label>Operatore</label>
+  <input type="text" class="form-control w-100"  [(ngModel)]="hourData.Operator" name="operatore" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+  </div>
+</div>
+
+<div class="input-group mb-3 d-flex flex-column">
+<label>Ore da inserire</label>
+  <input type="text" class="form-control w-100"  [(ngModel)]="hourData.Hour" name="ore" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+  </div>
+</div>
+
+<div class="input-group mb-3 d-flex flex-column">
+  <label>Task</label>
+<select class="form-select w-100" aria-label="Default select example">
+  <option selected>Inserisci un task</option>
+  <option *ngFor="let el of arrayTasks" [value]="el.Id_task">{{el.Task_name + ' ' + el.Task_description}}</option>
+</select>
+</div>
+
+<div class="input-group mb-3 d-flex flex-column">
+<label>Uteriori note</label>
+  <input type="text" class="form-control w-100"  [(ngModel)]="hourData.Description"  name="note" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+  </div>
+</div>
+
+
+
+<button type="submit" (click)="inserisciOra()"class="btn btn-success" >Inserisci ore</button>
+
+  </form>
+</div>

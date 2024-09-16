@@ -3,5 +3,5 @@ export interface Hours {
   Description: string;
   Hour: number;
   Date: string;
-  userIdUser: number | null
+  Id_task: number
 }

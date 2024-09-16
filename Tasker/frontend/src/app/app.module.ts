@@ -22,6 +22,7 @@ import { TasksArchiveComponent } from './Pages/tasks-archive/tasks-archive.compo
 import { HomeComponent } from './Pages/home/home.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { OreComponent } from './Pages/ore/ore.component';
+import { TasksDialogComponent } from './Static-Components/tasks-dialog/tasks-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { OreComponent } from './Pages/ore/ore.component';
     TasksArchiveComponent,
     HomeComponent,
     OreComponent,
+    TasksDialogComponent,
 
   ],
   imports: [

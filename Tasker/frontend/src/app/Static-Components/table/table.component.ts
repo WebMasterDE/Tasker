@@ -25,7 +25,7 @@ export class TableComponent {
   totalHours: number;;
   ngOnInit(): void {
     this.getTasksArchive()
-    this.getToalHours()
+    // this.getToalHours()
     setTimeout(() => {
 
       this.datatable = this.route === '/tasks' ? this.tasks : this.archive;
@@ -53,34 +53,34 @@ export class TableComponent {
     });
   }
 
-  getToalHours() {
-    let id = JSON.parse(localStorage.getItem("data")).id;
+  // getToalHours() {
+  //   let id = JSON.parse(localStorage.getItem("data")).id;
 
-    forkJoin({
-      tasks: this.http.GetTasksUser(id),
-      archive: this.http_archive.getTasksArchive(id)
-    }).subscribe(result => {
-      const tasks = result.tasks as Task[];
-      const archive = result.archive as Archive[];
+  //   forkJoin({
+  //     tasks: this.http.GetTasksUser(id),
+  //     archive: this.http_archive.getTasksArchive(id)
+  //   }).subscribe(result => {
+  //     const tasks = result.tasks as Task[];
+  //     const archive = result.archive as Archive[];
 
-      this.totalHours = 0;
+  //     this.totalHours = 0;
 
-      if (this.tasks, length > 0) {
-        tasks.forEach(element => {
-          let parsedData = parseInt(element.Task_hours.toString());
-          this.totalHours += parsedData;
-        });
-      }
+  //     if (this.tasks, length > 0) {
+  //       tasks.forEach(element => {
+  //         let parsedData = parseInt(element.Task_hours.toString());
+  //         this.totalHours += parsedData;
+  //       });
+  //     }
 
-      if (this.archive.length > 0) {
-        archive.forEach(element => {
-          let parsedData = parseInt(element.Task_hours.toString());
-          this.totalHours += parsedData;
-        });
-      }
+  //     if (this.archive.length > 0) {
+  //       archive.forEach(element => {
+  //         let parsedData = parseInt(element.Task_hours.toString());
+  //         this.totalHours += parsedData;
+  //       });
+  //     }
 
-    });
-  }
+  //   });
+  // }
   delete(element) {
     this.http.DeleteTaskUser(element).subscribe();
     window.location.reload()
@@ -155,14 +155,14 @@ export class TableComponent {
   standalone: true
 })
 export class DialogComponent {
-  singletask: Task = { Task_name: "", Task_description: "", Task_hours: 1, Task_creation: "", Task_end: "", Id_user: 0 }
+  singletask: Task = { Task_name: "", Task_description: "", Task_hours: 1, Task_creation: "", Task_end: "", Id_task: null }
   constructor(private http: TasksService) {
   }
   createTask() {
     const storage = localStorage.getItem("data");
 
     let jsondata = JSON.parse(storage)
-    this.singletask.Id_user = jsondata.id
+    // this.singletask.Id_user = jsondata.id
     this.http.CreateTaskUser(this.singletask).subscribe()
     window.location.reload()
   }
