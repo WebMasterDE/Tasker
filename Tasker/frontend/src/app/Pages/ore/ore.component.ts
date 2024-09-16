@@ -8,6 +8,7 @@ import { Hours } from 'src/Model/Hours';
 import { convertDate } from 'src/app/utils/utilities';
 import { DialogComponent } from 'src/app/Static-Components/table/table.component';
 import { FormsModule } from '@angular/forms';
+import { TasksService } from 'src/app/Services/tasks.service';
 
 
 @Component({
@@ -22,14 +23,13 @@ export class OreComponent {
 
   ngOnInit() {
     this.getHours();
-
   }
 
-  constructor(public dialog: MatDialog, private http_hours: HoursService, private router: Router) {
+  constructor(public dialog: MatDialog, private http_hours: HoursService, private router: Router, private http_tasks: TasksService) {
     this.getroute()
   }
 
-  displayedColumns: string[] = ['Date', 'Operator', 'Description', 'Hours'];
+  displayedColumns: string[] = ['Date', 'Operator', 'Description', 'Hours', 'Actions'];
   getroute() {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -44,7 +44,6 @@ export class OreComponent {
     this.http_hours.getHours(id.id).subscribe((data: Hours[]) => {
 
       this.datatable = data;
-
     });
   }
 
@@ -58,6 +57,10 @@ export class OreComponent {
 
 
   delete(element) {
+    this.http_hours.deleteHours(element).subscribe((data) => {
+    }, (error) => {
+      console.log(error)
+    });
     window.location.reload()
   }
 }

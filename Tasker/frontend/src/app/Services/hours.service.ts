@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Hours } from 'src/Model/Hours';
 
 @Injectable({
@@ -15,5 +16,9 @@ export class HoursService {
 
   addHours(data: Hours) {
     return this.http.post<Hours>(`http://localhost:3000/api/create/hours`, data);
+  }
+
+  deleteHours(data): Observable<Hours> {
+    return this.http.post<Hours>(`http://localhost:3000/api/delete/hours`, data);
   }
 }
