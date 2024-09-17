@@ -45,4 +45,13 @@ export class TasksDialogComponent {
     });
     window.location.reload()
   }
+
+  checkAllInput() {
+    if (!this.hourData.Date) {
+      return true
+    } else if (!this.hourData.Hour) {
+      return true
+    }
+    return false
+  }
 }

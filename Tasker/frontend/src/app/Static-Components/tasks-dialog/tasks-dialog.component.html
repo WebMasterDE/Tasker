@@ -39,7 +39,7 @@
 
 
 
-<button type="submit" (click)="inserisciOra()"class="btn btn-success" >Inserisci ore</button>
+<button type="submit" [disabled]="checkAllInput()" (click)="inserisciOra()"class="btn btn-success" >Inserisci ore</button>
 
   </form>
 </div>
