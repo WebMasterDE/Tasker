@@ -57,7 +57,7 @@ exports.login = async (req, res) => {
         if (isthesamepass) {
 
             const Token = generateToken({ Email: checkuser.Email })
-            return res.json({ Token, email: checkuser.Email, id: checkuser.Id_user, })
+            return res.json({ Token, email: checkuser.Email, id: checkuser.Id_user, name: checkuser.Name })
         } else {
             return res.status(401).json({ message: "la password non corrisponde" })
         }
@@ -109,7 +109,6 @@ exports.addHours = async (req, res) => {
 }
 exports.deleteHours = async (req, res) => {
     try {
-        console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", req.body)
         app.models.hours.destroy({ where: { Id_hour: req.body.hoursId_hour_hour.Id_hour } })
         app.models.user_tasks.destroy({ where: { Id_user_tasks: req.body.Id_user_tasks } })
         if (result === 1) {
