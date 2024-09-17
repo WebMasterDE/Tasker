@@ -14,18 +14,21 @@ import { TasksService } from 'src/app/Services/tasks.service';
 })
 export class TasksDialogComponent {
   arrayTasks = []
-  hourData: Hours = { Operator: '', Date: '', Hour: 0, Description: '', Id_task: null };
+  hourData: Hours = { Operator: '', Date: '', Hour: 0, Description: '', Id_task: null, Id_user: null };
   constructor(private dialogRef: MatDialogRef<DialogComponent>, private http_hours: HoursService, private http_tasks: TasksService) {
     this.arrayTasks = this.http_tasks.getAllTasks
   }
 
   ngOnInit() {
-    console.log(this.http_tasks.getAllTasks)
   }
 
-
+  getUserId() {
+    let data = JSON.parse(localStorage.getItem('data'))
+    return data.id
+  }
 
   inserisciOra() {
+    this.hourData.Id_user = this.getUserId()
     this.http_hours.addHours(this.hourData).subscribe((data) => {
 
     });

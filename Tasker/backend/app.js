@@ -1,36 +1,47 @@
 const express = require('express');
-const userRoute = require('./routes/user')
-const taskRoute = require('./routes/task')
-const archivedRoute = require('./routes/Archive')
-const parser = require('body-parser')
-const cors = require('cors')
-const Db = require('./util/DatabaseConnection')
-const TaskModel = require('./Models/taskModel')
-const UserModule = require('./Models/UserModel')
-const HoursModel = require('./Models/HourModel')
-const ArchivedModel = require('./Models/ArchiveModel')
-const constants = require("constants");
-const { arch } = require('os');
+const userRoute = require('./routes/user');
+const taskRoute = require('./routes/task');
+const archivedRoute = require('./routes/Archive');
+const parser = require('body-parser');
+const cors = require('cors');
+const { Sequelize } = require('sequelize');
+const initModels = require('./Models/init-models');
+
 const app = express();
 
-app.use(parser.json())
-app.use(cors())
+app.use(parser.json());
+app.use(cors());
 
-// routes
-app.use('/api', userRoute)
-app.use('/api', taskRoute)
-app.use('/api', archivedRoute)
+// Definisci la connessione al database
+const Dbsequelize = new Sequelize('taskerdb', 'root', '', {
+    host: 'localhost',
+    dialect: 'mysql'
+});
 
-UserModule.hasMany(TaskModel)
-ArchivedModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
-TaskModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
-HoursModel.belongsTo(UserModule, { constraints: true, onDelete: 'CASCADE' })
+// Inizializza i modelli
+const models = initModels(Dbsequelize);
 
-Db.sync().then(result => {
+// Verifica connessione al database
+Dbsequelize.authenticate()
+    .then(() => {
+        console.log('Connessione al database riuscita.');
 
-    app.listen(3000)
+        return Dbsequelize.sync();
+    })
+    .then(() => {
+        console.log('Modelli sincronizzati con il database.');
 
-}).catch(err => {
-    console.log(err)
-})
+        app.use('/api', userRoute);
+        app.use('/api', taskRoute);
+        app.use('/api', archivedRoute);
 
+        const port = 3000;
+        app.listen(port, () => {
+            console.log(`Server avviato su http://localhost:${port}`);
+        });
+    })
+    .catch((err) => {
+        console.error('Impossibile connettersi al database:', err);
+    });
+
+module.exports.models = models;

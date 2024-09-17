@@ -1,9 +1,10 @@
 const { Op } = require('sequelize');
-const ArchiveModel = require('../Models/ArchiveModel');
+const app = require('../app');
+
 
 exports.getArchive = async (req, res) => {
     try {
-        const alltask = await ArchiveModel.findAll({
+        const alltask = await app.models.archives.findAll({
             where: {
                 userIdUser: req.params.id
             }
@@ -17,7 +18,7 @@ exports.getArchive = async (req, res) => {
 exports.addTasksToArchive = async (req, res) => {
     try {
         console.log(req.body);
-        await ArchiveModel.create({
+        await app.models.archives.create({
             Task_name: req.body.Task_name,
             Task_description: req.body.Task_description,
             Task_hours: req.body.Task_hours,

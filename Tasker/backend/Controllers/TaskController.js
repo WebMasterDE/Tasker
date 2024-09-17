@@ -1,12 +1,8 @@
-const taskModel = require('../Models/taskModel');
+const app = require('../app');
 
 exports.getTasks = async (req, res) => {
     try {
-        const alltask = await taskModel.findAll({
-            where: {
-                userIdUser: req.params.id
-            }
-        })
+        const alltask = await app.models.tasks.findAll()
         res.json(alltask)
     } catch (err) {
         console.log(err)
@@ -14,7 +10,7 @@ exports.getTasks = async (req, res) => {
 }
 exports.deleteTasks = async (req, res) => {
     try {
-        const deletesingleTask = await taskModel.destroy({
+        const deletesingleTask = await app.models.tasks.destroy({
             where: {
                 Id_task: req.body.Id_task
             }
@@ -32,12 +28,10 @@ exports.deleteTasks = async (req, res) => {
 exports.addTasks = async (req, res) => {
     try {
         console.log(req.body)
-        taskModel.create({
+        app.models.tasks.create({
             Task_name: req.body.Task_name,
             Task_description: req.body.Task_description,
 
-            Task_hours: req.body.Task_hours,
-            Task_creation: req.body.Task_creation,
             Task_end: req.body.Task_end,
             userIdUser: req.body.Id_user
         })

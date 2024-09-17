@@ -1,13 +1,13 @@
-const ModelUser = require('../Models/UserModel')
-const HoursModel = require('../Models/HourModel')
+const app = require('../app');
 const bcrypt = require('bcrypt')
 const { logger } = require("sequelize/lib/utils/logger");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { Model } = require('sequelize');
 
 
 exports.getAllUser = async (req, res) => {
     try {
-        const user = await ModelUser.findOne({ where: { Id_user: req.params.id } })
+        const user = await app.models.users.findOne({ where: { Id_user: req.params.id } })
         return res.json(user);
     } catch (error) {
         console.log(error)
@@ -26,11 +26,11 @@ exports.signup = async (req, res) => {
             Email: req.body.Email,
             Password: hashedpassw
         }
-        ModelUser.findOne({ where: { Email: newUser.Email } }).then(resp => {
+        models.users.findOne({ where: { Email: newUser.Email } }).then(resp => {
             if (resp) {
                 return console.log("utente gia registrato")
             } else {
-                return ModelUser.create(newUser).then(response => {
+                return app.models.users.create(newUser).then(response => {
                     console.log('utente registrato con successo')
                 }).catch(error => console.log(error))
             }
@@ -50,8 +50,7 @@ function generateToken(data) {
 }
 
 exports.login = async (req, res) => {
-
-    const checkuser = await ModelUser.findOne({ where: { Email: req.body.Email } })
+    const checkuser = await app.models.users.findOne({ where: { Email: req.body.Email } })
     if (checkuser) {
         console.log(req.body.Password, checkuser.Password)
         const isthesamepass = await bcrypt.compare(req.body.Password, checkuser.Password);
@@ -71,7 +70,18 @@ exports.login = async (req, res) => {
 
 exports.getallHours = async (req, res) => {
     try {
-        const Hours = await HoursModel.findAll({ where: { userIdUser: req.params.id } })
+        const Hours = await app.models.user_tasks.findAll({
+            where: { userIdUser: req.params.id }, include: [
+                {
+                    model: app.models.hours,
+                    as: 'hoursId_hour_hour'  // Usa l'alias definito
+                },
+                {
+                    model: app.models.tasks,
+                    as: 'taskIdTask_task'  // Usa l'alias definito
+                }
+            ]
+        })
         return res.json(Hours)
     } catch (error) {
         console.log(error)
@@ -80,12 +90,16 @@ exports.getallHours = async (req, res) => {
 
 exports.addHours = async (req, res) => {
     try {
-        HoursModel.create({
+        const hour = await app.models.hours.create({
             Operator: req.body.Operator,
             Description: req.body.Description,
             Hour: req.body.Hour,
             Date: req.body.Date,
-            userIdUser: req.body.userIdUser
+        })
+        app.models.user_tasks.create({
+            hoursId_hour: hour.Id_hour,
+            userIdUser: req.body.Id_user,
+            taskIdTask: req.body.Id_task
         })
 
         res.status(201).send("Ore inserite inserite correttamente!")
@@ -95,8 +109,9 @@ exports.addHours = async (req, res) => {
 }
 exports.deleteHours = async (req, res) => {
     try {
-        console.log(req.body)
-        HoursModel.destroy({ where: { Id_hour: req.body.Id_hour } })
+        console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", req.body)
+        app.models.hours.destroy({ where: { Id_hour: req.body.hoursId_hour_hour.Id_hour } })
+        app.models.user_tasks.destroy({ where: { Id_user_tasks: req.body.Id_user_tasks } })
         if (result === 1) {
             res.status(200).json({ message: 'Record deleted successfully' });
         } else {

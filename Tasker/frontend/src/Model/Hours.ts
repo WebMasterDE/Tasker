@@ -4,4 +4,5 @@ export interface Hours {
   Hour: number;
   Date: string;
   Id_task: number
+  Id_user: number
 }

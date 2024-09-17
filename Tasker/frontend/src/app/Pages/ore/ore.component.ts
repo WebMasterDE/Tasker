@@ -39,7 +39,7 @@ export class OreComponent {
     this.getroute()
   }
 
-  displayedColumns: string[] = ['Date', 'Operator', 'Description', 'Hours', 'Actions'];
+  displayedColumns: string[] = ['Date', 'Operator', 'Task_name', 'Hours', 'Description', 'Actions'];
   getroute() {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -52,7 +52,6 @@ export class OreComponent {
     let dataStorage = localStorage.getItem('data');
     let id = JSON.parse(dataStorage)
     this.http_hours.getHours(id.id).subscribe((data: Hours[]) => {
-
       this.datatable = data;
     });
   }
@@ -61,7 +60,6 @@ export class OreComponent {
     const dialogRef = this.dialog.open(TasksDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 

@@ -1,5 +1,5 @@
 <div style="width: 500px" class="d-flex justify-content-center flex-column p-3">
-  <h1>Crea una task</h1>
+  <h1>Inserisci le ore</h1>
   <form class="d-flex flex-column">
   <div class="input-group mb-3 d-flex flex-column">
   <label>Data</label>
@@ -24,9 +24,9 @@
 
 <div class="input-group mb-3 d-flex flex-column">
   <label>Task</label>
-<select class="form-select w-100" aria-label="Default select example">
+<select class="form-select w-100" [(ngModel)]="hourData.Id_task" aria-label="Default select example"  name="id_task">
   <option selected>Inserisci un task</option>
-  <option *ngFor="let el of arrayTasks" [value]="el.Id_task">{{el.Task_name + ' ' + el.Task_description}}</option>
+  <option id= "valueId" *ngFor="let el of arrayTasks" [value]="el.Id_task">{{el.Task_name + ' ' + el.Task_description}}</option>
 </select>
 </div>
 
