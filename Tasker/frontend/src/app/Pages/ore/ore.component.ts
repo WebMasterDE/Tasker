@@ -19,7 +19,7 @@ import { TasksDialogComponent } from 'src/app/Static-Components/tasks-dialog/tas
 export class OreComponent {
 
   route: string;
-  datatable: Hours[] = [];
+  datatable;
   allTasks: JSON
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class OreComponent {
   getHours() {
     let dataStorage = localStorage.getItem('data');
     let id = JSON.parse(dataStorage)
-    this.http_hours.getHours(id.id).subscribe((data: Hours[]) => {
+    this.http_hours.getHours(id.id).subscribe((data) => {
       this.datatable = data;
     });
   }

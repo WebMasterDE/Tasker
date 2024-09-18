@@ -18,7 +18,7 @@ export class TasksComponent implements OnInit {
 
   ngOnInit() {
     this.getAllUsers()
-    // this.gettasks()
+    this.gettasks()
     // this.getAllUsers();
   }
   getAllUsers() {
@@ -29,11 +29,12 @@ export class TasksComponent implements OnInit {
     })
   }
 
-  // gettasks() {
-  //   const datas = localStorage.getItem('data');
-  //   const data = JSON.parse(datas)
-  //   this.task.GetTasksUser(data).subscribe(resp => {
-  //     this.tasks = resp;
-  //   })
-  // }
+  gettasks() {
+    const datas = localStorage.getItem('data');
+    const data = JSON.parse(datas)
+    this.task.GetTasksUser().subscribe(resp => {
+      this.tasks = resp;
+
+    })
+  }
 }

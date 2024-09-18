@@ -11,7 +11,7 @@ export class HoursService {
   constructor(private http: HttpClient) { }
 
   getHours(id: string) {
-    return this.http.get<Hours[]>(`http://localhost:3000/api/${id}/hours`);
+    return this.http.get(`http://localhost:3000/api/${id}/hours`);
   }
 
   addHours(data: Hours) {

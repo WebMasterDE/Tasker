@@ -90,7 +90,6 @@ export class TableComponent {
     const dialogRef = this.dialog.open(DialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 

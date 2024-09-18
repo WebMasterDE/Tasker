@@ -3,6 +3,6 @@ export interface Hours {
   Description: string;
   Hour: number;
   Date: string;
-  Id_task: number
-  Id_user: number
+  Id_task: number;
+  Id_user: number;
 }
