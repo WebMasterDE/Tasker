@@ -23,6 +23,7 @@ import { HomeComponent } from './Pages/home/home.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { OreComponent } from './Pages/ore/ore.component';
 import { TasksDialogComponent } from './Static-Components/tasks-dialog/tasks-dialog.component';
+import { WindowDialogComponent } from './Static-Components/window-dialog/window-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { TasksDialogComponent } from './Static-Components/tasks-dialog/tasks-dia
     HomeComponent,
     OreComponent,
     TasksDialogComponent,
+    WindowDialogComponent,
 
   ],
   imports: [

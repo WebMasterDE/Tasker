@@ -10,19 +10,21 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Archive } from 'src/Model/Archive';
 import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { WindowDialogComponent } from '../window-dialog/window-dialog.component';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   standalone: true,
-  imports: [MatTableModule, CommonModule],
+  imports: [MatTableModule, CommonModule, FormsModule],
 })
 export class TableComponent {
   @Input() tasks: Task[] = [];
   archive: Archive[] = [];
   route: string;
   datatable;
-  totalHours: number;;
+  id_to_delete: string
+  totalHours: number;
   ngOnInit(): void {
     this.getTasksArchive()
     // this.getToalHours()
@@ -30,6 +32,7 @@ export class TableComponent {
 
       this.datatable = this.route === '/tasks' ? this.tasks : this.archive;
     }, 500);
+
 
   }
   constructor(private http: TasksService, public dialog: MatDialog, private http_user: User_serviceService, private http_archive: ArchiveService, private router: Router) {
@@ -53,41 +56,30 @@ export class TableComponent {
     });
   }
 
-  // getToalHours() {
-  //   let id = JSON.parse(localStorage.getItem("data")).id;
-
-  //   forkJoin({
-  //     tasks: this.http.GetTasksUser(id),
-  //     archive: this.http_archive.getTasksArchive(id)
-  //   }).subscribe(result => {
-  //     const tasks = result.tasks as Task[];
-  //     const archive = result.archive as Archive[];
-
-  //     this.totalHours = 0;
-
-  //     if (this.tasks, length > 0) {
-  //       tasks.forEach(element => {
-  //         let parsedData = parseInt(element.Task_hours.toString());
-  //         this.totalHours += parsedData;
-  //       });
-  //     }
-
-  //     if (this.archive.length > 0) {
-  //       archive.forEach(element => {
-  //         let parsedData = parseInt(element.Task_hours.toString());
-  //         this.totalHours += parsedData;
-  //       });
-  //     }
-
-  //   });
-  // }
   delete(element) {
-    this.http.DeleteTaskUser(element).subscribe();
-    window.location.reload()
+    this.http.DeleteTaskUser(element).subscribe()
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  openDialogWindow(element) {
+    const dialogRef = this.dialog.open(WindowDialogComponent, {
+      data: {
+        title: 'Sei sicuro di eliminare la task?',
+        text: 'Verranno eliminate tutte le ore associate alla task',
+        btn_left: 'Annulla',
+        btn_right: 'Elimina',
+        action: this.delete(element)
+      },
+      width: '20%',
+      height: '25%'
+
+    });
 
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -100,6 +92,7 @@ export class TableComponent {
       }
     });
   }
+
 }
 
 @Component({
