@@ -3,6 +3,7 @@ import { User_serviceService } from "../../Services/auth.service";
 import { User } from "../../../Model/User";
 import { Router } from "@angular/router";
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',

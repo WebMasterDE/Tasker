@@ -31,7 +31,6 @@ export class SidenavComponent {
     this.route.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
-        console.log(this.currentRoute)
       }
     });
   }

@@ -1,9 +1,9 @@
 <!--top navbar-->
-<mat-toolbar *ngIf="currentRoute != '/signup'" style="background-color:#f5f8ff">
+<mat-toolbar *ngIf="currentRoute != '/signup'" style="background-color:#0b4978">
   <button class="mat-icon-button" mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
     <mat-icon class="mat-icon">menu</mat-icon>
   </button>
-  <h1 style="color: rgb(0, 0, 0);" >Tasker</h1>
+  <h1 style="color: white;" >Tasker</h1>
 </mat-toolbar>
 
 
@@ -13,34 +13,34 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/home">
         <span class="entry">
-          <i style="font-size: 1.3rem" class="fa-solid fa-house"></i>
-          <span>Home</span>
+          <i style="font-size: 1.3rem;color: white;" class="fa-solid fa-house mx-2"></i>
+          <span style="color: white;">Home</span>
         </span>
       </a>
       <a mat-list-item routerLink="/ore">
         <span class="entry">
-          <i style="font-size: 1.5rem" class="fa-solid fa-clock"></i>
-          <span>ore</span>
+          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-clock mx-2"></i>
+          <span style="color: white;">ore</span>
         </span>
       </a>
-      <hr style="width: 80%;margin: auto">
+      <hr style="width: 80%;margin: auto;color: white;">
       <a mat-list-item routerLink="/tasks" >
         <span class="entry">
-          <i style="font-size: 1.5rem;" class="fa-solid fa-box-archive"></i>
-           <span>Tasks</span>
+          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-box-archive mx-1"></i>
+           <span style="color: white;">Tasks</span>
         </span>
       </a>
       <a mat-list-item routerLink="/archived" >
         <span class="entry">
-          <i style="font-size: 1.5rem" class="fa-regular fa-clipboard"></i>
-          <span>Tasks archiviate</span>
+          <i style="font-size: 1.5rem;color: white;" class="fa-regular fa-clipboard mx-2"></i>
+          <span style="color: white;">Tasks archiviate</span>
         </span>
       </a>
-      <hr style="width: 80%;margin: auto">
+      <hr style="width: 80%;margin: auto;color: white;">
       <a mat-list-item (click)="logout()">
         <span class="entry">
-          <i style="font-size: 1.5rem" class="fa-solid fa-right-from-bracket"></i>
-          <span>Logout</span>
+          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-right-from-bracket mx-2"></i>
+          <span style="color: white;">Logout</span>
         </span>
       </a>
     </mat-nav-list>
