@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('tasks', {
     Id_task: {
       autoIncrement: true,
@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    Task_end: {
+    Task_creation: {
       type: DataTypes.DATEONLY,
       allowNull: false
     }

@@ -136,12 +136,6 @@ export class TableComponent {
           </div>
         </div>
 
-        <div class="input-group mb-3 d-flex flex-column">
-          <label>Data di consegna</label>
-          <input type="date" class="form-control w-100"  name="Task_end" [(ngModel)]="singletask.Task_end" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-          </div>
-        </div>
 
         <button type="submit" (click)="createTask()"class="btn btn-success" >Crea task</button>
 
@@ -154,7 +148,8 @@ export class TableComponent {
   standalone: true
 })
 export class DialogComponent {
-  singletask: Task = { Task_name: "", Task_description: "", Task_hours: 1, Task_creation: "", Task_end: "", Id_task: null }
+  singletask: Task = { Task_name: "", Task_description: "", Task_hours: 1, Task_creation: this.getTodayDate(), Id_task: null }
+  todayDate = new Date().toString
   constructor(private http: TasksService) {
   }
   createTask() {
@@ -164,5 +159,9 @@ export class DialogComponent {
     // this.singletask.Id_user = jsondata.id
     this.http.CreateTaskUser(this.singletask).subscribe()
     window.location.reload()
+  }
+
+  getTodayDate(): string {
+    return new Date().toISOString().split('T')[0]; // Restituisce la data nel formato YYYY-MM-DD
   }
 }

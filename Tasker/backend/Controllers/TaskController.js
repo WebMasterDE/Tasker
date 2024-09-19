@@ -31,8 +31,7 @@ exports.addTasks = async (req, res) => {
         app.models.tasks.create({
             Task_name: req.body.Task_name,
             Task_description: req.body.Task_description,
-
-            Task_end: req.body.Task_end,
+            Task_creation: req.body.Task_creation,
             userIdUser: req.body.Id_user
         })
 
