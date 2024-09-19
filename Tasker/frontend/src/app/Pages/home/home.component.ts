@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
           title: element.taskIdTask_task.Task_name + ' ' + element.taskIdTask_task.Task_description,
           start: element.hoursId_hour_hour.Date,
           color: this.color_gestionali(element.taskIdTask_task.Task_description),
-          url: element.hoursId_hour_hour.Commit != null ? `https://github.com/WebMasterDE/new_dbdem/commit/${element.hoursId_hour_hour.Commit}` : ''
+          url: element.hoursId_hour_hour.Commit != null ? `https://github.com/WebMasterDE/${this.redirectGestionale(element.taskIdTask_task.Task_description)}/commit/${element.hoursId_hour_hour.Commit}` : ''
         }
         this.alldatacalendar.push(obj)
       });
@@ -56,6 +56,18 @@ export class HomeComponent implements OnInit {
       return 'green'
     } else {
       return 'purple'
+    }
+  }
+
+  redirectGestionale(element) {
+    if (element == 'DIVEN_VECCHIO') {
+      return 'dbdiven'
+    } else if (element == 'DES_VECCHIO') {
+      return 'dbdes'
+    } else if (element == 'DEM_VECCHIO') {
+      return 'dbdem'
+    } else {
+      return 'new_dbdem'
     }
   }
 
