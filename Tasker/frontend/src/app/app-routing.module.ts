@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { TasksComponent } from "./Pages/tasks/tasks.component";
 import { SignupComponent } from "./Pages/signup/signup.component";
 import { TasksArchiveComponent } from './Pages/tasks-archive/tasks-archive.component';
-import { HomeComponent } from './Pages/home/home.component';
+import { CalendarioComponent } from './Pages/calendario/calendario.component';
 import { OreComponent } from './Pages/ore/ore.component';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'calendario', component: CalendarioComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'archived', component: TasksArchiveComponent },
   { path: 'ore', component: OreComponent },

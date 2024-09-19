@@ -19,7 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from "@angular/material/dialog";
 import { TasksArchiveComponent } from './Pages/tasks-archive/tasks-archive.component';
-import { HomeComponent } from './Pages/home/home.component';
+import { CalendarioComponent } from './Pages/calendario/calendario.component'
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { OreComponent } from './Pages/ore/ore.component';
 import { TasksDialogComponent } from './Static-Components/tasks-dialog/tasks-dialog.component';
@@ -35,7 +35,7 @@ import { SpinnerComponent } from "./utils/spinner/spinner.component";
     TasksComponent,
     SignupComponent,
     TasksArchiveComponent,
-    HomeComponent,
+    CalendarioComponent,
     OreComponent,
     TasksDialogComponent,
     WindowDialogComponent,

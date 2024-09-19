@@ -6,11 +6,11 @@ import { HoursService } from 'src/app/Services/hours.service';
 import { Hours } from 'src/Model/Hours';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-calendario',
+  templateUrl: './Calendario.component.html',
+  styleUrls: ['./Calendario.component.css']
 })
-export class HomeComponent implements OnInit {
+export class CalendarioComponent implements OnInit {
   id_user: string
   datacalendar;
   alldatacalendar: { title: string, start: Date }[] = []
@@ -44,7 +44,9 @@ export class HomeComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin],
     initialView: 'dayGridMonth',
-    contentHeight: 700,
+    contentHeight: 650,
+
+
   };
 
   color_gestionali(element) {

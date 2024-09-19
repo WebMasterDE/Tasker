@@ -11,22 +11,22 @@
 <mat-sidenav-container   autosize>
   <mat-sidenav *ngIf="currentRoute != '/signup'" [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile">
     <mat-nav-list>
-      <a mat-list-item routerLink="/home">
+      <a mat-list-item routerLink="/calendario">
         <span class="entry">
-          <i style="font-size: 1.3rem;color: white;" class="fa-solid fa-house mx-1"></i>
-          <span style="color: white;">Home</span>
+          <i style="font-size: 1.5rem;color: white;" class="fa-regular fa-calendar mx-2 h-100"></i>
+          <span style="color: white;">Calendario</span>
         </span>
       </a>
       <a mat-list-item routerLink="/ore">
         <span class="entry">
-          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-clock mx-1"></i>
+          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-clock mx-2"></i>
           <span style="color: white;">ore</span>
         </span>
       </a>
       <hr style="width: 80%;margin: auto;color: white;">
       <a mat-list-item routerLink="/tasks" >
         <span class="entry">
-          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-box-archive mx-1"></i>
+          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-box-archive mx-2"></i>
            <span style="color: white;">Tasks</span>
         </span>
       </a>

@@ -42,3 +42,8 @@ mat-sidenav {
 ::ng-deep .mat-icon-button .mat-icon {
   color: white;
 }
+
+.entry {
+  display: flex;
+  align-items: center;
+}
