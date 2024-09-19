@@ -1,11 +1,12 @@
-<div class="d-flex justify-content-center align-items-center h-100 background">
-  <div class="card">
-    <h1 style="color: white; font-size: 3rem; font-family: 'Lucida Sans';font-weight: bold;">Tasker</h1>
-    <input placeholder="Email" [(ngModel)]="User.Email" class='input my-3' name="Email" type="text">
-    <input placeholder="Password"  [(ngModel)]="User.Password" class="input my-3" name="Password" type="password">
-    <button class="btn my-3" (click)="login()">
-      Login
-    </button>
-  </div>
 
-</div>
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <div class="card">
+      <h1 class="m-auto" style="color: white; font-size: 3rem; font-family: 'Lucida Sans';font-weight: bold;">Tasker</h1>
+      <input placeholder="Email" [(ngModel)]="User.Email" class='input my-3 m-auto' name="Email" type="text">
+      <input placeholder="Password"  [(ngModel)]="User.Password" class="input my-3 m-auto" name="Password" type="password">
+      <button class="btn mb-5 mt-3" (click)="login()">
+        Login
+      </button>
+    </div>
+
+  </div>
