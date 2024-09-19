@@ -95,6 +95,7 @@ exports.addHours = async (req, res) => {
             Description: req.body.Description,
             Hour: req.body.Hour,
             Date: req.body.Date,
+            Commit: req.body.Commit
         })
         app.models.user_tasks.create({
             hoursId_hour: hour.Id_hour,

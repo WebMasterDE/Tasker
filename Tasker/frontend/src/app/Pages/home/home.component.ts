@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit {
         let obj = {
           title: element.taskIdTask_task.Task_name + ' ' + element.taskIdTask_task.Task_description,
           start: element.hoursId_hour_hour.Date,
-          color: this.color_gestionali(element.taskIdTask_task.Task_description)
+          color: this.color_gestionali(element.taskIdTask_task.Task_description),
+          url: element.hoursId_hour_hour.Commit != null ? `https://github.com/WebMasterDE/new_dbdem/commit/${element.hoursId_hour_hour.Commit}` : ''
         }
         this.alldatacalendar.push(obj)
       });

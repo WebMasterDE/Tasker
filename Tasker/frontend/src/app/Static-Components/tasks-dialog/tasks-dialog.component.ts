@@ -15,7 +15,7 @@ import { LoadingService } from 'src/app/Services/loading.service';
 })
 export class TasksDialogComponent {
   arrayTasks = []
-  hourData: Hours = { Operator: this.getnameUser(), Date: '', Hour: 0, Description: '', Id_task: null, Id_user: null };
+  hourData: Hours = { Operator: this.getnameUser(), Date: '', Hour: 0, Description: '', Id_task: null, Id_user: null, Commit: null };
   constructor(private dialogRef: MatDialogRef<DialogComponent>, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService) {
     this.arrayTasks = this.http_tasks.getAllTasks
   }

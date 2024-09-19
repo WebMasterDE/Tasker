@@ -46,7 +46,7 @@ export class OreComponent {
     this.getroute()
   }
 
-  displayedColumns: string[] = ['Date', 'Operator', 'Task_name', 'Hours', 'Description', 'Actions'];
+  displayedColumns: string[] = ['Date', 'Operator', 'Task_name', 'Hours', 'Description', 'Commit', 'Actions'];
   getroute() {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {

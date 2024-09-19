@@ -31,6 +31,13 @@
 </div>
 
 <div class="input-group mb-3 d-flex flex-column">
+  <label>Commit (opzionale)</label>
+    <input type="text" class="form-control w-100" [(ngModel)]="hourData.Commit" name="commit" placeholder="Aggiungi il codice del commit">
+    <div class="input-group-append">
+    </div>
+  </div>
+
+<div class="input-group mb-3 d-flex flex-column">
 <label>Uteriori note</label>
   <textarea style="height: 150px;" class="form-control w-100" [(ngModel)]="hourData.Description" name="note" placeholder="Aggiungi una descrizione"></textarea>
   <div class="input-group-append">

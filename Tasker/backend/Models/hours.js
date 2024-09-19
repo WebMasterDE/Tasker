@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('hours', {
     Id_hour: {
       autoIncrement: true,
@@ -22,6 +22,10 @@ module.exports = function(sequelize, DataTypes) {
     Date: {
       type: DataTypes.DATEONLY,
       allowNull: false
+    },
+    Commit: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
     userIdUser: {
       type: DataTypes.INTEGER,
