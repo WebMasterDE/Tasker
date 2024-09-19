@@ -1,0 +1,19 @@
+mat-spinner {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Centra lo spinner sia verticalmente che orizzontalmente */
+}
+
+.background-spinner {
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  position: fixed;
+  /* Assicura che lo sfondo copra tutta la schermata */
+  top: 0;
+  left: 0;
+}

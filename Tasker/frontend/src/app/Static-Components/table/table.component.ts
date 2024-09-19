@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Task } from "../../../Model/Task"
 import { MatTableModule } from "@angular/material/table";
 import { TasksService } from '../../Services/tasks.service'
@@ -11,12 +11,14 @@ import { Archive } from 'src/Model/Archive';
 import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { WindowDialogComponent } from '../window-dialog/window-dialog.component';
+import { SpinnerComponent } from 'src/app/utils/spinner/spinner.component';
+import { LoadingService } from 'src/app/Services/loading.service';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   standalone: true,
-  imports: [MatTableModule, CommonModule, FormsModule],
+  imports: [MatTableModule, CommonModule, FormsModule, SpinnerComponent],
 })
 export class TableComponent {
   @Input() tasks: Task[] = [];
@@ -25,17 +27,22 @@ export class TableComponent {
   datatable;
   id_to_delete: string
   totalHours: number;
+  isloading: boolean = true
   ngOnInit(): void {
+    this.loading.show()
     this.getTasksArchive()
     // this.getToalHours()
     setTimeout(() => {
 
       this.datatable = this.route === '/tasks' ? this.tasks : this.archive;
+      this.loading.hide()
     }, 500);
 
 
   }
-  constructor(private http: TasksService, public dialog: MatDialog, private http_user: User_serviceService, private http_archive: ArchiveService, private router: Router) {
+
+
+  constructor(private http: TasksService, public dialog: MatDialog, private http_user: User_serviceService, private http_archive: ArchiveService, private router: Router, private loading: LoadingService) {
     this.getroute()
 
   }

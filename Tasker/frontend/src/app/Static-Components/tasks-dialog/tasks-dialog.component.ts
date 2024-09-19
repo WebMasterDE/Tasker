@@ -6,6 +6,7 @@ import { DialogComponent } from '../table/table.component';
 import { HoursService } from 'src/app/Services/hours.service';
 import { TasksComponent } from 'src/app/Pages/tasks/tasks.component';
 import { TasksService } from 'src/app/Services/tasks.service';
+import { LoadingService } from 'src/app/Services/loading.service';
 
 @Component({
   selector: 'app-tasks-dialog',
@@ -15,7 +16,7 @@ import { TasksService } from 'src/app/Services/tasks.service';
 export class TasksDialogComponent {
   arrayTasks = []
   hourData: Hours = { Operator: this.getnameUser(), Date: '', Hour: 0, Description: '', Id_task: null, Id_user: null };
-  constructor(private dialogRef: MatDialogRef<DialogComponent>, private http_hours: HoursService, private http_tasks: TasksService) {
+  constructor(private dialogRef: MatDialogRef<DialogComponent>, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService) {
     this.arrayTasks = this.http_tasks.getAllTasks
   }
 

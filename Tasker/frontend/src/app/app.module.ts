@@ -24,6 +24,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { OreComponent } from './Pages/ore/ore.component';
 import { TasksDialogComponent } from './Static-Components/tasks-dialog/tasks-dialog.component';
 import { WindowDialogComponent } from './Static-Components/window-dialog/window-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingService } from './Services/loading.service';
+import { SpinnerComponent } from "./utils/spinner/spinner.component";
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { WindowDialogComponent } from './Static-Components/window-dialog/window-
     OreComponent,
     TasksDialogComponent,
     WindowDialogComponent,
+
 
   ],
   imports: [
@@ -53,9 +57,11 @@ import { WindowDialogComponent } from './Static-Components/window-dialog/window-
     NgbModule,
     MatTableModule,
     MatDialogModule,
-    FullCalendarModule
+    FullCalendarModule,
+    MatProgressSpinnerModule,
+    SpinnerComponent
   ],
-  providers: [],
+  providers: [LoadingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
