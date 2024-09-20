@@ -2,22 +2,22 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('tasks', {
     Id_task: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true
     },
     Task_name: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     Task_description: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     Task_creation: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

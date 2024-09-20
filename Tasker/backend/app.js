@@ -13,7 +13,7 @@ app.use(parser.json());
 app.use(cors());
 
 // Definisci la connessione al database
-const Dbsequelize = new Sequelize('taskerdb', 'root', '', {
+const Dbsequelize = new Sequelize('taskerdb2', 'root', '', {
     host: 'localhost',
     dialect: 'mysql'
 });

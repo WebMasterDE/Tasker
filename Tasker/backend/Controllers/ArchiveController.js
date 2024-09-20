@@ -6,7 +6,7 @@ exports.getArchive = async (req, res) => {
     try {
         const alltask = await app.models.archives.findAll({
             where: {
-                userIdUser: req.params.id
+                Id_user: req.params.id
             }
         })
         res.json(alltask)

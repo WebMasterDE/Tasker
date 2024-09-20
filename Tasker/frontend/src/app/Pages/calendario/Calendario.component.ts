@@ -31,10 +31,10 @@ export class CalendarioComponent implements OnInit {
       this.datacalendar = val
       this.datacalendar.forEach(element => {
         let obj = {
-          title: element.taskIdTask_task.Task_name + ' ' + element.taskIdTask_task.Task_description,
-          start: element.hoursId_hour_hour.Date,
-          color: this.color_gestionali(element.taskIdTask_task.Task_description),
-          url: element.hoursId_hour_hour.Commit != null ? `https://github.com/WebMasterDE/${this.redirectGestionale(element.taskIdTask_task.Task_description)}/commit/${element.hoursId_hour_hour.Commit}` : ''
+          title: element.Id_task_task.Task_name + ' ' + element.Id_task_task.Task_description,
+          start: element.Date,
+          color: this.color_gestionali(element.Id_task_task.Task_description),
+          url: element.Commit != null ? `https://github.com/WebMasterDE/${this.redirectGestionale(element.Id_task_task.Task_description)}/commit/${element.Commit}` : ''
         }
         this.alldatacalendar.push(obj)
       });

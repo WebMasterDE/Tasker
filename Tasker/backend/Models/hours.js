@@ -2,32 +2,28 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('hours', {
     Id_hour: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      autoIncrement: true,
+      primaryKey: true,
     },
     Operator: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     Description: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     Hour: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     Date: {
       type: DataTypes.DATEONLY,
-      allowNull: false
-    },
-    Commit: {
-      type: DataTypes.STRING(255),
       allowNull: true
     },
-    userIdUser: {
+    Id_user: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
@@ -35,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
         key: 'Id_user'
       }
     },
-    taskIdTask: {
+    Id_task: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
@@ -43,13 +39,9 @@ module.exports = function (sequelize, DataTypes) {
         key: 'Id_task'
       }
     },
-    userTaskIdUserTasks: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'user_tasks',
-        key: 'Id_user_tasks'
-      }
+    Commit: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -65,24 +57,17 @@ module.exports = function (sequelize, DataTypes) {
         ]
       },
       {
-        name: "userIdUser",
+        name: "hours_users_Id_user_fk",
         using: "BTREE",
         fields: [
-          { name: "userIdUser" },
+          { name: "Id_user" },
         ]
       },
       {
-        name: "taskIdTask",
+        name: "hours_tasks_Id_task_fk",
         using: "BTREE",
         fields: [
-          { name: "taskIdTask" },
-        ]
-      },
-      {
-        name: "userTaskIdUserTasks",
-        using: "BTREE",
-        fields: [
-          { name: "userTaskIdUserTasks" },
+          { name: "Id_task" },
         ]
       },
     ]

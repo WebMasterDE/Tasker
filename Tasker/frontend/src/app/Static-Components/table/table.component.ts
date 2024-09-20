@@ -30,7 +30,7 @@ export class TableComponent {
   isloading: boolean = true
   ngOnInit(): void {
     this.loading.show()
-    this.getTasksArchive()
+    // this.getTasksArchive()
     // this.getToalHours()
     setTimeout(() => {
 
@@ -55,13 +55,13 @@ export class TableComponent {
     window.location.reload()
   }
 
-  getTasksArchive() {
-    let id = JSON.parse(localStorage.getItem("data")).id
-    this.http_archive.getTasksArchive(id).subscribe((data: Archive[]) => {
-      this.archive = data
+  // getTasksArchive() {
+  //   let id = JSON.parse(localStorage.getItem("data")).id
+  //   this.http_archive.getTasksArchive(id).subscribe((data: Archive[]) => {
+  //     this.archive = data
 
-    });
-  }
+  //   });
+  // }
 
   delete(element) {
     this.http.DeleteTaskUser(element).subscribe()

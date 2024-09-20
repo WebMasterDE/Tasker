@@ -70,15 +70,11 @@ exports.login = async (req, res) => {
 
 exports.getallHours = async (req, res) => {
     try {
-        const Hours = await app.models.user_tasks.findAll({
-            where: { userIdUser: req.params.id }, include: [
-                {
-                    model: app.models.hours,
-                    as: 'hoursId_hour_hour'  // Usa l'alias definito
-                },
+        const Hours = await app.models.hours.findAll({
+            where: { Id_user: req.params.id }, include: [
                 {
                     model: app.models.tasks,
-                    as: 'taskIdTask_task'  // Usa l'alias definito
+                    as: 'Id_task_task'
                 }
             ]
         })
@@ -95,12 +91,10 @@ exports.addHours = async (req, res) => {
             Description: req.body.Description,
             Hour: req.body.Hour,
             Date: req.body.Date,
-            Commit: req.body.Commit
-        })
-        app.models.user_tasks.create({
-            hoursId_hour: hour.Id_hour,
-            userIdUser: req.body.Id_user,
-            taskIdTask: req.body.Id_task
+            Commit: req.body.Commit,
+            Id_user: req.body.Id_user,
+            Id_task: req.body.Id_task
+
         })
 
         res.status(201).send("Ore inserite inserite correttamente!")
@@ -110,8 +104,7 @@ exports.addHours = async (req, res) => {
 }
 exports.deleteHours = async (req, res) => {
     try {
-        app.models.hours.destroy({ where: { Id_hour: req.body.hoursId_hour_hour.Id_hour } })
-        app.models.user_tasks.destroy({ where: { Id_user_tasks: req.body.Id_user_tasks } })
+        app.models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })
         if (result === 1) {
             res.status(200).json({ message: 'Record deleted successfully' });
         } else {
