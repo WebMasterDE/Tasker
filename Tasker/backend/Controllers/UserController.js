@@ -24,9 +24,10 @@ exports.signup = async (req, res) => {
         const newUser = {
             Name: req.body.Name,
             Email: req.body.Email,
-            Password: hashedpassw
+            Password: hashedpassw,
+            Autorizzazione: 3
         }
-        models.users.findOne({ where: { Email: newUser.Email } }).then(resp => {
+        app.models.users.findOne({ where: { Email: newUser.Email } }).then(resp => {
             if (resp) {
                 return console.log("utente gia registrato")
             } else {
