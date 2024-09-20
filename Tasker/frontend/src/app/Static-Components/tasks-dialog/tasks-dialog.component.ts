@@ -15,7 +15,7 @@ import { LoadingService } from 'src/app/Services/loading.service';
 })
 export class TasksDialogComponent {
   arrayTasks = []
-  hourData: Hours = { Operator: this.getnameUser(), Date: '', Hour: 0, Description: '', Id_task: null, Id_user: null, Commit: null };
+  hourData: Hours = { Operator: this.getnameUser(), Date: this.getTodayDate(), Hour: 0, Description: '', Id_task: null, Id_user: null, Commit: null };
   constructor(private dialogRef: MatDialogRef<DialogComponent>, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService) {
     this.arrayTasks = this.http_tasks.getAllTasks
   }
@@ -28,6 +28,9 @@ export class TasksDialogComponent {
     return data.id
   }
 
+  getTodayDate(): string {
+    return new Date().toISOString().split('T')[0]; // Restituisce la data nel formato YYYY-MM-DD
+  }
   getnameUser() {
     let data = JSON.parse(localStorage.getItem('data'))
 
@@ -51,6 +54,8 @@ export class TasksDialogComponent {
     if (!this.hourData.Date) {
       return true
     } else if (!this.hourData.Hour) {
+      return true
+    } else if (!this.hourData.Description) {
       return true
     }
     return false

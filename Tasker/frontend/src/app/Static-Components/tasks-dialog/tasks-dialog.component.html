@@ -10,14 +10,7 @@
 
 <div class="input-group mb-3 d-flex flex-column">
 <label>Operatore</label>
-  <input type="text" class="form-control w-100"  [(ngModel)]="hourData.Operator" name="operatore" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-  </div>
-</div>
-
-<div class="input-group mb-3 d-flex flex-column">
-<label>Ore da inserire</label>
-  <input type="text" class="form-control w-100"  [(ngModel)]="hourData.Hour" name="ore" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+  <input type="text" class="form-control w-100"  [(ngModel)]="hourData.Operator" name="operatore" disabled="true" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
   <div class="input-group-append">
   </div>
 </div>
@@ -29,6 +22,14 @@
   <option id= "valueId" *ngFor="let el of arrayTasks" [value]="el.Id_task">{{el.Task_name + ' ' + el.Task_description}}</option>
 </select>
 </div>
+
+<div class="input-group mb-3 d-flex flex-column">
+<label>Ore da inserire</label>
+  <input type="text" class="form-control w-100"  [(ngModel)]="hourData.Hour" name="ore" placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+  </div>
+</div>
+
 
 <div class="input-group mb-3 d-flex flex-column">
   <label>Commit (opzionale)</label>
