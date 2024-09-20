@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent },
   { path: 'archived', component: TasksArchiveComponent },
   { path: 'ore', component: OreComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '', redirectTo: '/calendario', pathMatch: 'full' }
 ];
 
 @NgModule({

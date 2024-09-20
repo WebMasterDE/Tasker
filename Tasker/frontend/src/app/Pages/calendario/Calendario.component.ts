@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { HoursService } from 'src/app/Services/hours.service';
+import { LoadingService } from 'src/app/Services/loading.service';
 import { Hours } from 'src/Model/Hours';
 
 @Component({
@@ -14,12 +15,13 @@ export class CalendarioComponent implements OnInit {
   id_user: string
   datacalendar;
   alldatacalendar: { title: string, start: Date }[] = []
-  constructor(private http_hour: HoursService) {
+  constructor(private http_hour: HoursService, private load: LoadingService) {
     let data = JSON.parse(localStorage.getItem('data'))
     this.id_user = data.id
 
   }
   ngOnInit(): void {
+    this.load.show()
     this.createDataCalendar()
   }
 
@@ -38,6 +40,7 @@ export class CalendarioComponent implements OnInit {
       });
       this.calendarOptions.events = this.alldatacalendar
     })
+    this.load.hide()
   }
 
 
@@ -50,11 +53,11 @@ export class CalendarioComponent implements OnInit {
   };
 
   color_gestionali(element) {
-    if (element == 'DIVEN') {
+    if (element == 'DIVEN' || element == 'DIVEN_VECCHIO') {
       return ''
-    } else if (element == 'DES') {
+    } else if (element == 'DES' || element == 'DES_VECCHIO') {
       return 'orange'
-    } else if (element == 'DEM') {
+    } else if (element == 'DEM' || element == 'DEM_VECCHIO') {
       return 'green'
     } else {
       return 'purple'
@@ -68,8 +71,10 @@ export class CalendarioComponent implements OnInit {
       return 'dbdes'
     } else if (element == 'DEM_VECCHIO') {
       return 'dbdem'
-    } else {
+    } else if (element == 'DIVEN' || element == 'DES' || element == 'DEM') {
       return 'new_dbdem'
+    } else {
+      return 'CustoDE_mobile_frontend'
     }
   }
 
