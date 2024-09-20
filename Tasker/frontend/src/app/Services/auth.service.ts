@@ -35,5 +35,10 @@ export class User_serviceService {
       return false
     }
   }
+  userAuthorization(id: string): Observable<Object> {
+    let oo = this._http.get<Object>(`http://localhost:3000/api/authorization/${id}/user`);
+    console.log(oo)
+    return oo
+  }
 }
 

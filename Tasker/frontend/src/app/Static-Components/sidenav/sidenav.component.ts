@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatSidenav } from "@angular/material/sidenav";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { NavigationEnd, Router } from "@angular/router";
+import { User_serviceService } from 'src/app/Services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -15,7 +16,8 @@ export class SidenavComponent {
   isMobile = true;
   currentRoute: any;
   isCollapsed = true;
-  constructor(private observer: BreakpointObserver, private route: Router) {
+  permission: Object;
+  constructor(private observer: BreakpointObserver, private route: Router, private auth: User_serviceService) {
     this.currentRoute = this.route.url
   }
 
@@ -33,6 +35,17 @@ export class SidenavComponent {
         this.currentRoute = event.url;
       }
     });
+    this.Authorization()
+  }
+
+  Authorization() {
+    let id = JSON.parse(localStorage.getItem('data'))
+    let value;
+    this.auth.userAuthorization(id.id).subscribe((val) => {
+      value = val
+
+      return this.permission = value.Autorizzazione
+    })
   }
 
   toggleMenu() {

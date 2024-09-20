@@ -23,14 +23,14 @@
           <span style="color: white;">ore</span>
         </span>
       </a>
-      <!-- <hr style="width: 80%;margin: auto;color: white;"> -->
-      <!-- <a mat-list-item routerLink="/tasks" >
+      <hr style="width: 80%;margin: auto;color: white;">
+      <a mat-list-item routerLink="/tasks" *ngIf="this.permission == 1" >
         <span class="entry">
           <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-box-archive mx-2"></i>
            <span style="color: white;">Tasks</span>
         </span>
       </a>
-      <a mat-list-item routerLink="/archived" >
+      <!-- <a mat-list-item routerLink="/archived" >
         <span class="entry">
           <i style="font-size: 1.5rem;color: white;" class="fa-regular fa-clipboard mx-2"></i>
           <span style="color: white;">Tasks archiviate</span>

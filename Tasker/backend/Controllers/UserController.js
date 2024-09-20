@@ -2,7 +2,7 @@ const app = require('../app');
 const bcrypt = require('bcrypt')
 const { logger } = require("sequelize/lib/utils/logger");
 const jwt = require('jsonwebtoken');
-const { Model } = require('sequelize');
+const { Model, where } = require('sequelize');
 
 
 exports.getAllUser = async (req, res) => {
@@ -110,6 +110,18 @@ exports.deleteHours = async (req, res) => {
         } else {
             res.status(404).json({ message: 'Record not found' });
         }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+exports.getAuthorization = async (req, res) => {
+    try {
+        const authorization = await app.models.users.findOne({
+            where: { Id_user: req.params.id },
+            attributes: ['Autorizzazione']
+        })
+        return res.json(authorization)
     } catch (err) {
         console.log(err)
     }

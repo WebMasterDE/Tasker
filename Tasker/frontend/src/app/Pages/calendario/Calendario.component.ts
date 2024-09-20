@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { User_serviceService } from 'src/app/Services/auth.service';
 import { HoursService } from 'src/app/Services/hours.service';
 import { LoadingService } from 'src/app/Services/loading.service';
 import { Hours } from 'src/Model/Hours';
