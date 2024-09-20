@@ -6,6 +6,7 @@ const parser = require('body-parser');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
 const initModels = require('./Models/init-models');
+const shiftsRoute = require('./routes/shifts')
 
 const app = express();
 
@@ -34,6 +35,7 @@ Dbsequelize.authenticate()
         app.use('/api', userRoute);
         app.use('/api', taskRoute);
         app.use('/api', archivedRoute);
+        app.use('/api', shiftsRoute);
 
         const port = 3000;
         app.listen(port, () => {

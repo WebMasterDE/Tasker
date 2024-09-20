@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   return sequelize.define('hours', {
     Id_hour: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     Operator: {
       type: DataTypes.STRING(255),

@@ -3,6 +3,7 @@
   {{text}}
 </mat-dialog-content>
 <mat-dialog-actions>
+  <input class="form-control w-100 mb-4" [(ngModel)] ="data.inputdata" [type]="typeinput">
   <button mat-button mat-dialog-close cdkFocusInitial>{{btn_left}}</button>
   <div class="mx-4"></div>
   <button (click)="action" mat-button mat-dialog-close >{{btn_right}}</button>

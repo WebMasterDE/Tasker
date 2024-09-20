@@ -6,7 +6,12 @@ import { User_serviceService } from 'src/app/Services/auth.service';
 import { HoursService } from 'src/app/Services/hours.service';
 import { LoadingService } from 'src/app/Services/loading.service';
 import { Hours } from 'src/Model/Hours';
-
+import interactionPlugin from '@fullcalendar/interaction';
+import { ShiftService } from 'src/app/Services/shift.service';
+import { WindowDialogComponent } from 'src/app/Static-Components/window-dialog/window-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Shift } from 'src/Model/Shift';
+import { ArchiveService } from 'src/app/Services/archive.service';
 @Component({
   selector: 'app-calendario',
   templateUrl: './Calendario.component.html',
@@ -15,8 +20,10 @@ import { Hours } from 'src/Model/Hours';
 export class CalendarioComponent implements OnInit {
   id_user: string
   datacalendar;
+  hour: string
+  datas;
   alldatacalendar: { title: string, start: Date }[] = []
-  constructor(private http_hour: HoursService, private load: LoadingService) {
+  constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog) {
     let data = JSON.parse(localStorage.getItem('data'))
     this.id_user = data.id
 
@@ -48,10 +55,18 @@ export class CalendarioComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin],
     initialView: 'dayGridMonth',
-    contentHeight: 650,
-
-
+    contentHeight: 630,
   };
+
+  calendarOptionsShifts: CalendarOptions = {
+    plugins: [interactionPlugin, dayGridPlugin],
+    initialView: 'dayGridMonth',
+    contentHeight: 630,
+    selectable: true,
+    dateClick: (info) => this.opendialogShift(info),
+    select: function getall(info) {
+    },
+  }
 
   color_gestionali(element) {
     if (element == 'DIVEN' || element == 'DIVEN_VECCHIO') {
@@ -78,5 +93,41 @@ export class CalendarioComponent implements OnInit {
       return 'CustoDE_mobile_frontend'
     }
   }
+
+  opendialogShift(element) {
+
+    const dialogRef = this.dialog.open(WindowDialogComponent, this.datas = {
+      data: {
+        title: 'Inserimento orario di lavoro',
+        text: 'Inserisci a che ora sarai in sede',
+        btn_left: 'Annulla',
+        btn_right: 'Inserisci',
+        typeinput: 'number',
+
+      },
+      width: '20%',
+      height: '30%'
+
+
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.insertShift(element)
+    });
+  }
+
+  insertShift(element) {
+    let user_id = localStorage.getItem('data')
+    let id = JSON.parse(user_id)
+    let data: Shift = {
+      start_date: element.dateStr,
+      end_date: null,
+      hour: parseInt(this.datas.data.inputdata),
+      Id_user: id.id
+    }
+    this.http_shift.insertShift(data).subscribe()
+  }
+
 
 }

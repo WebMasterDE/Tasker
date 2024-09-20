@@ -2,5 +2,12 @@
   style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background-color: white"
   class="container my-3 p-5"
 >
-  <full-calendar [options]="calendarOptions"></full-calendar>
+<mat-tab-group>
+  <mat-tab label="Ore lavorate">
+    <full-calendar class="my-4" [options]="calendarOptions"></full-calendar>
+  </mat-tab>
+  <mat-tab label="Turni di lavoro">
+    <full-calendar id="shift-calendar" class="my-4" [options]="calendarOptionsShifts"></full-calendar>
+  </mat-tab>
+</mat-tab-group>
 </div>

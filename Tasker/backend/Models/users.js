@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   return sequelize.define('users', {
     Id_user: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true
     },
     Name: {
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true
     },
     Autorizzazione: {
-      type: DataTypes.INTEGER(3),
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 3
     }

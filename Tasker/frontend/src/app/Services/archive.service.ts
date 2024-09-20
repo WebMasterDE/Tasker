@@ -10,6 +10,8 @@ export class ArchiveService {
 
   constructor(private http: HttpClient) { }
 
+  inputdata: string
+
   getTasksArchive(id_user: number): Observable<Archive[]> {
     return this.http.get<Archive[]>(`http://localhost:3000/api/archive/${id_user}`);
   }
