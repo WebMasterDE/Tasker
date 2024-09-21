@@ -32,6 +32,7 @@ export class SidenavComponent {
 
     this.route.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        this.sidenav.close();  // Chiudi la sidenav su navigazione
         this.currentRoute = event.url;
       }
     });
@@ -49,7 +50,6 @@ export class SidenavComponent {
   }
 
   toggleMenu() {
-
     this.sidenav.toggle(); // On desktop/tablet, toggle the menu
     this.isCollapsed = !this.isCollapsed;
 
