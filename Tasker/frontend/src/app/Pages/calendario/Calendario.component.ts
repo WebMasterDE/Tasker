@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -12,21 +12,25 @@ import { WindowDialogComponent } from 'src/app/Static-Components/window-dialog/w
 import { MatDialog } from '@angular/material/dialog';
 import { Shift } from 'src/Model/Shift';
 import { ArchiveService } from 'src/app/Services/archive.service';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 @Component({
   selector: 'app-calendario',
   templateUrl: './Calendario.component.html',
   styleUrls: ['./Calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
+  @ViewChild('shiftCalendar') shiftCalendar: FullCalendarComponent;
+
   id_user: string
   datacalendar;
   hour: string
   datas;
   alldatacalendar: { title: string, start: Date }[] = []
+  shiftsTabActive = false;  // Variabile per controllare se la tab dei turni è attiva
+
   constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog) {
     let data = JSON.parse(localStorage.getItem('data'))
     this.id_user = data.id
-
   }
   ngOnInit(): void {
     this.load.show()
@@ -127,6 +131,13 @@ export class CalendarioComponent implements OnInit {
       Id_user: id.id
     }
     this.http_shift.insertShift(data).subscribe()
+  }
+
+  tabChanged(event: any): void {
+    if (event.index === 1 && !this.shiftsTabActive) {
+      // Attiva il rendering del calendario nella seconda tab solo quando è selezionata
+      this.shiftsTabActive = true;
+    }
   }
 
 

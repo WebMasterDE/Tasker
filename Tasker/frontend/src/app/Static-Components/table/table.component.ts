@@ -148,7 +148,7 @@ export class TableComponent {
   standalone: true
 })
 export class DialogComponent {
-  singletask: Task = { Task_name: "", Task_description: "", Task_hours: 1, Task_creation: this.getTodayDate(), Id_task: null }
+  singletask: Task = { Task_name: "", Task_description: "", Task_hours: 1, Task_creation: this.getTodayDate() }
   todayDate = new Date().toString
   constructor(private http: TasksService) {
   }
