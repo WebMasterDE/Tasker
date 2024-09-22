@@ -28,6 +28,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingService } from './Services/loading.service';
 import { SpinnerComponent } from "./utils/spinner/spinner.component";
 import { MatTabsModule } from '@angular/material/tabs';
+import { ManageUserComponent } from './Pages/manage-user/manage-user.component';
+import { UsersTableComponent } from './Static-Components/users-table/users-table.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     OreComponent,
     TasksDialogComponent,
     WindowDialogComponent,
+    ManageUserComponent,
   ],
   imports: [
     TableComponent,
@@ -59,7 +62,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     FullCalendarModule,
     MatProgressSpinnerModule,
     SpinnerComponent,
-    MatTabsModule
+    MatTabsModule,
+    UsersTableComponent
   ],
   providers: [LoadingService],
   bootstrap: [AppComponent]

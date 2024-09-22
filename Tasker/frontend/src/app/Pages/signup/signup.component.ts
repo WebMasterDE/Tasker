@@ -19,7 +19,7 @@ export class SignupComponent implements OnInit {
   }
 
 
-  User: User = { Name: '', Email: '', Password: '' };
+  User: User = { Name: '', Email: '', Password: '', Authorization: 3 };
 
 
   SendSignup() {

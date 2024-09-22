@@ -30,12 +30,13 @@
            <span style="color: white;">Tasks</span>
         </span>
       </a>
-      <!-- <a mat-list-item routerLink="/archived" >
+
+      <a mat-list-item routerLink="/users" *ngIf="this.permission == 1" >
         <span class="entry">
-          <i style="font-size: 1.5rem;color: white;" class="fa-regular fa-clipboard mx-2"></i>
-          <span style="color: white;">Tasks archiviate</span>
+          <i  style="font-size: 1.5rem;color: white;" class="fa-solid fa-user mx-2"></i>
+          <span style="color: white;">Gestione utenti</span>
         </span>
-      </a> -->
+      </a>
       <hr style="width: 80%;margin: auto;color: white;">
       <a mat-list-item (click)="logout()">
         <span class="entry">
