@@ -17,7 +17,7 @@ exports.getAllUserbyId = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await app.models.users.findAll({ attributes: ['Name', 'Email', 'Authorization'] });
+        const users = await app.models.users.findAll({ attributes: ['Id_User', 'Name', 'Email', 'Authorization'] });
         return res.json(users)
     } catch (err) {
         console.log(err)
@@ -132,6 +132,24 @@ exports.getAuthorization = async (req, res) => {
             attributes: ['Authorization']
         })
         return res.json(authorization)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+exports.modifyPassword = async (req, res) => {
+    try {
+        const existingUser = await app.models.users.findOne({ where: { id_User: req.params.id } })
+        const hashedpassw = await bcrypt.hash(req.body.pass, 12)
+        console.log('-------------------------------------------', req.body.pass)
+        existingUser.update({
+            Password: hashedpassw
+        })
+        if (res.status(201)) {
+            return console.log('password_modificata correattamente')
+        } else {
+            return console.log('errore nella modifica della password')
+        }
     } catch (err) {
         console.log(err)
     }

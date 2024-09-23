@@ -15,5 +15,6 @@ route.get('/:id/hours', UserController.getallHours);
 route.post('/create/hours', UserController.addHours);
 route.post('/delete/hours', UserController.deleteHours);
 route.get('/authorization/:id/user', UserController.getAuthorization)
+route.post('/change/password/user/:id', UserController.modifyPassword)
 
 module.exports = route

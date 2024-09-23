@@ -1,9 +1,14 @@
   <button mat-fab extended (click)="openDialog()">
-    <i class="fa-solid fa-plus"></i>
-    <i class="fa-regular fa-user"></i>
+    <i class="fa-solid mr-1 fs-4 fa-plus"></i>
+    <i class="fa-regular mx-1 fs-4 fa-user"></i>
   </button>
 
 <table style="margin-top: 50px" mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+
+  <ng-container matColumnDef="Id_User">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.Id_User}} </td>
+  </ng-container>
 
   <ng-container matColumnDef="Name">
     <th mat-header-cell *matHeaderCellDef> Nome </th>
@@ -26,8 +31,18 @@
       </select>
     </td>
   </ng-container>
+  <ng-container matColumnDef="Change_password">
+    <th mat-header-cell *matHeaderCellDef> Gestisci </th>
+    <td mat-cell *matCellDef="let element">
+      <button class="pass-button" mat-fab extended (click)="openDialogWindow(element.Id_User)">
+        <i class="fa-solid fa-key"></i>
+      </button>
+    </td>
+  </ng-container>
+
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
+<app-spinner></app-spinner>

@@ -44,5 +44,13 @@ export class User_serviceService {
     let oo = this._http.get<Object>(`http://localhost:3000/api/authorization/${id}/user`);
     return oo
   }
+
+  changePassword(newpass: string, id: string) {
+    try {
+      return this._http.post(`http://localhost:3000/api/change/password/user/${id}`, { pass: newpass }).subscribe()
+    } catch (err) {
+      return console.log(err)
+    }
+  }
 }
 

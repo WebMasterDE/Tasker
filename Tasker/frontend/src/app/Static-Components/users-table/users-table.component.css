@@ -7,3 +7,10 @@ select {
 .mat-mdc-fab {
   background-color: #129ae3;
 }
+
+.pass-button {
+  padding: 10px !important;
+  width: 40px !important;
+  height: 40px;
+  background-color: #f7d200 !important;
+}

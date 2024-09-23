@@ -32,8 +32,8 @@ export class SidenavComponent {
 
     this.route.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.sidenav.close();  // Chiudi la sidenav su navigazione
         this.currentRoute = event.url;
+        this.sidenav.close();  // Chiudi la sidenav su navigazione
       }
     });
     this.Authorization()
