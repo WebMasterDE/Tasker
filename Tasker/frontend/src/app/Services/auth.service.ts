@@ -12,9 +12,14 @@ export class User_serviceService {
   constructor(private _http: HttpClient) {
   }
 
-  // GET  all user table
+  // GET  user by id
   getUser(id: string): Observable<User> {
     return this._http.get<User>(`http://localhost:3000/api/${id}/user`);
+  }
+
+  //GET all users
+  getAllUsers(): Observable<User[]> {
+    return this._http.get<User[]>('http://localhost:3000/api/get/users')
   }
 
   // POST send data to backend for registration
@@ -37,7 +42,6 @@ export class User_serviceService {
   }
   userAuthorization(id: string): Observable<Object> {
     let oo = this._http.get<Object>(`http://localhost:3000/api/authorization/${id}/user`);
-    console.log(oo)
     return oo
   }
 }

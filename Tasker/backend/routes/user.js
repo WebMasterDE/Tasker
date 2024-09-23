@@ -7,7 +7,8 @@ const UserController = require('../Controllers/UserController')
  * GET /api/user
  * @returns all users in the table user
  */
-route.get('/:id/user', UserController.getAllUser)
+route.get('/:id/user', UserController.getAllUserbyId)
+route.get('/get/users', UserController.getAllUsers)
 route.post('/user/auth/signup', UserController.signup);
 route.post('/user/auth/login', UserController.login);
 route.get('/:id/hours', UserController.getallHours);

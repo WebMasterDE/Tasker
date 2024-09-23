@@ -63,7 +63,8 @@ import { UsersTableComponent } from './Static-Components/users-table/users-table
     MatProgressSpinnerModule,
     SpinnerComponent,
     MatTabsModule,
-    UsersTableComponent
+    UsersTableComponent,
+    MatButtonModule
   ],
   providers: [LoadingService],
   bootstrap: [AppComponent]

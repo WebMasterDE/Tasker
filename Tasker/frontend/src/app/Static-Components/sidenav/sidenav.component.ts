@@ -45,7 +45,7 @@ export class SidenavComponent {
     this.auth.userAuthorization(id.id).subscribe((val) => {
       value = val
 
-      return this.permission = value.Autorizzazione
+      return this.permission = value.Authorization
     })
   }
 

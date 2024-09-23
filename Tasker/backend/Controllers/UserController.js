@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { Model, where } = require('sequelize');
 
 
-exports.getAllUser = async (req, res) => {
+exports.getAllUserbyId = async (req, res) => {
     try {
         const user = await app.models.users.findOne({ where: { Id_user: req.params.id } })
         return res.json(user);
@@ -13,6 +13,15 @@ exports.getAllUser = async (req, res) => {
         console.log(error)
     }
 
+}
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await app.models.users.findAll({ attributes: ['Name', 'Email', 'Authorization'] });
+        return res.json(users)
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 exports.signup = async (req, res) => {
@@ -120,7 +129,7 @@ exports.getAuthorization = async (req, res) => {
     try {
         const authorization = await app.models.users.findOne({
             where: { Id_user: req.params.id },
-            attributes: ['Autorizzazione']
+            attributes: ['Authorization']
         })
         return res.json(authorization)
     } catch (err) {
