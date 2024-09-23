@@ -81,6 +81,7 @@ export class TableComponent {
         text: 'Verranno eliminate tutte le ore associate alla task',
         btn_left: 'Annulla',
         btn_right: 'Elimina',
+        typeinput: '',
         action: this.delete(element)
       },
       width: '20%',
