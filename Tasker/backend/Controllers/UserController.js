@@ -81,7 +81,7 @@ exports.login = async (req, res) => {
 exports.getallHours = async (req, res) => {
     try {
         const Hours = await app.models.hours.findAll({
-            where: { Id_user: req.params.id }, include: [
+            include: [
                 {
                     model: app.models.tasks,
                     as: 'Id_task_task'

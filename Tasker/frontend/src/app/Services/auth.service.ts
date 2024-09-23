@@ -3,13 +3,14 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { User } from "../../Model/User"
 import { Logindata } from "../../Model/Logindata";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class User_serviceService {
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private snack: MatSnackBar) {
   }
 
   // GET  user by id
@@ -47,7 +48,13 @@ export class User_serviceService {
 
   changePassword(newpass: string, id: string) {
     try {
-      return this._http.post(`http://localhost:3000/api/change/password/user/${id}`, { pass: newpass }).subscribe()
+      let changepsw = this._http.post(`http://localhost:3000/api/change/password/user/${id}`, { pass: newpass }).subscribe(val => {
+
+      }, error => {
+        console.log('errore nel cambio password')
+      })
+      this.snack.open('Password cambiata correttamente!')
+      return changepsw
     } catch (err) {
       return console.log(err)
     }

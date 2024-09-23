@@ -30,6 +30,7 @@ import { SpinnerComponent } from "./utils/spinner/spinner.component";
 import { MatTabsModule } from '@angular/material/tabs';
 import { ManageUserComponent } from './Pages/manage-user/manage-user.component';
 import { UsersTableComponent } from './Static-Components/users-table/users-table.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { UsersTableComponent } from './Static-Components/users-table/users-table
     SpinnerComponent,
     MatTabsModule,
     UsersTableComponent,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [LoadingService],
   bootstrap: [AppComponent]
