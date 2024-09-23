@@ -7,15 +7,15 @@ const cors = require('cors');
 const { Sequelize } = require('sequelize');
 const initModels = require('./Models/init-models');
 const shiftsRoute = require('./routes/shifts')
-
+const dotenv = require('dotenv').config();
 const app = express();
 
 app.use(parser.json());
 app.use(cors());
 
 // Definisci la connessione al database
-const Dbsequelize = new Sequelize('taskerdb2', 'root', '', {
-    host: 'localhost',
+const Dbsequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PASSWORD, {
+    host: process.env.HOST,
     dialect: 'mysql'
 });
 
@@ -37,9 +37,8 @@ Dbsequelize.authenticate()
         app.use('/api', archivedRoute);
         app.use('/api', shiftsRoute);
 
-        const port = 3000;
-        app.listen(port, () => {
-            console.log(`Server avviato su http://localhost:${port}`);
+        app.listen(process.env.PORT, () => {
+            console.log(`Server avviato su ${process.env.HOST}:${process.env.PORT}`);
         });
     })
     .catch((err) => {
