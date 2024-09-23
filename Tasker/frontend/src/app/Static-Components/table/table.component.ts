@@ -82,7 +82,7 @@ export class TableComponent {
         btn_left: 'Annulla',
         btn_right: 'Elimina',
         typeinput: '',
-        action: this.delete(element)
+        action: () => { return this.delete(element) }
       },
       width: '20%',
       height: '25%'
