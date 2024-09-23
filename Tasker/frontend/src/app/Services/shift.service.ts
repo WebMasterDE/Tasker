@@ -14,5 +14,10 @@ export class ShiftService {
 
   insertShift(data: Shift): Observable<Shift> {
     return this.http.post<Shift>(`http://localhost:3000/api/insert/shift`, data)
+
+  }
+
+  getAllShifts(): Observable<Shift[]> {
+    return this.http.get<Shift[]>('http://localhost:3000/api/get/shift')
   }
 }

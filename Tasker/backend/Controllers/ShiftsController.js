@@ -15,3 +15,21 @@ exports.insertShift = async (req, res) => {
         console.log(err)
     }
 }
+
+exports.getAllShifts = async (req, res) => {
+    try {
+        const getshift = await app.models.shifts.findAll({
+            include: [
+                {
+                    model: app.models.users,
+                    as: 'Id_user_user',
+                    attributes: ['Name']
+                }
+            ]
+        })
+        res.json(getshift)
+
+    } catch (err) {
+        console.log(err)
+    }
+}

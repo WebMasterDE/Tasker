@@ -26,6 +26,7 @@ export class CalendarioComponent implements OnInit {
   hour: string
   datas;
   alldatacalendar: { title: string, start: Date }[] = []
+  alldataShiftsCalendar: { title: string, start: Date, color: string }[] = []
   shiftsTabActive = false;  // Variabile per controllare se la tab dei turni è attiva
 
   constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog) {
@@ -35,6 +36,7 @@ export class CalendarioComponent implements OnInit {
   ngOnInit(): void {
     this.load.show()
     this.createDataCalendar()
+    this.GetShifts()
   }
 
 
@@ -128,9 +130,41 @@ export class CalendarioComponent implements OnInit {
       start_date: element.dateStr,
       end_date: null,
       hour: parseInt(this.datas.data.inputdata),
-      Id_user: id.id
+      Id_user: id.id,
+      Id_user_user: null
     }
     this.http_shift.insertShift(data).subscribe()
+  }
+
+  GetShifts() {
+    this.http_shift.getAllShifts().subscribe(val => {
+      val.forEach(el => {
+        this.alldataShiftsCalendar.push({
+          title: el.hour >= 9 && el.hour <= 13 ? `${el.Id_user_user.Name} Mattina` : `${el.Id_user_user.Name} Pomeriggio`,
+          start: el.start_date,
+          color: this.getColorForUserShifts(el.Id_user_user.Name)
+        })
+      })
+      this.calendarOptionsShifts.events = this.alldataShiftsCalendar
+    })
+  }
+
+  getColorForUserShifts(name): string {
+    if (name == 'Davide Tonetto') {
+      return '#330019'
+    } else if (name == 'Giovanni') {
+      return '#00cc00'
+    } else if (name == 'Jeremy') {
+      return '#0080ff'
+    } else if (name == 'Gabriele') {
+      return '#cc0000'
+    } else if (name == 'Gioele') {
+      return '#6600cc'
+    } else if (name == 'Davide Nincao') {
+      return '#666600'
+    } else {
+      return ''
+    }
   }
 
   tabChanged(event: any): void {
