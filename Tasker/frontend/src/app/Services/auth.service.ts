@@ -43,8 +43,7 @@ export class User_serviceService {
     }
   }
   userAuthorization(id: string): Observable<Object> {
-    let oo = this._http.get<Object>(`${environment_prod.BACKEND_URL}/authorization/${id}/user`);
-    return oo
+    return this._http.get<Object>(`${environment_prod.BACKEND_URL}/authorization/${id}/user`);
   }
 
   changePassword(newpass: string, id: string) {
