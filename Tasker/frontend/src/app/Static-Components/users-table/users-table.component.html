@@ -1,8 +1,8 @@
-<div class="example-button-row">
-  <button mat-flat-button>Basic</button>
-  <button mat-flat-button disabled>Disabled</button>
-  <a mat-flat-button href="https://www.google.com/" target="_blank">Link</a>
-</div>
+  <button mat-fab extended (click)="openDialog()">
+    <i class="fa-solid fa-plus"></i>
+    <i class="fa-regular fa-user"></i>
+  </button>
+
 <table style="margin-top: 50px" mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
 
   <ng-container matColumnDef="Name">

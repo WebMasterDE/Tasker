@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
             Name: req.body.Name,
             Email: req.body.Email,
             Password: hashedpassw,
-            Autorizzazione: 3
+            Authorization: 3
         }
         app.models.users.findOne({ where: { Email: newUser.Email } }).then(resp => {
             if (resp) {

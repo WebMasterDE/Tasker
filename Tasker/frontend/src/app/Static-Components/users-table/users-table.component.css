@@ -3,3 +3,7 @@ select {
   border-radius: 10px;
   background-color: white;
 }
+
+.mat-mdc-fab {
+  background-color: #129ae3;
+}
