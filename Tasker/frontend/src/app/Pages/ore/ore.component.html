@@ -1,13 +1,9 @@
 
-<div class="container">
-  <div
-  (click)="openDialog()"
-  style="width: 210px"
-  class="add-button d-flex align-items-center my-5"
->
-  <i class="fa-solid fa-plus mx-2"></i>
-  <p class="my-0">Aggiungi le ore lavorate</p>
-</div>
+<div class="container my-5">
+  <button mat-fab extended (click)="openDialog()">
+    <i class="fa-solid fa-plus fs-4 mr-1"></i>
+    <i class="fa-regular fa-clock fs-4 mx-1"></i>
+  </button>
   <table
     style="margin-top: 50px"
     mat-table

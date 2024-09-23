@@ -1,12 +1,7 @@
-<div
-  (click)="openDialog()"
-  style="width: 140px"
-  class="add-button d-flex align-items-center"
->
-  <i class="fa-solid fa-plus"></i>
-
-  <p class="my-0 mx-2">Aggiungi task</p>
-</div>
+<button mat-fab extended (click)="openDialog()">
+  <i class="fa-solid fa-plus fs-4 mr-1"></i>
+  <i class="fa-regular fa-note-sticky fs-4 mx-1"></i>
+</button>
 <table
   style="margin-top: 50px"
   mat-table

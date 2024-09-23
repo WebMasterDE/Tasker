@@ -13,12 +13,13 @@ import { CommonModule } from '@angular/common';
 import { WindowDialogComponent } from '../window-dialog/window-dialog.component';
 import { SpinnerComponent } from 'src/app/utils/spinner/spinner.component';
 import { LoadingService } from 'src/app/Services/loading.service';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   standalone: true,
-  imports: [MatTableModule, CommonModule, FormsModule, SpinnerComponent],
+  imports: [MatTableModule, CommonModule, FormsModule, SpinnerComponent, MatButtonModule],
 })
 export class TableComponent {
   @Input() tasks: Task[] = [];

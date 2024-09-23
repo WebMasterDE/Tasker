@@ -43,3 +43,7 @@ table {
   color: white;
   padding: 10px;
 }
+
+.mat-mdc-fab {
+  background-color: #129ae3;
+}
