@@ -16,9 +16,10 @@ export class SidenavComponent {
   isMobile = true;
   currentRoute: any;
   isCollapsed = true;
-  permission: Object;
+  permission: Object = null
   constructor(private observer: BreakpointObserver, private route: Router, private auth: User_serviceService) {
     this.currentRoute = this.route.url
+    this.Authorization()
   }
 
   ngOnInit() {
@@ -33,20 +34,25 @@ export class SidenavComponent {
     this.route.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
-        // this.sidenav.close();  // Chiudi la sidenav su navigazione
+        this.sidenav.close();  // Chiudi la sidenav su navigazione
       }
     });
-    this.Authorization()
   }
 
   Authorization() {
     let id = JSON.parse(localStorage.getItem('data'))
     let value;
-    this.auth.userAuthorization(id.id).subscribe((val) => {
-      value = val
 
-      return this.permission = value.Authorization
-    })
+    if (id) {
+
+      this.auth.userAuthorization(id.id).subscribe((val) => {
+        value = val
+
+        this.permission = value.Authorization
+      })
+    } else {
+      this.route.navigate(['/signup'])
+    }
   }
 
   toggleMenu() {

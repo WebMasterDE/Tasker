@@ -17,7 +17,7 @@
           <span style="color: white;">Calendario</span>
         </span>
       </a>
-      <a mat-list-item routerLink="/ore">
+      <a mat-list-item routerLink="/ore" *ngIf="this.permission == 1 || this.permission==2">
         <span class="entry">
           <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-clock mx-2"></i>
           <span style="color: white;">ore</span>

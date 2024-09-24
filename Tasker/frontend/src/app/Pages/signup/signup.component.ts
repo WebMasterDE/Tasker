@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { User_serviceService } from "../../Services/auth.service";
 import { User } from "../../../Model/User";
 import { Router } from "@angular/router";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  constructor(private http_user: User_serviceService, private route: Router) {
+  constructor(private http_user: User_serviceService, private route: Router, private snack: MatSnackBar) {
 
   }
 
@@ -33,10 +34,16 @@ export class SignupComponent implements OnInit {
     this.http_user.loginUser(this.User).subscribe(resp => {
       if (resp) {
         localStorage.setItem("data", JSON.stringify(resp))
-        this.route.navigate(['/tasks'])
-      } else {
-        console.log("utente non trovato")
+
+        this.route.navigate(['/calendario'])
       }
+    }, err => {
+      this.snack.open('Credenziali non valide', '', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'end'
+
+      })
     })
   }
 
