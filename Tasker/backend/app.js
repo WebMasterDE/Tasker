@@ -16,7 +16,8 @@ app.use(cors());
 // Definisci la connessione al database
 const Dbsequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PASSWORD, {
     host: process.env.HOST,
-    dialect: 'mysql'
+    dialect: 'mariadb',
+    port: process.env.PORT
 });
 
 // Inizializza i modelli
