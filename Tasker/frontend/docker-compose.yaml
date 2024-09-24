@@ -8,8 +8,9 @@ services:
     expose:
       - 4201
     networks:
-      - internalnet
+      - net1
 
 networks:
-  internalnet:
-    driver: bridge
+  net1:
+    name: frontend_internalnet
+    external: true
