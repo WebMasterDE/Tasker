@@ -19,7 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from "@angular/material/dialog";
 import { TasksArchiveComponent } from './Pages/tasks-archive/tasks-archive.component';
-import { CalendarioComponent } from './Pages/calendario/calendario.component'
+import { CalendarioComponent } from './Pages/calendario/Calendario.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { OreComponent } from './Pages/ore/ore.component';
 import { TasksDialogComponent } from './Static-Components/tasks-dialog/tasks-dialog.component';

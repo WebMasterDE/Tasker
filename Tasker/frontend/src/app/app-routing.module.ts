@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TasksComponent } from "./Pages/tasks/tasks.component";
 import { SignupComponent } from "./Pages/signup/signup.component";
 import { TasksArchiveComponent } from './Pages/tasks-archive/tasks-archive.component';
-import { CalendarioComponent } from './Pages/calendario/calendario.component';
+import { CalendarioComponent} from './Pages/calendario/Calendario.component';
 import { OreComponent } from './Pages/ore/ore.component';
 import { ManageUserComponent } from './Pages/manage-user/manage-user.component';
 
