@@ -4,7 +4,7 @@ COPY package*.json ./
 COPY . .
 RUN npm install
 RUN npm install -g @angular/cli@16
-RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
+#RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
 CMD ["ng", "serve", "--host", "0.0.0.0"]
 
 #FROM node:20.11.1 as build
