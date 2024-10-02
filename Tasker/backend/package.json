@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "serve": "nodemon app.js",
-    "build": "webpack --mode production"
+    "serve": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
