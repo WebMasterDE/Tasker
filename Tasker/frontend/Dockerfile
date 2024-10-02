@@ -9,7 +9,7 @@ RUN npm run build
 # Stage 2: Copy the frontend files to Nginx and run Nginx
 FROM nginx:alpine
 COPY nginx_config /etc/nginx/conf.d 
-COPY --from=builder /app/dist/Tasker/frontend /usr/share/nginx/html
+COPY --from=builder /app/dist/tasker /usr/share/nginx/html
 EXPOSE 4201
 
 
