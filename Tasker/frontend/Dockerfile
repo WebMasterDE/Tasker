@@ -1,18 +1,16 @@
-FROM node:20.11.1 as build
+# Stage 1: Build the frontend application
+FROM node:18-alpine as builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
 COPY . .
 RUN npm run build
 
-FROM nginx:stable
-#COPY ssl /etc/nginx/ssl
+# Stage 2: Copy the frontend files to Nginx and run Nginx
+FROM nginx:alpine
 COPY nginx_config /etc/nginx/conf.d 
-COPY --from=build /app/dist/frontend/ /usr/share/nginx/html
+COPY --from=builder /app/dist/frontend /usr/share/nginx/html
 EXPOSE 4201
-
-
 
 
 
