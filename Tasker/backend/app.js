@@ -42,7 +42,7 @@ Dbsequelize.authenticate()
         app.use('/api', archivedRoute);
         app.use('/api', shiftsRoute);
 
-        app.listen(process.env.PORT, () => {
+        app.listen(3000, () => {
             console.log(`Server avviato su ${process.env.HOST}:${process.env.PORT}`);
         });
     })
