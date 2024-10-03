@@ -33,7 +33,7 @@ Dbsequelize.authenticate()
     .then(() => {
         console.log('Modelli sincronizzati con il database.');
 
-        route.get('/api/', (req, res) => {
+        app.get('/api/', (req, res) => {
             res.status(200).send("API working!");
         });
 
