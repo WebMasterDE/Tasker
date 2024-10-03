@@ -10,7 +10,7 @@ COPY . .
 
 EXPOSE 3000
 
-CMD npm run serve 
+CMD node ./app.js 
 
 
 
