@@ -142,13 +142,13 @@ export class CalendarioComponent implements OnInit {
   getColorForUserShifts(name): string {
     if (name == 'Davide Tonetto') {
       return '#330019'
-    } else if (name == 'Giovanni') {
+    } else if (name == 'Giovanni Vesco') {
       return '#00cc00'
-    } else if (name == 'Jeremy') {
+    } else if (name == 'Jeremy Famengo') {
       return '#0080ff'
-    } else if (name == 'Gabriele') {
+    } else if (name == 'Gabriele Pagnotta') {
       return '#cc0000'
-    } else if (name == 'Gioele') {
+    } else if (name == 'Gioele Zara') {
       return '#6600cc'
     } else if (name == 'Davide Nincao') {
       return '#666600'
