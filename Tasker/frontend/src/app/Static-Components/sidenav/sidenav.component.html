@@ -1,50 +1,49 @@
 <!--top navbar-->
 <mat-toolbar *ngIf="currentRoute != '/signup'" style="background-color:#0b4978">
-  <button class="mat-icon-button" mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+  <button (click)="toggleMenu()" aria-label="Menu icon" class="mat-icon-button" mat-icon-button>
     <mat-icon class="mat-icon">menu</mat-icon>
   </button>
-  <h1 style="color: white;" >Tasker</h1>
+  <h1 style="color: white;">Tasker</h1>
 </mat-toolbar>
 
 
-
-<mat-sidenav-container   autosize>
+<mat-sidenav-container autosize>
   <mat-sidenav *ngIf="currentRoute != '/signup'" [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile">
     <mat-nav-list>
       <a mat-list-item routerLink="/calendario">
         <span class="entry">
-          <i style="font-size: 1.5rem;color: white;" class="fa-regular fa-calendar mx-2 h-100"></i>
+          <i class="fa-regular fa-calendar mx-2 h-100" style="font-size: 1.5rem;color: white;"></i>
           <span style="color: white;">Calendario</span>
         </span>
       </a>
-      <a mat-list-item routerLink="/ore" *ngIf="this.permission == 1 || this.permission==2">
+      <a *ngIf="this.permission == 1 || this.permission==2" mat-list-item routerLink="/ore">
         <span class="entry">
-          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-clock mx-2"></i>
+          <i class="fa-solid fa-clock mx-2" style="font-size: 1.5rem;color: white;"></i>
           <span style="color: white;">ore</span>
         </span>
       </a>
       <hr style="width: 80%;margin: auto;color: white;">
-      <a mat-list-item routerLink="/tasks" *ngIf="this.permission == 1" >
+      <a *ngIf="this.permission == 1" mat-list-item routerLink="/tasks">
         <span class="entry">
-          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-box-archive mx-2"></i>
+          <i class="fa-solid fa-box-archive mx-2" style="font-size: 1.5rem;color: white;"></i>
            <span style="color: white;">Tasks</span>
         </span>
       </a>
 
-      <a mat-list-item routerLink="/users" *ngIf="this.permission == 1" >
+      <a *ngIf="this.permission == 1" mat-list-item routerLink="/users">
         <span class="entry">
-          <i  style="font-size: 1.5rem;color: white;" class="fa-solid fa-user mx-2"></i>
+          <i class="fa-solid fa-user mx-2" style="font-size: 1.5rem;color: white;"></i>
           <span style="color: white;">Gestione utenti</span>
         </span>
       </a>
       <hr style="width: 80%;margin: auto;color: white;">
-      <a mat-list-item (click)="logout()">
+      <a (click)="logout()" mat-list-item>
         <span class="entry">
-          <i style="font-size: 1.5rem;color: white;" class="fa-solid fa-right-from-bracket mx-2"></i>
+          <i class="fa-solid fa-right-from-bracket mx-2" style="font-size: 1.5rem;color: white;"></i>
           <span style="color: white;">Logout</span>
         </span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </mat-sidenav-container>

@@ -1,7 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ArchiveService } from 'src/app/Services/archive.service';
-import { ShiftService } from 'src/app/Services/shift.service';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {ShiftService} from 'src/app/Services/shift.service';
 
 @Component({
   selector: 'app-window-dialog',
@@ -16,7 +15,16 @@ export class WindowDialogComponent {
   action: Function;
   inputdata: string;
   typeinput: string
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { title: string; text: string, btn_left: string, btn_right: string, action: Function, inputdata: string | null, typeinput: string }, public http_shift: ShiftService) {
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {
+    title: string;
+    text: string,
+    btn_left: string,
+    btn_right: string,
+    action: Function,
+    inputdata: string | null,
+    typeinput: string
+  }, public http_shift: ShiftService) {
     this.title = data.title;
     this.text = data.text;
     this.btn_left = data.btn_left

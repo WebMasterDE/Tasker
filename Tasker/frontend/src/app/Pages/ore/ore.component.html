@@ -1,50 +1,50 @@
-
 <div class="container my-5">
-  <button mat-fab extended (click)="openDialog()">
+  <button (click)="openDialog()" extended mat-fab>
     <i class="fa-solid fa-plus fs-5 mr-1"></i>
     <i class="fa-regular fa-clock fs-5 mx-1"></i>
   </button>
   <table
-    style="margin-top: 50px"
-    mat-table
     [dataSource]="datatable"
     class="mat-elevation-z8 custom-table"
+    mat-table
+    style="margin-top: 50px"
   >
     <ng-container matColumnDef="Date">
-      <th mat-header-cell *matHeaderCellDef>Data</th>
-      <td mat-cell *matCellDef="let element">{{ element.Date }}</td>
+      <th *matHeaderCellDef mat-header-cell>Data</th>
+      <td *matCellDef="let element" mat-cell>{{ element.Date }}</td>
     </ng-container>
     <ng-container matColumnDef="Operator">
-      <th mat-header-cell *matHeaderCellDef>Operatore</th>
-      <td mat-cell *matCellDef="let element">{{ element.Operator }}</td>
+      <th *matHeaderCellDef mat-header-cell>Operatore</th>
+      <td *matCellDef="let element" mat-cell>{{ element.Operator }}</td>
     </ng-container>
     <ng-container matColumnDef="Task_name">
-      <th mat-header-cell *matHeaderCellDef>Task</th>
-      <td mat-cell *matCellDef="let element">{{ element.Id_task_task.Task_name + ' ' + element.Id_task_task.Task_description }}</td>
+      <th *matHeaderCellDef mat-header-cell>Task</th>
+      <td *matCellDef="let element"
+          mat-cell>{{ element.Id_task_task.Task_name + ' ' + element.Id_task_task.Task_description }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="Description">
-      <th mat-header-cell *matHeaderCellDef>Note</th>
-      <td mat-cell *matCellDef="let element">{{ element.Description }}</td>
+      <th *matHeaderCellDef mat-header-cell>Note</th>
+      <td *matCellDef="let element" mat-cell>{{ element.Description }}</td>
     </ng-container>
     <ng-container matColumnDef="Hours">
-      <th mat-header-cell *matHeaderCellDef>Ore inserite</th>
-      <td mat-cell *matCellDef="let element">{{ element.Hour }}</td>
+      <th *matHeaderCellDef mat-header-cell>Ore inserite</th>
+      <td *matCellDef="let element" mat-cell>{{ element.Hour }}</td>
     </ng-container>
     <ng-container matColumnDef="Commit">
-      <th mat-header-cell *matHeaderCellDef>Commit</th>
-      <td mat-cell *matCellDef="let element">{{ element.Commit }}</td>
+      <th *matHeaderCellDef mat-header-cell>Commit</th>
+      <td *matCellDef="let element" mat-cell>{{ element.Commit }}</td>
     </ng-container>
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef>Azioni</th>
-      <td mat-cell *matCellDef="let element">
-        <i (click)="delete(element)" style="cursor: pointer; color: red;" class="fa-solid fa-circle-xmark fs-4"></i>
+      <th *matHeaderCellDef mat-header-cell>Azioni</th>
+      <td *matCellDef="let element" mat-cell>
+        <i (click)="delete(element)" class="fa-solid fa-circle-xmark fs-4" style="cursor: pointer; color: red;"></i>
       </td>
     </ng-container>
 
 
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
   </table>
 </div>
 <div class="d-flex justify-content-end mx-5 my-5"></div>

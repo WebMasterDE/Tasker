@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { UsersTableComponent } from 'src/app/Static-Components/users-table/users-table.component';
+import {Component} from '@angular/core';
+
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',

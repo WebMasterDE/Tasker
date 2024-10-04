@@ -1,17 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NavigationEnd, Router } from '@angular/router';
-import { co } from '@fullcalendar/core/internal-common';
-import { User_serviceService } from 'src/app/Services/auth.service';
-import { HoursService } from 'src/app/Services/hours.service';
-import { Hours } from 'src/Model/Hours';
-import { convertDate } from 'src/app/utils/utilities';
-import { DialogComponent } from 'src/app/Static-Components/table/table.component';
-import { FormsModule } from '@angular/forms';
-import { TasksService } from 'src/app/Services/tasks.service';
-import { TasksDialogComponent } from 'src/app/Static-Components/tasks-dialog/tasks-dialog.component';
-import { LoadingService } from 'src/app/Services/loading.service';
-import { SpinnerComponent } from 'src/app/utils/spinner/spinner.component';
+import {Component} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {NavigationEnd, Router} from '@angular/router';
+import {HoursService} from 'src/app/Services/hours.service';
+import {Hours} from 'src/Model/Hours';
+import {TasksService} from 'src/app/Services/tasks.service';
+import {TasksDialogComponent} from 'src/app/Static-Components/tasks-dialog/tasks-dialog.component';
+import {LoadingService} from 'src/app/Services/loading.service';
 
 @Component({
   selector: 'app-ore',
@@ -23,6 +17,11 @@ export class OreComponent {
   route: string;
   datatable;
   allTasks: JSON
+  displayedColumns: string[] = ['Date', 'Operator', 'Task_name', 'Hours', 'Description', 'Commit', 'Actions'];
+
+  constructor(public dialog: MatDialog, private http_hours: HoursService, private router: Router, private http_task: TasksService, private loading: LoadingService) {
+    this.getroute()
+  }
 
   ngOnInit() {
     this.loading.show()
@@ -34,7 +33,6 @@ export class OreComponent {
 
   }
 
-
   getallTasks() {
     let response = this.http_task.GetTasksUser().subscribe((val) => {
       this.http_task.getAllTasks = val
@@ -42,11 +40,6 @@ export class OreComponent {
 
   }
 
-  constructor(public dialog: MatDialog, private http_hours: HoursService, private router: Router, private http_task: TasksService, private loading: LoadingService) {
-    this.getroute()
-  }
-
-  displayedColumns: string[] = ['Date', 'Operator', 'Task_name', 'Hours', 'Description', 'Commit', 'Actions'];
   getroute() {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {

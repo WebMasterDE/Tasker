@@ -1,14 +1,15 @@
 <div
-  style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background-color: white"
   class="container my-3 p-4"
+  style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background-color: white"
 >
   <mat-tab-group (selectedTabChange)="tabChanged($event)">
     <mat-tab label="Ore lavorate">
-      <full-calendar class="my-4" [options]="calendarOptions"></full-calendar>
+      <full-calendar [options]="calendarOptions" class="my-4"></full-calendar>
     </mat-tab>
     <mat-tab label="Turni di lavoro">
       <!-- Carica il calendario solo quando la tab è attiva -->
-      <full-calendar *ngIf="shiftsTabActive" id="shift-calendar" class="my-4" [options]="calendarOptionsShifts"></full-calendar>
+      <full-calendar *ngIf="shiftsTabActive" [options]="calendarOptionsShifts" class="my-4"
+                     id="shift-calendar"></full-calendar>
     </mat-tab>
   </mat-tab-group>
 </div>

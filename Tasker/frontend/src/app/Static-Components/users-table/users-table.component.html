@@ -1,30 +1,30 @@
-  <button mat-fab extended (click)="openDialog()">
-    <i class="fa-solid mr-1 fs-5 fa-plus"></i>
-    <i class="fa-regular mx-1 fs-5 fa-user"></i>
-  </button>
+<button (click)="openDialog()" extended mat-fab>
+  <i class="fa-solid mr-1 fs-5 fa-plus"></i>
+  <i class="fa-regular mx-1 fs-5 fa-user"></i>
+</button>
 
-<table style="margin-top: 50px" mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+<table [dataSource]="dataSource" class="mat-elevation-z8 custom-table" mat-table style="margin-top: 50px">
 
   <ng-container matColumnDef="Id_User">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.Id_User}} </td>
+    <th *matHeaderCellDef mat-header-cell> Id</th>
+    <td *matCellDef="let element" mat-cell> {{ element.Id_User }}</td>
   </ng-container>
 
   <ng-container matColumnDef="Name">
-    <th mat-header-cell *matHeaderCellDef> Nome </th>
-    <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+    <th *matHeaderCellDef mat-header-cell> Nome</th>
+    <td *matCellDef="let element" mat-cell> {{ element.Name }}</td>
   </ng-container>
 
   <ng-container matColumnDef="Email">
-    <th mat-header-cell *matHeaderCellDef> Email </th>
-    <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+    <th *matHeaderCellDef mat-header-cell> Email</th>
+    <td *matCellDef="let element" mat-cell> {{ element.Email }}</td>
   </ng-container>
 
   <ng-container matColumnDef="Authorization">
-    <th mat-header-cell *matHeaderCellDef> Autorizzazione </th>
-    <td mat-cell *matCellDef="let element">
+    <th *matHeaderCellDef mat-header-cell> Autorizzazione</th>
+    <td *matCellDef="let element" mat-cell>
       <select>
-        <option [value]="element.Authorization">{{element.Authorization}}</option>
+        <option [value]="element.Authorization">{{ element.Authorization }}</option>
         <option *ngFor="let el of inputAuth" [value]="el">
           {{ el }}
         </option>
@@ -32,17 +32,17 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="Change_password">
-    <th mat-header-cell *matHeaderCellDef> Gestisci </th>
-    <td mat-cell *matCellDef="let element">
-      <button class="pass-button" mat-fab extended (click)="openDialogWindow(element.Id_User)">
+    <th *matHeaderCellDef mat-header-cell> Gestisci</th>
+    <td *matCellDef="let element" mat-cell>
+      <button (click)="openDialogWindow(element.Id_User)" class="pass-button" extended mat-fab>
         <i class="fa-solid fa-key"></i>
       </button>
     </td>
   </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
 </table>
 
 <app-spinner></app-spinner>

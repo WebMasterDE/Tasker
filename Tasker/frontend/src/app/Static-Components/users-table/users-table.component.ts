@@ -1,15 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { User_serviceService } from 'src/app/Services/auth.service';
-import { User } from 'src/Model/User';
-import { MatButtonModule } from '@angular/material/button';
-import { UserDialogComponent } from '../user-dialog/user-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { LoadingService } from 'src/app/Services/loading.service';
-import { WindowDialogComponent } from '../window-dialog/window-dialog.component';
-import { SpinnerComponent } from "../../utils/spinner/spinner.component";
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {CommonModule} from '@angular/common';
+import {Component, inject, OnInit} from '@angular/core';
+import {MatTableModule} from '@angular/material/table';
+import {User_serviceService} from 'src/app/Services/auth.service';
+import {User} from 'src/Model/User';
+import {MatButtonModule} from '@angular/material/button';
+import {UserDialogComponent} from '../user-dialog/user-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {LoadingService} from 'src/app/Services/loading.service';
+import {WindowDialogComponent} from '../window-dialog/window-dialog.component';
+import {SpinnerComponent} from "../../utils/spinner/spinner.component";
 
 @Component({
   selector: 'app-users-table',
@@ -20,15 +19,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UsersTableComponent implements OnInit {
   datas;
-  constructor(private http_user: User_serviceService, private load: LoadingService) { }
+  displayedColumns: string[] = ['Id_User', 'Name', 'Email', 'Authorization', 'Change_password'];
+  inputAuth: string[] = ['1', '2', '3']
+  dataSource: User[] = [];
+  readonly dialog = inject(MatDialog);
+
+  constructor(private http_user: User_serviceService, private load: LoadingService) {
+  }
+
   ngOnInit(): void {
     this.load.show()
     this.getAllUsers()
   }
-  displayedColumns: string[] = ['Id_User', 'Name', 'Email', 'Authorization', 'Change_password'];
-  inputAuth: string[] = ['1', '2', '3']
-  dataSource: User[] = [
-  ];
 
   getAllUsers() {
     this.http_user.getAllUsers().subscribe(val => {
@@ -43,8 +45,6 @@ export class UsersTableComponent implements OnInit {
     });
     this.load.hide()
   }
-
-  readonly dialog = inject(MatDialog);
 
   openDialog() {
     const dialogRef = this.dialog.open(UserDialogComponent);
@@ -61,7 +61,9 @@ export class UsersTableComponent implements OnInit {
         btn_left: 'Annulla',
         btn_right: 'Invia',
         typeinput: 'password',
-        action: () => { return this.http_user.changePassword(this.datas.data.inputdata, id.toString()) }
+        action: () => {
+          return this.http_user.changePassword(this.datas.data.inputdata, id.toString())
+        }
       },
       width: '20%',
       height: '27%'

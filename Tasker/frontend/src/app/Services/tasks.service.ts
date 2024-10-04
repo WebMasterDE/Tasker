@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Task } from "../../Model/Task";
-import { Observable } from "rxjs";
-import { environment_prod } from '../environment/environtments'
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Task} from "../../Model/Task";
+import {Observable} from "rxjs";
+import {environment_prod} from '../environment/environtments'
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,9 @@ import { environment_prod } from '../environment/environtments'
 export class TasksService {
 
   getAllTasks = []
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+  }
 
   GetTasksUser(): Observable<Task[]> {
     return this.http.get<Task[]>(`${environment_prod.BACKEND_URL}/get/tasks`)

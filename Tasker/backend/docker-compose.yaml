@@ -3,7 +3,7 @@ services:
     container_name: tasker_backend
     build: .
     image: tasker_backend
-    ports: 
+    ports:
       - 3000:3000
     expose:
       - 3000

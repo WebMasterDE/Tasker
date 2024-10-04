@@ -1,18 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { CalendarOptions } from '@fullcalendar/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {CalendarOptions} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { User_serviceService } from 'src/app/Services/auth.service';
-import { HoursService } from 'src/app/Services/hours.service';
-import { LoadingService } from 'src/app/Services/loading.service';
-import { Hours } from 'src/Model/Hours';
+import {HoursService} from 'src/app/Services/hours.service';
+import {LoadingService} from 'src/app/Services/loading.service';
 import interactionPlugin from '@fullcalendar/interaction';
-import { ShiftService } from 'src/app/Services/shift.service';
-import { WindowDialogComponent } from 'src/app/Static-Components/window-dialog/window-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { Shift } from 'src/Model/Shift';
-import { ArchiveService } from 'src/app/Services/archive.service';
-import { FullCalendarComponent } from '@fullcalendar/angular';
+import {ShiftService} from 'src/app/Services/shift.service';
+import {WindowDialogComponent} from 'src/app/Static-Components/window-dialog/window-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {Shift} from 'src/Model/Shift';
+import {FullCalendarComponent} from '@fullcalendar/angular';
+
 @Component({
   selector: 'app-calendario',
   templateUrl: './Calendario.component.html',
@@ -28,17 +25,31 @@ export class CalendarioComponent implements OnInit {
   alldatacalendar: { title: string, start: Date }[] = []
   alldataShiftsCalendar: { title: string, start: Date, color: string }[] = []
   shiftsTabActive = false;  // Variabile per controllare se la tab dei turni è attiva
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin],
+    initialView: 'dayGridMonth',
+    contentHeight: 630,
+  };
+  calendarOptionsShifts: CalendarOptions = {
+    plugins: [interactionPlugin, dayGridPlugin],
+    initialView: 'dayGridMonth',
+    contentHeight: 630,
+    selectable: true,
+    dateClick: (info) => this.opendialogShift(info),
+    select: function getall(info) {
+    },
+  }
 
   constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog) {
     let data = JSON.parse(localStorage.getItem('data'))
     this.id_user = data.id
   }
+
   ngOnInit(): void {
     this.load.show()
     this.createDataCalendar()
     this.GetShifts()
   }
-
 
   createDataCalendar() {
     this.http_hour.getHours(this.id_user).subscribe((val) => {
@@ -55,23 +66,6 @@ export class CalendarioComponent implements OnInit {
       this.calendarOptions.events = this.alldatacalendar
     })
     this.load.hide()
-  }
-
-
-  calendarOptions: CalendarOptions = {
-    plugins: [dayGridPlugin],
-    initialView: 'dayGridMonth',
-    contentHeight: 630,
-  };
-
-  calendarOptionsShifts: CalendarOptions = {
-    plugins: [interactionPlugin, dayGridPlugin],
-    initialView: 'dayGridMonth',
-    contentHeight: 630,
-    selectable: true,
-    dateClick: (info) => this.opendialogShift(info),
-    select: function getall(info) {
-    },
   }
 
   color_gestionali(element) {
@@ -112,11 +106,7 @@ export class CalendarioComponent implements OnInit {
 
       },
       width: '20%',
-      height: '30%'
-
-
     });
-
 
     dialogRef.afterClosed().subscribe(result => {
       this.insertShift(element)

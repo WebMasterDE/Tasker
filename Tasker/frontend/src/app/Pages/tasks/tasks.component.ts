@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { User_serviceService } from '../../Services/auth.service'
-import { User } from "../../../Model/User";
-import { TasksService } from "../../Services/tasks.service";
-import { Task } from "../../../Model/Task";
+import {Component, OnInit} from '@angular/core';
+import {User_serviceService} from '../../Services/auth.service'
+import {User} from "../../../Model/User";
+import {TasksService} from "../../Services/tasks.service";
+import {Task} from "../../../Model/Task";
 
 @Component({
   selector: 'app-tasks',
@@ -14,13 +14,16 @@ export class TasksComponent implements OnInit {
 
   Users: User;
   tasks: Task[] = []
-  constructor(private http_user: User_serviceService, private task: TasksService) { }
+
+  constructor(private http_user: User_serviceService, private task: TasksService) {
+  }
 
   ngOnInit() {
     this.getAllUsers()
     this.gettasks()
     // this.getAllUsers();
   }
+
   getAllUsers() {
     const datauser = localStorage.getItem('data');
     let finaluser = JSON.parse(datauser)

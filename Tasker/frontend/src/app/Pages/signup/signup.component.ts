@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { User_serviceService } from "../../Services/auth.service";
-import { User } from "../../../Model/User";
-import { Router } from "@angular/router";
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, OnInit} from '@angular/core';
+import {User_serviceService} from "../../Services/auth.service";
+import {User} from "../../../Model/User";
+import {Router} from "@angular/router";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -11,6 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  User: User = {Name: '', Email: '', Password: '', Authorization: 3};
+
   constructor(private http_user: User_serviceService, private route: Router, private snack: MatSnackBar) {
 
   }
@@ -18,10 +20,6 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.http_user.IsloggedIn()
   }
-
-
-  User: User = { Name: '', Email: '', Password: '', Authorization: 3 };
-
 
   SendSignup() {
     this.http_user.sendUser(this.User).subscribe(res => {
@@ -46,7 +44,6 @@ export class SignupComponent implements OnInit {
       })
     })
   }
-
 
 
 }

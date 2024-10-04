@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CommonModule } from '@angular/common';
-import { LoadingService } from 'src/app/Services/loading.service';
+import {Component, OnInit} from '@angular/core';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {CommonModule} from '@angular/common';
+import {LoadingService} from 'src/app/Services/loading.service';
 
 @Component({
   selector: 'app-spinner',
@@ -13,7 +13,8 @@ import { LoadingService } from 'src/app/Services/loading.service';
 export class SpinnerComponent implements OnInit {
   isLoading: boolean = false
 
-  constructor(private loadingService: LoadingService) { }
+  constructor(private loadingService: LoadingService) {
+  }
 
 
   ngOnInit() {
