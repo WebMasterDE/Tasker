@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
         Task_creation: {
             type: DataTypes.DATEONLY,
             allowNull: true
+        },
+        color: {
+            type: DataTypes.STRING(25),
+            allowNull: true
         }
     }, {
         sequelize,

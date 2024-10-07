@@ -29,7 +29,7 @@ export class TableComponent {
   id_to_delete: string
   totalHours: number;
   isloading: boolean = true
-  displayedColumns: string[] = ['Task_name', 'Task_description', 'Task_creation', 'Manage'];
+  displayedColumns: string[] = ['Task_name', 'Task_description', 'Task_creation', 'color', 'Manage'];
 
   constructor(private http: TasksService, public dialog: MatDialog, private http_user: User_serviceService, private http_archive: ArchiveService, private router: Router, private loading: LoadingService) {
     this.getroute()
@@ -123,16 +123,8 @@ export class TableComponent {
         <div class="input-group mb-3 d-flex flex-column">
           <label>Descrizione</label>
           <textarea type="text" class="form-control w-100" name="Task_description"
-                 [(ngModel)]="singletask.Task_description" placeholder="inserisci" aria-label="inserisci"
-                 aria-describedby="basic-addon2"></textarea>
-          <div class="input-group-append">
-          </div>
-        </div>
-
-        <div class="input-group mb-3 d-flex flex-column">
-          <label>Ore da impiegare</label>
-          <input type="text" class="form-control w-100" name="Task_description" [(ngModel)]="singletask.Task_hours"
-                 placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+                    [(ngModel)]="singletask.Task_description" placeholder="inserisci" aria-label="inserisci"
+                    aria-describedby="basic-addon2"></textarea>
           <div class="input-group-append">
           </div>
         </div>
@@ -145,6 +137,13 @@ export class TableComponent {
           </div>
         </div>
 
+        <div class="input-group mb-3 d-flex flex-column">
+          <label>Colore</label>
+          <input type="color" class="form-control" style="width:10%" name="color" [(ngModel)]="singletask.color"
+                 placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
 
         <button type="submit" (click)="createTask()" class="btn btn-success">Crea task</button>
 
@@ -157,8 +156,7 @@ export class TableComponent {
   standalone: true
 })
 export class DialogComponent {
-  singletask: Task = {Task_name: "", Task_description: "", Task_hours: 0, Task_creation: this.getTodayDate()}
-  todayDate = new Date().toString
+  singletask: Task = {Task_name: "", Task_description: "", Task_creation: this.getTodayDate(), color: ''}
 
   constructor(private http: TasksService) {
   }

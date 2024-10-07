@@ -8,6 +8,7 @@ exports.getTasks = async (req, res) => {
         console.log(err)
     }
 }
+
 exports.deleteTasks = async (req, res) => {
     try {
         const deletesingleTask = await app.models.tasks.destroy({

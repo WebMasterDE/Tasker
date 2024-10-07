@@ -28,12 +28,16 @@ export class CalendarioComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin],
     initialView: 'dayGridMonth',
-    contentHeight: 630,
+    eventClick: function (info) {
+      alert('Event: ' + info.event.title + '\nHours: ' + info.event.extendedProps['hours'] + '\nDescription: \n' + info.event.extendedProps['description']);
+
+      // change the border color just for fun
+      info.el.style.borderColor = 'red';
+    }
   };
   calendarOptionsShifts: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin],
     initialView: 'dayGridMonth',
-    contentHeight: 630,
     selectable: true,
     dateClick: (info) => this.opendialogShift(info),
     select: function getall(info) {
@@ -55,43 +59,21 @@ export class CalendarioComponent implements OnInit {
     this.http_hour.getHours(this.id_user).subscribe((val) => {
       this.datacalendar = val
       this.datacalendar.forEach(element => {
+        console.log(element)
         let obj = {
-          title: element.Id_task_task.Task_name + ' ' + element.Id_task_task.Task_description,
+          title: element.Operator + ' (' + element.Id_task_task.Task_name + ')',
           start: element.Date,
-          color: this.color_gestionali(element.Id_task_task.Task_description),
-          url: element.Commit != null ? `https://github.com/WebMasterDE/${this.redirectGestionale(element.Id_task_task.Task_description)}/commit/${element.Commit}` : ''
+          color: element.Id_task_task.Task_description.color,
+          extendedProps: {
+            description: element.Description,
+            hours: element.Hour
+          }
         }
         this.alldatacalendar.push(obj)
       });
       this.calendarOptions.events = this.alldatacalendar
     })
     this.load.hide()
-  }
-
-  color_gestionali(element) {
-    if (element == 'DIVEN' || element == 'DIVEN_VECCHIO') {
-      return ''
-    } else if (element == 'DES' || element == 'DES_VECCHIO') {
-      return 'orange'
-    } else if (element == 'DEM' || element == 'DEM_VECCHIO') {
-      return 'green'
-    } else {
-      return 'purple'
-    }
-  }
-
-  redirectGestionale(element) {
-    if (element == 'DIVEN_VECCHIO') {
-      return 'dbdiven'
-    } else if (element == 'DES_VECCHIO') {
-      return 'dbdes'
-    } else if (element == 'DEM_VECCHIO') {
-      return 'dbdem'
-    } else if (element == 'DIVEN' || element == 'DES' || element == 'DEM') {
-      return 'new_dbdem'
-    } else {
-      return 'CustoDE_mobile_frontend'
-    }
   }
 
   opendialogShift(element) {
@@ -152,6 +134,8 @@ export class CalendarioComponent implements OnInit {
       return '#6600cc'
     } else if (name == 'Davide Nincao') {
       return '#666600'
+    } else if (name == 'Fabio Michieletto') {
+      return '#ff6600'
     } else {
       return ''
     }

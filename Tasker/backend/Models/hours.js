@@ -12,11 +12,11 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         Description: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.TEXT,
             allowNull: true
         },
         Hour: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.DECIMAL(10, 1),
             allowNull: true
         },
         Date: {
