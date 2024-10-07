@@ -33,7 +33,8 @@ exports.addTasks = async (req, res) => {
             Task_name: req.body.Task_name,
             Task_description: req.body.Task_description,
             Task_creation: req.body.Task_creation,
-            userIdUser: req.body.Id_user
+            userIdUser: req.body.Id_user,
+            color: req.body.color,
         })
 
         res.status(201).send("Task effettuata correttamente!")
