@@ -4,7 +4,7 @@ const taskRoute = require('./routes/task');
 const archivedRoute = require('./routes/Archive');
 const parser = require('body-parser');
 const cors = require('cors');
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 const initModels = require('./Models/init-models');
 const shiftsRoute = require('./routes/shifts')
 const dotenv = require('dotenv').config();
@@ -43,7 +43,7 @@ Dbsequelize.authenticate()
         app.use('/api', shiftsRoute);
 
         app.listen(3000, () => {
-            console.log(`Server avviato su ${process.env.HOST}:${process.env.PORT}`);
+            console.log(`Server avviato su ${process.env.HOST}:3000`);
         });
     })
     .catch((err) => {
