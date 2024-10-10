@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center flex-column p-3" style="width: 500px">
+<div class="d-flex justify-content-center flex-column p-3" style="width: 500px;">
   <h1>Inserisci le ore</h1>
   <form class="d-flex flex-column">
     <div class="input-group mb-3 d-flex flex-column">
@@ -30,9 +30,12 @@
     <div class="input-group mb-3 d-flex flex-column">
       <label>Ore da inserire</label>
       <input [(ngModel)]="hourData.Hour" aria-describedby="basic-addon2" aria-label="inserisci" class="form-control w-100" name="ore"
-             placeholder="inserisci" type="text">
+             placeholder="inserisci" type="number" min="1">
       <div class="input-group-append">
       </div>
+      <p class="my-3"><mat-slide-toggle (change)="showStraordinario()">Straordinario</mat-slide-toggle></p>
+      <input *ngIf="show"  [(ngModel)]="overtime.Hours" aria-describedby="basic-addon2" aria-label="inserisci" class="form-control w-100" name="straordinario"
+             placeholder="inserisci ore straordinarie" type="number" min="1">
     </div>
 
 

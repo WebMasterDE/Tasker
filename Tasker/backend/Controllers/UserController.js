@@ -1,13 +1,13 @@
 const app = require('../app');
 const bcrypt = require('bcrypt')
-const {logger} = require("sequelize/lib/utils/logger");
+const { logger } = require("sequelize/lib/utils/logger");
 const jwt = require('jsonwebtoken');
-const {Model, where} = require('sequelize');
+const { Model, where } = require('sequelize');
 
 
 exports.getAllUserbyId = async (req, res) => {
     try {
-        const user = await app.models.users.findOne({where: {Id_user: req.params.id}})
+        const user = await app.models.users.findOne({ where: { Id_user: req.params.id } })
         return res.json(user);
     } catch (error) {
         console.log(error)
@@ -17,7 +17,7 @@ exports.getAllUserbyId = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await app.models.users.findAll({attributes: ['Id_User', 'Name', 'Email', 'Authorization']});
+        const users = await app.models.users.findAll({ attributes: ['Id_User', 'Name', 'Email', 'Authorization'] });
         return res.json(users)
     } catch (err) {
         console.log(err)
@@ -36,7 +36,7 @@ exports.signup = async (req, res) => {
             Password: hashedpassw,
             Authorization: 3
         }
-        app.models.users.findOne({where: {Email: newUser.Email}}).then(resp => {
+        app.models.users.findOne({ where: { Email: newUser.Email } }).then(resp => {
             if (resp) {
                 return console.log("utente gia registrato")
             } else {
@@ -56,23 +56,23 @@ exports.signup = async (req, res) => {
 // generate token
 function generateToken(data) {
     var token = require('crypto').randomBytes(64).toString('hex');
-    return jwt.sign(data, token, {expiresIn: '30m'});
+    return jwt.sign(data, token, { expiresIn: '30m' });
 }
 
 exports.login = async (req, res) => {
-    const checkuser = await app.models.users.findOne({where: {Email: req.body.Email}})
+    const checkuser = await app.models.users.findOne({ where: { Email: req.body.Email } })
     if (checkuser) {
         const isthesamepass = await bcrypt.compare(req.body.Password, checkuser.Password);
         if (isthesamepass) {
 
-            const Token = generateToken({Email: checkuser.Email})
-            return res.json({Token, email: checkuser.Email, id: checkuser.Id_user, name: checkuser.Name})
+            const Token = generateToken({ Email: checkuser.Email })
+            return res.json({ Token, email: checkuser.Email, id: checkuser.Id_user, name: checkuser.Name })
         } else {
-            return res.status(401).json({message: "la password non corrisponde"})
+            return res.status(401).json({ message: "la password non corrisponde" })
         }
     } else {
         console.log("utente non trovato")
-        return res.status(401).json({message: "utente non trovato"})
+        return res.status(401).json({ message: "utente non trovato" })
     }
 
 }
@@ -113,11 +113,11 @@ exports.addHours = async (req, res) => {
 }
 exports.deleteHours = async (req, res) => {
     try {
-        app.models.hours.destroy({where: {Id_hour: req.body.Id_hour}})
+        app.models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })
         if (result === 1) {
-            res.status(200).json({message: 'Record deleted successfully'});
+            res.status(200).json({ message: 'Record deleted successfully' });
         } else {
-            res.status(404).json({message: 'Record not found'});
+            res.status(404).json({ message: 'Record not found' });
         }
     } catch (err) {
         console.log(err)
@@ -127,7 +127,7 @@ exports.deleteHours = async (req, res) => {
 exports.getAuthorization = async (req, res) => {
     try {
         const authorization = await app.models.users.findOne({
-            where: {Id_user: req.params.id},
+            where: { Id_user: req.params.id },
             attributes: ['Authorization']
         })
         return res.json(authorization)
@@ -138,7 +138,7 @@ exports.getAuthorization = async (req, res) => {
 
 exports.modifyPassword = async (req, res) => {
     try {
-        const existingUser = await app.models.users.findOne({where: {id_User: req.params.id}})
+        const existingUser = await app.models.users.findOne({ where: { id_User: req.params.id } })
         const hashedpassw = await bcrypt.hash(req.body.pass, 12)
         console.log('-------------------------------------------', req.body.pass)
         existingUser.update({

@@ -1,0 +1,21 @@
+
+<div class="d-flex flex-wrap justify-content-center">
+  <div class="card my-5 px-3 py-5">
+    <div class="card-body">
+      <h5 class="card-title fs-3"><b>STRAORDINARIO</b></h5>
+      <p class="fs-2 my-4" style="color: #1099e3;font-weight: bold;">{{months[mese_corrente - 1]}}</p>
+      <p class="card-text mb-3">Ore straordinario totali:</p>
+      <p class="importo fs-2 my-4">{{ore_straordinario_totali}} ore</p>
+      <p class="card-text mb-3">Ammontare straordinario:</p>
+      <p class="importo fs-2 my-4">{{this.importo_straordinario.toFixed(2)}} €</p>
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-description> <b>Come viene calcolato? </b> </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p><b>Viene aggiunta la percentuale di maggiorazione del proprio contratto alla paga base oraria e moltiplicata per le ore di straordinario</b></p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

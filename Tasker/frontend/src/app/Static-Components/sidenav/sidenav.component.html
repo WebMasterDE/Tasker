@@ -37,6 +37,13 @@
         </span>
       </a>
       <hr style="width: 80%;margin: auto;color: white;">
+      <a *ngIf="this.permission != 3" mat-list-item routerLink="/overtime">
+        <span class="entry">
+          <i class="fa-solid fa-calculator mx-2" style="font-size: 1.5rem;color: white;"></i>
+          <span style="color: white;">Contabilità</span>
+        </span>
+      </a>
+      <hr style="width: 80%;margin: auto;color: white;">
       <a (click)="logout()" mat-list-item>
         <span class="entry">
           <i class="fa-solid fa-right-from-bracket mx-2" style="font-size: 1.5rem;color: white;"></i>

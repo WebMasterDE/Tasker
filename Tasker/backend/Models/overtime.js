@@ -1,27 +1,23 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('shifts', {
-    Id_shift: {
+module.exports = function (sequelize, DataTypes) {
+  return sequelize.define('overtime', {
+    Id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    start_date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
+    Hours: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
-    end_date: {
+    Date: {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
-    hour: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     Id_user: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'users',
         key: 'Id_user'
@@ -29,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'shifts',
+    tableName: 'overtime',
     timestamps: false,
     indexes: [
       {
@@ -37,11 +33,11 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "Id_shift" },
+          { name: "Id" },
         ]
       },
       {
-        name: "shifts_users_Id_user_fk",
+        name: "Overtime___fk",
         using: "BTREE",
         fields: [
           { name: "Id_user" },
