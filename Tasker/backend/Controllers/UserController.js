@@ -138,6 +138,24 @@ exports.deleteHours = async (req, res) => {
     }
 }
 
+exports.updateHour = async (req, res) => {
+    try {
+        console.log(req.params, '-------------------------')
+        const updHours = app.models.hours.update({
+
+            Description: req.body.Description,
+            Date: req.body.Date,
+            Commit: req.body.Commit,
+            Hour: req.body.Hour,
+            Id_task: req.body.Id_task
+
+        }, { where: { Id_hour: req.params.idHour } })
+        return updHours
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 exports.getAuthorization = async (req, res) => {
     try {
         const authorization = await app.models.users.findOne({
@@ -154,7 +172,6 @@ exports.modifyPassword = async (req, res) => {
     try {
         const existingUser = await app.models.users.findOne({ where: { id_User: req.params.id } })
         const hashedpassw = await bcrypt.hash(req.body.pass, 12)
-        console.log('-------------------------------------------', req.body.pass)
         existingUser.update({
             Password: hashedpassw
         })

@@ -20,9 +20,13 @@ export class OreComponent {
 
   route: string;
   datatable;
-  allTasks: JSON
+  allTasks: JSON;
+  ismodifying: boolean;
+  id_hour: number;
   displayedColumns: string[] = ['Date', 'Operator', 'Task_name', 'Hours', 'Description', 'Commit', 'Actions'];
   private _bottomSheet = inject(MatBottomSheet);
+
+  HourData: Hours;
 
   @ViewChild('bottomSheetContent') bottomSheetContent: TemplateRef<any>;
 
@@ -90,8 +94,10 @@ export class OreComponent {
     this.loading.hide()
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(TasksDialogComponent);
+  openDialog(datas) {
+    const dialogRef = this.dialog.open(TasksDialogComponent, {
+      data: { dati: datas }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -105,6 +111,8 @@ export class OreComponent {
     });
     window.location.reload()
   }
+
+
 }
 
 

@@ -19,9 +19,11 @@
 
     <div class="input-group mb-3 d-flex flex-column">
       <label>Task</label>
-      <select [(ngModel)]="hourData.Id_task" aria-label="Default select example" class="form-select w-100"
-              name="id_task" required>
-        <option *ngFor="let el of arrayTasks" [value]="el.Id_task"
+      <select #task aria-label="Default select example" class="form-select w-100"
+              name="id_task" id="id_task" required (change)="onSelected(task.value)"  >
+              <option selected >{{taskDescription ? taskDescription:'Seleziona una task' }}</option>
+
+        <option *ngFor="let el of arrayTasks"  [value]="el.Id_task"
                 id="valueId">{{ el.Task_name + ' ' + el.Task_description }}
         </option>
       </select>
@@ -56,7 +58,7 @@
     </div>
 
 
-    <button (click)="inserisciOra()" [disabled]="checkAllInput()" class="btn btn-success" type="submit">Inserisci ore
+    <button (click)="Id_hour != null ? modificaOra(data.dati.Id_hour,hourData) : inserisciOra()" [disabled]="checkAllInput()" class="btn btn-success" type="submit">Inserisci ore
     </button>
 
   </form>
