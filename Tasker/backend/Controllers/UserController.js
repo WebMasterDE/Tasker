@@ -79,14 +79,29 @@ exports.login = async (req, res) => {
 
 exports.getallHours = async (req, res) => {
     try {
-        const Hours = await app.models.hours.findAll({
-            include: [
-                {
-                    model: app.models.tasks,
-                    as: 'Id_task_task'
-                }
-            ]
-        })
+        console.log(req.params.id, '---------------------------------------------------------------------------')
+        let Hours = Object
+        if (req.params.id == '10') {
+
+            Hours = await app.models.hours.findAll({
+                include: [
+                    {
+                        model: app.models.tasks,
+                        as: 'Id_task_task'
+                    }
+                ],
+            })
+        } else {
+            Hours = await app.models.hours.findAll({
+                include: [
+                    {
+                        model: app.models.tasks,
+                        as: 'Id_task_task'
+                    }
+                ],
+                where: { Id_user: req.params.id }
+            })
+        }
         return res.json(Hours)
     } catch (error) {
         console.log(error)
