@@ -79,7 +79,6 @@ exports.login = async (req, res) => {
 
 exports.getallHours = async (req, res) => {
     try {
-        console.log(req.params.id, '---------------------------------------------------------------------------')
         let Hours = Object
         if (req.params.id == '10') {
 
