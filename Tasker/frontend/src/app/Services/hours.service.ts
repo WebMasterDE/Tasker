@@ -16,6 +16,10 @@ export class HoursService {
     return this.http.get(`${environment_prod.BACKEND_URL}/${id}/hours`);
   }
 
+  getAllHours() {
+    return this.http.get(`${environment_prod.BACKEND_URL}/hours`)
+  }
+
   addHours(data: Hours) {
     return this.http.post<Hours>(`${environment_prod.BACKEND_URL}/create/hours`, data);
   }

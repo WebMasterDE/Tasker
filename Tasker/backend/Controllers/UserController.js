@@ -77,7 +77,7 @@ exports.login = async (req, res) => {
 
 }
 
-exports.getallHours = async (req, res) => {
+exports.getallHoursById = async (req, res) => {
     try {
         let Hours = Object
         if (req.params.id == '10') {
@@ -107,6 +107,25 @@ exports.getallHours = async (req, res) => {
     }
 }
 
+exports.getallHours = async (req, res) => {
+    try {
+
+        const Hours = await app.models.hours.findAll({
+            include: [
+                {
+                    model: app.models.tasks,
+                    as: 'Id_task_task'
+                }
+            ],
+
+        })
+
+        return res.json(Hours)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 exports.addHours = async (req, res) => {
     try {
         const hour = await app.models.hours.create({
@@ -125,6 +144,7 @@ exports.addHours = async (req, res) => {
         console.log(err)
     }
 }
+
 exports.deleteHours = async (req, res) => {
     try {
         app.models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })
@@ -140,7 +160,7 @@ exports.deleteHours = async (req, res) => {
 
 exports.updateHour = async (req, res) => {
     try {
-        console.log(req.params, '-------------------------')
+
         const updHours = app.models.hours.update({
 
             Description: req.body.Description,

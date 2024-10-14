@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {CalendarOptions} from '@fullcalendar/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {HoursService} from 'src/app/Services/hours.service';
-import {LoadingService} from 'src/app/Services/loading.service';
+import { HoursService } from 'src/app/Services/hours.service';
+import { LoadingService } from 'src/app/Services/loading.service';
 import interactionPlugin from '@fullcalendar/interaction';
-import {ShiftService} from 'src/app/Services/shift.service';
-import {WindowDialogComponent} from 'src/app/Static-Components/window-dialog/window-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
-import {Shift} from 'src/Model/Shift';
-import {FullCalendarComponent} from '@fullcalendar/angular';
+import { ShiftService } from 'src/app/Services/shift.service';
+import { WindowDialogComponent } from 'src/app/Static-Components/window-dialog/window-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Shift } from 'src/Model/Shift';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-calendario',
@@ -56,10 +56,9 @@ export class CalendarioComponent implements OnInit {
   }
 
   createDataCalendar() {
-    this.http_hour.getHours(this.id_user).subscribe((val) => {
+    this.http_hour.getAllHours().subscribe((val) => {
       this.datacalendar = val
       this.datacalendar.forEach(element => {
-        console.log(element)
         let obj = {
           title: element.Operator + ' (' + element.Id_task_task.Task_name + ')',
           start: element.Date,
