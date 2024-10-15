@@ -62,7 +62,7 @@ export class CalendarioComponent implements OnInit {
         let obj = {
           title: element.Operator + ' (' + element.Id_task_task.Task_name + ')',
           start: element.Date,
-          color: element.Id_task_task.Task_description.color,
+          color: element.Id_task_task.color,
           extendedProps: {
             description: element.Description,
             hours: element.Hour
