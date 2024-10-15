@@ -36,6 +36,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +75,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
     MatSnackBarModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+
   ],
   providers: [LoadingService],
   bootstrap: [AppComponent]

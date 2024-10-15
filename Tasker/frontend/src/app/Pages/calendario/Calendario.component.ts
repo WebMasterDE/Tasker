@@ -9,6 +9,7 @@ import { WindowDialogComponent } from 'src/app/Static-Components/window-dialog/w
 import { MatDialog } from '@angular/material/dialog';
 import { Shift } from 'src/Model/Shift';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import tippy from 'tippy.js';
 
 @Component({
   selector: 'app-calendario',
@@ -28,13 +29,25 @@ export class CalendarioComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin],
     initialView: 'dayGridMonth',
-    eventClick: function (info) {
-      alert('Event: ' + info.event.title + '\nHours: ' + info.event.extendedProps['hours'] + '\nDescription: \n' + info.event.extendedProps['description']);
+    eventMouseEnter: (info) => {
+      const tooltipContent = `
+      <b>Task:</b> ${info.event.title}<br>
+      <b>Ore impiegate</b> ${info.event.extendedProps['hours']}<br>
+      <b>Descrizione:</b> ${info.event.extendedProps['description']}<br>
+      <b>Codice commit:</b> ${info.event.extendedProps['commit'] != null ? info.event.extendedProps['commit'] : 'Non inserito'}
 
-      // change the border color just for fun
-      info.el.style.borderColor = 'red';
+    `;
+      // Crea il tooltip
+      const tooltip = tippy(info.el, {
+        theme: 'light',
+        content: tooltipContent,
+        allowHTML: true
+      })[0]; // Prendi la prima istanza di Tippy
+
+      // Aggiungi un listener per distruggere il tooltip al mouseleave
+
     }
-  };
+  }
   calendarOptionsShifts: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin],
     initialView: 'dayGridMonth',
@@ -65,7 +78,8 @@ export class CalendarioComponent implements OnInit {
           color: element.Id_task_task.color,
           extendedProps: {
             description: element.Description,
-            hours: element.Hour
+            hours: element.Hour,
+            commit: element.Commit
           }
         }
         this.alldatacalendar.push(obj)
