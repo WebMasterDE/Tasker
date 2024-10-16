@@ -35,6 +35,7 @@ import { OvertimeComponent } from './Pages/overtime/overtime.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
     MatExpansionModule,
     MatSlideToggleModule,
     MatBottomSheetModule,
+    MatCheckboxModule
 
   ],
   providers: [LoadingService],

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnChanges, OnInit, QueryList, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { HoursService } from 'src/app/Services/hours.service';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Shift } from 'src/Model/Shift';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import tippy from 'tippy.js';
+import { User_serviceService } from 'src/app/Services/auth.service';
 
 @Component({
   selector: 'app-calendario',
@@ -18,14 +19,22 @@ import tippy from 'tippy.js';
 })
 export class CalendarioComponent implements OnInit {
   @ViewChild('shiftCalendar') shiftCalendar: FullCalendarComponent;
+  @ViewChildren('checkboxRef') checkboxes: QueryList<ElementRef>;
 
   id_user: string
   datacalendar;
   hour: string
   datas;
+  checkclick: boolean;
+  checked: boolean;
+  arrayCheck: [] = [];
+  user: Array<any> = []
+  selectedUserId: number | null = null;
+  shiftsTabActive = false;  // Variabile per controllare se la tab dei turni è attiva
+
+  isCheckboxSelected: boolean = false
   alldatacalendar: { title: string, start: Date }[] = []
   alldataShiftsCalendar: { title: string, start: Date, color: string }[] = []
-  shiftsTabActive = false;  // Variabile per controllare se la tab dei turni è attiva
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin],
     initialView: 'dayGridMonth',
@@ -35,7 +44,6 @@ export class CalendarioComponent implements OnInit {
       <b>Ore impiegate</b> ${info.event.extendedProps['hours']}<br>
       <b>Descrizione:</b> ${info.event.extendedProps['description']}<br>
       <b>Codice commit:</b> ${info.event.extendedProps['commit'] != null ? info.event.extendedProps['commit'] : 'Non inserito'}
-
     `;
       // Crea il tooltip
       const tooltip = tippy(info.el, {
@@ -43,11 +51,9 @@ export class CalendarioComponent implements OnInit {
         content: tooltipContent,
         allowHTML: true
       })[0]; // Prendi la prima istanza di Tippy
-
-      // Aggiungi un listener per distruggere il tooltip al mouseleave
-
     }
   }
+
   calendarOptionsShifts: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin],
     initialView: 'dayGridMonth',
@@ -57,15 +63,17 @@ export class CalendarioComponent implements OnInit {
     },
   }
 
-  constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog) {
+  constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog, private users: User_serviceService, private render: Renderer2) {
     let data = JSON.parse(localStorage.getItem('data'))
     this.id_user = data.id
   }
+
 
   ngOnInit(): void {
     this.load.show()
     this.createDataCalendar()
     this.GetShifts()
+    this.getAllUsers()
   }
 
   createDataCalendar() {
@@ -154,10 +162,54 @@ export class CalendarioComponent implements OnInit {
     }
   }
 
-  tabChanged(event: any): void {
-    if (event.index === 1 && !this.shiftsTabActive) {
-      // Attiva il rendering del calendario nella seconda tab solo quando è selezionata
-      this.shiftsTabActive = true;
+  tabChanged(event: any) {
+    this.shiftsTabActive = event.index === 1;
+  }
+
+  getAllUsers() {
+    this.users.getAllUsers().subscribe(data => {
+      data.forEach(el => {
+        if (el.Id_User != 10) {
+
+          this.user.push({ id: el.Id_User, name: el.Name, checked: false })
+        }
+      })
+    })
+  }
+
+  filterByUser(users: any[]) {
+    // Trova l'utente selezionato
+    const selectedUser = users.find(user => user.checked);
+    this.selectedUserId = selectedUser ? selectedUser.id : null;
+
+
+    if (this.selectedUserId) {
+      this.http_hour.getHours(this.selectedUserId.toString()).subscribe((val) => {
+        this.alldatacalendar = [];
+        this.calendarOptions.events = [];
+        this.datacalendar = val
+        this.datacalendar.forEach(element => {
+          let obj = {
+            title: element.Operator + ' (' + element.Id_task_task.Task_name + ')',
+            start: element.Date,
+            color: element.Id_task_task.color,
+            extendedProps: {
+              description: element.Description,
+              hours: element.Hour,
+              commit: element.Commit
+            }
+          }
+          this.alldatacalendar.push(obj)
+        });
+        this.calendarOptions.events = this.alldatacalendar
+
+      })
+      this.load.hide()
+    } else {
+      // Se nessun utente è selezionato, ripristina il calendario
+      this.alldatacalendar = [];
+      this.calendarOptions.events = [];
+      this.createDataCalendar();
     }
   }
 
