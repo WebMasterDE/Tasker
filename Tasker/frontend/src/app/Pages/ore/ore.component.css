@@ -53,3 +53,14 @@ table {
   border-radius: 50px;
   padding: 12px;
 }
+
+.accordion-title {
+  font-size: 1.2rem;
+  font-family: Roboto, sans-serif;
+  color: #109be6;
+  font-weight: bold;
+}
+
+.mat-accordion .mat-expansion-panel:first-of-type {
+  border-radius: 20px !important;
+}

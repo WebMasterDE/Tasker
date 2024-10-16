@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, signal, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { HoursService } from 'src/app/Services/hours.service';
@@ -19,12 +19,15 @@ import { Overtime } from 'src/Model/Overtime';
 export class OreComponent {
 
   route: string;
-  datatable;
+  datatable: Array<{ num_mese: number, mese: string, ore: any[], ore_totali: number, anno: number }> = []
   allTasks: JSON;
   ismodifying: boolean;
   id_hour: number;
+  count_month = [];
+  year: number;
   displayedColumns: string[] = ['Date', 'Operator', 'Task_name', 'Hours', 'Description', 'Commit', 'Actions'];
   private _bottomSheet = inject(MatBottomSheet);
+  readonly panelOpenState = signal(false);
 
   HourData: Hours;
 
@@ -32,6 +35,7 @@ export class OreComponent {
 
   ArrayovertimeList: Overtime[] = []
 
+  month: Array<string> = []
   constructor(public dialog: MatDialog, private http_hours: HoursService, private http_overtime: OvertimeService, private router: Router, private http_task: TasksService, private loading: LoadingService, private bottomSheet: MatBottomSheet) {
     this.getroute()
   }
@@ -39,13 +43,84 @@ export class OreComponent {
 
 
   ngOnInit() {
+    this.getActualMonth()
     this.loading.show()
-    setTimeout(() => {
 
-      this.getHours();
-    }, 1000);
     this.getallTasks()
     this.overtimeList();
+  }
+
+  getActualMonth() {
+    const enum_mesi = [
+      { nome: '01', mese: 'Gennaio' },
+      { nome: '02', mese: 'Febbraio' },
+      { nome: '03', mese: 'Marzo' },
+      { nome: '04', mese: 'Aprile' },
+      { nome: '05', mese: 'Maggio' },
+      { nome: '06', mese: 'Giugno' },
+      { nome: '07', mese: 'Luglio' },
+      { nome: '08', mese: 'Agosto' },
+      { nome: '09', mese: 'Settembre' },
+      { nome: '10', mese: 'Ottobre' },
+      { nome: '11', mese: 'Novembre' },
+      { nome: '12', mese: 'Dicembre' }
+    ];
+
+
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+    let actual_data = today.toLocaleDateString();
+    let actual_month = parseInt(actual_data.split('/')[1])
+
+
+
+    for (let start_Month = 9; start_Month <= actual_month;) {
+      this.count_month.push(start_Month++);
+
+    }
+
+
+    enum_mesi.forEach(ogg => {
+      this.datatable.push({ num_mese: 0, mese: ogg.mese, ore: [], ore_totali: 0, anno: 0 })
+      this.count_month.forEach(m => {
+        if (ogg.nome == m) {
+          this.month.push(ogg.mese)
+        }
+      })
+    })
+
+
+    setTimeout(() => {
+
+      this.getHours(enum_mesi);
+    }, 1000);
+  }
+
+  getHours(mesi) {
+    let dataStorage = localStorage.getItem('data');
+    let id = JSON.parse(dataStorage)
+
+    this.http_hours.getHours(id.id).subscribe((data: Array<any>) => {
+      data.forEach(dati => {
+        this.datatable.forEach(el => {
+
+          mesi.forEach(mes => {
+
+            if (mes.mese === el.mese) {
+              el.num_mese = mes.nome
+              el.anno = dati.Date.split('-')[0]
+              var ore_filtrate = data.filter(elem => { return elem.Date.split('-')[1] == el.num_mese && elem.Date.split('-')[0] == this.year })
+              el.ore = ore_filtrate
+              el.ore_totali = el.ore.reduce((acc, elem) => acc + elem.Hour, 0)
+            }
+          })
+        })
+      })
+
+    });
+    console.log(this.datatable)
+    this.loading.hide()
+    return this.datatable
   }
 
   getUserId() {
@@ -56,9 +131,9 @@ export class OreComponent {
   overtimeList() {
     const today = new Date();
 
-    const year = today.getFullYear();
+    this.year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
-    this.http_overtime.getOvertimeHours(this.getUserId(), month, year).subscribe(data => {
+    this.http_overtime.getOvertimeHours(this.getUserId(), month, this.year).subscribe(data => {
       data.forEach(el => {
         this.ArrayovertimeList.push({ Date: el.Date, Hours: el.Hours, Id_user: this.getUserId() })
       })
@@ -84,15 +159,6 @@ export class OreComponent {
     });
   }
 
-  getHours() {
-    let dataStorage = localStorage.getItem('data');
-    let id = JSON.parse(dataStorage)
-
-    this.http_hours.getHours(id.id).subscribe((data) => {
-      this.datatable = data;
-    });
-    this.loading.hide()
-  }
 
   openDialog(datas) {
     const dialogRef = this.dialog.open(TasksDialogComponent, {
