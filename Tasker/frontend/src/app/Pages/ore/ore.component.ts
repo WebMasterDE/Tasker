@@ -45,82 +45,91 @@ export class OreComponent {
   ngOnInit() {
     this.getActualMonth()
     this.loading.show()
-
     this.getallTasks()
     this.overtimeList();
   }
 
   getActualMonth() {
-    const enum_mesi = [
-      { nome: '01', mese: 'Gennaio' },
-      { nome: '02', mese: 'Febbraio' },
-      { nome: '03', mese: 'Marzo' },
-      { nome: '04', mese: 'Aprile' },
-      { nome: '05', mese: 'Maggio' },
-      { nome: '06', mese: 'Giugno' },
-      { nome: '07', mese: 'Luglio' },
-      { nome: '08', mese: 'Agosto' },
-      { nome: '09', mese: 'Settembre' },
-      { nome: '10', mese: 'Ottobre' },
-      { nome: '11', mese: 'Novembre' },
-      { nome: '12', mese: 'Dicembre' }
-    ];
+
+    try {
+      const enum_mesi = [
+        { nome: '01', mese: 'Gennaio' },
+        { nome: '02', mese: 'Febbraio' },
+        { nome: '03', mese: 'Marzo' },
+        { nome: '04', mese: 'Aprile' },
+        { nome: '05', mese: 'Maggio' },
+        { nome: '06', mese: 'Giugno' },
+        { nome: '07', mese: 'Luglio' },
+        { nome: '08', mese: 'Agosto' },
+        { nome: '09', mese: 'Settembre' },
+        { nome: '10', mese: 'Ottobre' },
+        { nome: '11', mese: 'Novembre' },
+        { nome: '12', mese: 'Dicembre' }
+      ];
 
 
-    const timeElapsed = Date.now();
-    const today = new Date(timeElapsed);
-    let actual_data = today.toLocaleDateString();
-    let actual_month = parseInt(actual_data.split('/')[1])
+      const timeElapsed = Date.now();
+      const today = new Date(timeElapsed);
+      let actual_data = today.toLocaleDateString();
+      let actual_month = parseInt(actual_data.split('/')[1])
 
 
 
-    for (let start_Month = 9; start_Month <= actual_month;) {
-      this.count_month.push(start_Month++);
+      for (let start_Month = 9; start_Month <= actual_month;) {
+        this.count_month.push(start_Month++);
 
-    }
-
-
-    enum_mesi.forEach(ogg => {
-      this.datatable.push({ num_mese: 0, mese: ogg.mese, ore: [], ore_totali: 0, anno: 0 })
-      this.count_month.forEach(m => {
-        if (ogg.nome == m) {
-          this.month.push(ogg.mese)
-        }
-      })
-    })
+      }
 
 
-    setTimeout(() => {
-
-      this.getHours(enum_mesi);
-    }, 1000);
-  }
-
-  getHours(mesi) {
-    let dataStorage = localStorage.getItem('data');
-    let id = JSON.parse(dataStorage)
-
-    this.http_hours.getHours(id.id).subscribe((data: Array<any>) => {
-      data.forEach(dati => {
-        this.datatable.forEach(el => {
-
-          mesi.forEach(mes => {
-
-            if (mes.mese === el.mese) {
-              el.num_mese = mes.nome
-              el.anno = dati.Date.split('-')[0]
-              var ore_filtrate = data.filter(elem => { return elem.Date.split('-')[1] == el.num_mese && elem.Date.split('-')[0] == this.year })
-              el.ore = ore_filtrate
-              el.ore_totali = el.ore.reduce((acc, elem) => acc + elem.Hour, 0)
-            }
-          })
+      enum_mesi.forEach(ogg => {
+        this.datatable.push({ num_mese: 0, mese: ogg.mese, ore: [], ore_totali: 0, anno: 0 })
+        this.count_month.forEach(m => {
+          if (ogg.nome == m) {
+            this.month.push(ogg.mese)
+          }
         })
       })
 
-    });
-    console.log(this.datatable)
-    this.loading.hide()
-    return this.datatable
+
+      setTimeout(() => {
+
+        this.getHours(enum_mesi);
+      }, 1000);
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+  getHours(mesi) {
+    try {
+      let dataStorage = localStorage.getItem('data');
+      let id = JSON.parse(dataStorage)
+
+      this.http_hours.getHours(id.id).subscribe((data: Array<any>) => {
+        data.forEach(dati => {
+          this.datatable.forEach(el => {
+
+            mesi.forEach(mes => {
+
+              if (mes.mese === el.mese) {
+                el.num_mese = mes.nome
+                el.anno = dati.Date.split('-')[0]
+                var ore_filtrate = data.filter(elem => { return elem.Date.split('-')[1] == el.num_mese && elem.Date.split('-')[0] == this.year })
+                el.ore = ore_filtrate
+                el.ore_totali = el.ore.reduce((acc, elem) => acc + elem.Hour, 0)
+              }
+            })
+          })
+        })
+
+      });
+      this.loading.hide()
+      return this.datatable
+    } catch (err) {
+      console.log(err)
+    }
+    return null
   }
 
   getUserId() {
