@@ -26,7 +26,7 @@ export class TasksDialogComponent {
     Id_user: this.getUserId()
   }
   show: boolean;
-  selectedvalue: string
+  selectedvalue = this.data.dati.Id_task_task.Id_task
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { dati }, private dialogRef: MatDialogRef<DialogComponent>, private http_overtime: OvertimeService, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService) {
     this.arrayTasks = this.http_tasks.getAllTasks
@@ -67,8 +67,8 @@ export class TasksDialogComponent {
   }
 
   onSelected(value: string): void {
-    console.log(value)
     this.selectedvalue = value;
+
   }
 
   inserisciOra() {
