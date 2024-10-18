@@ -6,7 +6,7 @@
 
 <h1 class="my-3" style="font-size: 2rem;"><b>{{this.year}}</b></h1>
 <hr>
-  <mat-accordion style="border-radius: 50px;" *ngFor="let mese of month.reverse()">
+  <mat-accordion style="border-radius: 50px;" *ngFor="let mese of month">
     <mat-expansion-panel class="my-2" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title class="accordion-title"> {{mese}} </mat-panel-title>
@@ -15,7 +15,7 @@
       <button class=" mb-3 d-block" mat-raised-button (click)="openBottomSheet()"><b>Visualizza straordinari</b></button>
 
       <div *ngFor="let el of datatable">
-        <div class="d-flex justify-content-end align-items-center" *ngIf="el.mese === mese">
+        <div class="d-flex justify-content-end align-items-center" *ngIf="el.mese == mese">
           <p style="font-size: 1.1rem;" class="d-inline m-0 mx-1"><b>Ore totali: </b> </p>
           <span style="font-size: 1.1rem;" class="badge rounded-pill text-bg-primary">{{el.ore_totali}}</span>
         </div>
