@@ -19,7 +19,7 @@
 
     <div class="input-group mb-3 d-flex flex-column">
       <label>Task</label>
-      <select #task aria-label="Default select example" class="form-select w-100"
+      <select #task aria-label="Default select example" class="form-select w-100" [value]="data.dati.Id_task_task.Id_task"
               name="id_task" id="id_task" required (change)="onSelected(task.value)"  >
               <option selected >{{taskDescription ? taskDescription:'Seleziona una task' }}</option>
 

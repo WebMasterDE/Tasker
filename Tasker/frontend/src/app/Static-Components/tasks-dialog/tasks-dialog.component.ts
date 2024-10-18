@@ -43,6 +43,7 @@ export class TasksDialogComponent {
       Commit: this.data.dati?.Commit ? this.data.dati.Commit : null
     };
     this.getTaskDescription();
+    console.log(this.data)
   }
 
   getUserId() {
@@ -66,6 +67,7 @@ export class TasksDialogComponent {
   }
 
   onSelected(value: string): void {
+    console.log(value)
     this.selectedvalue = value;
   }
 
