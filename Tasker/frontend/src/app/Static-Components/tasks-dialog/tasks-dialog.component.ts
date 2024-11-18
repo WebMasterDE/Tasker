@@ -108,9 +108,8 @@ export class TasksDialogComponent {
     this.hourData.Id_user = this.getUserId()
     this.hourData.Hour = this.hourData.Hour + this.overtime.Hours
     this.hourData.Id_task = parseInt(this.selectedvalue)
-    this.hourData.id_subtask = this.selectedSubvalue
+    this.hourData.id_subtask = this.selectedSubvalue ? this.selectedSubvalue : null
     this.http_hours.addHours(this.hourData).subscribe((data) => {
-
     });
     window.location.reload()
   }
@@ -118,7 +117,7 @@ export class TasksDialogComponent {
   modificaOra(id_hour: number, data: Hours) {
     try {
       data.Id_task = parseInt(this.selectedvalue);
-      data.id_subtask = this.selectedSubvalue
+      data.id_subtask = this.selectedSubvalue ? this.selectedSubvalue : null
       this.arrayTasks.forEach(data => {
         if (data.Id_task == this.hourData.Id_task) {
           return data.Task_name + ' ' + data.Task_description
