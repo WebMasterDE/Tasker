@@ -33,7 +33,7 @@
       <label>Subtask</label>
       <select #subtask aria-label="Default select example" class="form-select w-100"
               name="id_subtask" id="id_subtask" required (change)="onSelectedSub(subtask.value)">
-              <option selected >{{subtaskDescription != '' ? subtaskDescription : 'Seleziona una sottotask'}}</option>
+              <option selected >{{subtaskDescription ? subtaskDescription : 'Seleziona una sottotask'}}</option>
 
         <option *ngFor="let el of arraySubtasks" [value]="el.id"
                 id="valueSubId">{{el.descrizione}}
