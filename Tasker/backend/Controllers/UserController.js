@@ -87,7 +87,11 @@ exports.getallHoursById = async (req, res) => {
                     {
                         model: app.models.tasks,
                         as: 'Id_task_task'
-                    }
+                    },
+                    {
+                        model: app.models.subtask,
+                        as: 'id_subtask_subtask'
+                    },
                 ],
             })
         } else {
@@ -96,8 +100,14 @@ exports.getallHoursById = async (req, res) => {
                     {
                         model: app.models.tasks,
                         as: 'Id_task_task'
+                    },
+                    {
+                        model: app.models.subtask,
+                        as: 'id_subtask_subtask'
                     }
                 ],
+
+
                 where: { Id_user: req.params.id }
             })
         }
@@ -135,6 +145,7 @@ exports.addHours = async (req, res) => {
             Date: req.body.Date,
             Commit: req.body.Commit,
             Id_user: req.body.Id_user,
+            id_subtask: req.body.id_subtask,
             Id_task: req.body.Id_task
 
         })
@@ -167,7 +178,8 @@ exports.updateHour = async (req, res) => {
             Date: req.body.Date,
             Commit: req.body.Commit,
             Hour: req.body.Hour,
-            Id_task: req.body.Id_task
+            Id_task: req.body.Id_task,
+            id_subtask: req.body.id_subtask
 
         }, { where: { Id_hour: req.params.idHour } })
         return updHours

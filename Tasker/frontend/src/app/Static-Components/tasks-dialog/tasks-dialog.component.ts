@@ -7,6 +7,8 @@ import { TasksService } from 'src/app/Services/tasks.service';
 import { LoadingService } from 'src/app/Services/loading.service';
 import { OvertimeService } from 'src/app/Services/overtime.service';
 import { Overtime } from 'src/Model/Overtime';
+import { SubtaskService } from 'src/app/Services/subtask.service';
+import { Subtasks } from 'src/Model/Subtasks';
 
 @Component({
   selector: 'app-tasks-dialog',
@@ -15,10 +17,13 @@ import { Overtime } from 'src/Model/Overtime';
 })
 export class TasksDialogComponent {
   arrayTasks = []
+  arraySubtasks = []
 
   hourData: Hours;
   Id_hour: number = this.data.dati?.Id_hour ? this.data.dati.Id_hour : null
-  taskDescription: string
+  taskDescription: string;
+  subtaskDescription = this.data.dati.id_subtask_subtask.descrizione
+
 
   overtime: Overtime = {
     Hours: 0,
@@ -27,8 +32,10 @@ export class TasksDialogComponent {
   }
   show: boolean;
   selectedvalue = this.data.dati !== null ? this.data.dati.Id_task_task.Id_task : null
+  selectedSubvalue = 0
+  selectedtask: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { dati }, private dialogRef: MatDialogRef<DialogComponent>, private http_overtime: OvertimeService, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { dati }, private dialogRef: MatDialogRef<DialogComponent>, private http_overtime: OvertimeService, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService, private http_subtasks: SubtaskService) {
     this.arrayTasks = this.http_tasks.getAllTasks
     console.log(data)
   }
@@ -41,10 +48,12 @@ export class TasksDialogComponent {
       Description: this.data.dati?.Description ? this.data.dati.Description : '',
       Id_task: this.selectedvalue !== null ? parseInt(this.selectedvalue) : null,
       Id_user: null,
+      id_subtask: null,
       Commit: this.data.dati?.Commit ? this.data.dati.Commit : null
     };
     this.getTaskDescription();
-    console.log(this.data)
+    this.getAllSubtasks()
+
   }
 
   getUserId() {
@@ -69,7 +78,21 @@ export class TasksDialogComponent {
 
   onSelected(value: string): void {
     this.selectedvalue = value;
+    this.selectedtask = true
 
+  }
+
+  onSelectedSub(value: string): void {
+    this.selectedSubvalue = parseInt(value);
+
+  }
+
+  getAllSubtasks() {
+    this.http_subtasks.getSubtasks().subscribe(data => {
+      this.arraySubtasks = data
+      console.log(this.arraySubtasks)
+
+    })
   }
 
   inserisciOra() {
@@ -85,6 +108,7 @@ export class TasksDialogComponent {
     this.hourData.Id_user = this.getUserId()
     this.hourData.Hour = this.hourData.Hour + this.overtime.Hours
     this.hourData.Id_task = parseInt(this.selectedvalue)
+    this.hourData.id_subtask = this.selectedSubvalue
     this.http_hours.addHours(this.hourData).subscribe((data) => {
 
     });
@@ -93,7 +117,8 @@ export class TasksDialogComponent {
 
   modificaOra(id_hour: number, data: Hours) {
     try {
-      data.Id_task = parseInt(this.selectedvalue)
+      data.Id_task = parseInt(this.selectedvalue);
+      data.id_subtask = this.selectedSubvalue
       this.arrayTasks.forEach(data => {
         if (data.Id_task == this.hourData.Id_task) {
           return data.Task_name + ' ' + data.Task_description
@@ -101,9 +126,7 @@ export class TasksDialogComponent {
           return ''
         }
       })
-
       this.http_hours.updateHour(data, id_hour).subscribe(data => {
-        console.log(data);
       })
     } catch (err) {
       console.log(err)
@@ -117,6 +140,7 @@ export class TasksDialogComponent {
         if (data.Id_task == this.data.dati.Id_task_task.Id_task) {
           this.taskDescription = data.Task_name + ' ' + data.Task_description
         }
+
       } else {
 
         this.hourData.Id_task = data.Id_task
@@ -135,7 +159,7 @@ export class TasksDialogComponent {
         return true
       } else if (!this.hourData.Description) {
         return true
-      } else if (!this.hourData.Id_task) {
+      } else if (!this.selectedtask) {
         return true
       }
     }

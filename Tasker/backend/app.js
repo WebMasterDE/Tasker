@@ -3,6 +3,7 @@ const userRoute = require('./routes/user');
 const taskRoute = require('./routes/task');
 const archivedRoute = require('./routes/Archive');
 const overtimeRoute = require('./routes/overtime');
+const subtaskRoute = require('./routes/subtask');
 const Contract_of_employmentRoute = require('./routes/Contract_of_employmentRoute.js')
 const parser = require('body-parser');
 const cors = require('cors');
@@ -45,6 +46,7 @@ Dbsequelize.authenticate()
         app.use('/api', shiftsRoute);
         app.use('/api', overtimeRoute)
         app.use('/api', Contract_of_employmentRoute)
+        app.use('/api', subtaskRoute)
 
         app.listen(3000, () => {
             console.log(`Server avviato su ${process.env.HOST}:3000`);

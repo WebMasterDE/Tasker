@@ -18,7 +18,7 @@
     </div>
 
     <div class="input-group mb-3 d-flex flex-column">
-      <label>Task</label>
+      <label>Task <b style="color: red;">*</b></label>
       <select #task aria-label="Default select example" class="form-select w-100"
               name="id_task" id="id_task" required (change)="onSelected(task.value)">
               <option selected >{{taskDescription ? taskDescription:'Seleziona una task' }}</option>
@@ -30,7 +30,19 @@
     </div>
 
     <div class="input-group mb-3 d-flex flex-column">
-      <label>Ore da inserire</label>
+      <label>Subtask</label>
+      <select #subtask aria-label="Default select example" class="form-select w-100"
+              name="id_subtask" id="id_subtask" required (change)="onSelectedSub(subtask.value)">
+              <option selected >{{subtaskDescription != '' ? subtaskDescription : 'Seleziona una sottotask'}}</option>
+
+        <option *ngFor="let el of arraySubtasks" [value]="el.id"
+                id="valueSubId">{{el.descrizione}}
+        </option>
+      </select>
+    </div>
+
+    <div class="input-group mb-3 d-flex flex-column">
+      <label>Ore da inserire <b style="color: red;">*</b></label>
       <input [(ngModel)]="hourData.Hour" aria-describedby="basic-addon2" aria-label="inserisci" class="form-control w-100" name="ore"
              placeholder="inserisci" type="number" min="1">
       <div class="input-group-append">
@@ -50,7 +62,7 @@
     </div>
 
     <div class="input-group mb-3 d-flex flex-column">
-      <label>Uteriori note</label>
+      <label>Uteriori note <b style="color: red;">*</b></label>
       <textarea [(ngModel)]="hourData.Description" class="form-control w-100" name="note" placeholder="Aggiungi una descrizione"
                 style="height: 150px;"></textarea>
       <div class="input-group-append">
@@ -58,7 +70,8 @@
     </div>
 
 
-    <button (click)="Id_hour != null ? modificaOra(data.dati.Id_hour,hourData) : inserisciOra()" [disabled]="checkAllInput()" class="btn btn-success" type="submit">Inserisci ore
+    <button (click)="Id_hour != null ? modificaOra(data.dati.Id_hour,hourData) : inserisciOra()" [disabled]="checkAllInput()" class="btn btn-success" type="submit">
+      Inserisci ore
     </button>
 
   </form>

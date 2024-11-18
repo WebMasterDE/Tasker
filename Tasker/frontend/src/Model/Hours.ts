@@ -5,5 +5,6 @@ export interface Hours {
   Date: string;
   Id_task: number;
   Id_user: number;
+  id_subtask: number;
   Commit: string;
 }
