@@ -22,7 +22,7 @@ export class TasksDialogComponent {
   hourData: Hours;
   Id_hour: number = this.data.dati?.Id_hour ? this.data.dati.Id_hour : null
   taskDescription: string;
-  subtaskDescription = this.data.dati.id_subtask_subtask?.descrizione
+  subtaskDescription = this.data.dati != null ? this.data.dati.id_subtask_subtask?.descrizione : null
 
 
   overtime: Overtime = {
