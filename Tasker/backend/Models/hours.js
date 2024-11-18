@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     Hour: {
-      type: DataTypes.DECIMAL(10,1),
+      type: DataTypes.FLOAT,
       allowNull: true
     },
     Date: {
@@ -37,6 +37,14 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'tasks',
         key: 'Id_task'
+      }
+    },
+    id_subtask: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'subtask',
+        key: 'id'
       }
     },
     Commit: {
@@ -68,6 +76,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "Id_task" },
+        ]
+      },
+      {
+        name: "hours_subtask_id_fk",
+        using: "BTREE",
+        fields: [
+          { name: "id_subtask" },
         ]
       },
     ]

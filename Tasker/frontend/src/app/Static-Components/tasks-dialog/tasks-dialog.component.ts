@@ -26,10 +26,11 @@ export class TasksDialogComponent {
     Id_user: this.getUserId()
   }
   show: boolean;
-  selectedvalue = this.data.dati.Id_task_task.Id_task
+  selectedvalue = this.data.dati !== null ? this.data.dati.Id_task_task.Id_task : null
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { dati }, private dialogRef: MatDialogRef<DialogComponent>, private http_overtime: OvertimeService, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService) {
     this.arrayTasks = this.http_tasks.getAllTasks
+    console.log(data)
   }
 
   ngOnInit() {
@@ -38,7 +39,7 @@ export class TasksDialogComponent {
       Date: this.data.dati?.Date ? this.data.dati.Date : this.getTodayDate(),
       Hour: this.data.dati?.Hour ? this.data.dati.Hour : 0,
       Description: this.data.dati?.Description ? this.data.dati.Description : '',
-      Id_task: parseInt(this.selectedvalue),
+      Id_task: this.selectedvalue !== null ? parseInt(this.selectedvalue) : null,
       Id_user: null,
       Commit: this.data.dati?.Commit ? this.data.dati.Commit : null
     };
@@ -107,7 +108,6 @@ export class TasksDialogComponent {
     } catch (err) {
       console.log(err)
     }
-    window.location.reload()
 
   }
 

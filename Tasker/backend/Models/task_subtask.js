@@ -1,31 +1,27 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('overtime', {
-    Id: {
-      autoIncrement: true,
+  return sequelize.define('task_subtask', {
+    id_task: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
-    },
-    Hours: {
-      type: DataTypes.FLOAT,
-      allowNull: true
-    },
-    Date: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    Id_user: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      primaryKey: true,
       references: {
-        model: 'users',
-        key: 'Id_user'
+        model: 'tasks',
+        key: 'Id_task'
+      }
+    },
+    id_subtask: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      references: {
+        model: 'subtask',
+        key: 'id'
       }
     }
   }, {
     sequelize,
-    tableName: 'overtime',
+    tableName: 'task_subtask',
     timestamps: false,
     indexes: [
       {
@@ -33,14 +29,15 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "Id" },
+          { name: "id_subtask" },
+          { name: "id_task" },
         ]
       },
       {
-        name: "Overtime___fk",
+        name: "task_subtask_tasks_Id_task_fk",
         using: "BTREE",
         fields: [
-          { name: "Id_user" },
+          { name: "id_task" },
         ]
       },
     ]

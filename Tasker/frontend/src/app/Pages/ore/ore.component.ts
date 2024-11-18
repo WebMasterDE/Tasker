@@ -169,7 +169,7 @@ export class OreComponent {
   }
 
 
-  openDialog(datas) {
+  openDialog(datas: object | null) {
     const dialogRef = this.dialog.open(TasksDialogComponent, {
       data: { dati: datas }
     });
