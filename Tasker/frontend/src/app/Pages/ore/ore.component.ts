@@ -32,6 +32,7 @@ export class OreComponent {
   HourData: Hours;
 
   @ViewChild('bottomSheetContent') bottomSheetContent: TemplateRef<any>;
+  @ViewChild('straordinariMese') straordinariMese: TemplateRef<any>;
 
   ArrayovertimeList: Overtime[] = []
 
@@ -46,7 +47,7 @@ export class OreComponent {
     this.getActualMonth()
     this.loading.show()
     this.getallTasks()
-    this.overtimeList();
+    this.overtimeList(null)
   }
 
   getActualMonth() {
@@ -108,6 +109,7 @@ export class OreComponent {
 
       this.http_hours.getHours(id.id).subscribe((data: Array<any>) => {
         data.forEach(dati => {
+
           this.datatable.forEach(el => {
 
             mesi.forEach(mes => {
@@ -137,21 +139,51 @@ export class OreComponent {
     return data.id
   }
 
-  overtimeList() {
+  overtimeList(mese:string|null) {
     const today = new Date();
 
+    const enumMOnth = [
+      { nome: '01', mese: 'Gennaio' },
+      { nome: '02', mese: 'Febbraio' },
+      { nome: '03', mese: 'Marzo' },
+      { nome: '04', mese: 'Aprile' },
+      { nome: '05', mese: 'Maggio' },
+      { nome: '06', mese: 'Giugno' },
+      { nome: '07', mese: 'Luglio' },
+      { nome: '08', mese: 'Agosto' },
+      { nome: '09', mese: 'Settembre' },
+      { nome: '10', mese: 'Ottobre' },
+      { nome: '11', mese: 'Novembre' },
+      { nome: '12', mese: 'Dicembre' }
+    ]
     this.year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
+    let month;
+    console.log(mese)
+    if(mese === null){
+      this.ArrayovertimeList = []
+      month = String(today.getMonth() + 1).padStart(2, '0');
+
+    }else{
+      enumMOnth.forEach(el => {if(el.mese === mese){
+        this.ArrayovertimeList = []
+        month = el.nome
+      }})
+    }
+    console.log(month)
     this.http_overtime.getOvertimeHours(this.getUserId(), month, this.year).subscribe(data => {
       data.forEach(el => {
         this.ArrayovertimeList.push({ Date: el.Date, Hours: el.Hours, Id_user: this.getUserId() })
       })
+      console.log(this.ArrayovertimeList)
+    this.openBottomSheet()
     })
   }
 
   openBottomSheet(): void {
     this.bottomSheet.open(this.bottomSheetContent);
+
   }
+
 
   getallTasks() {
     let response = this.http_task.GetTasksUser().subscribe((val) => {
