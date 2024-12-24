@@ -20,16 +20,13 @@ export class TasksDialogComponent {
   arraySubtasks = []
 
   hourData: Hours;
+  overtime: Overtime;
   Id_hour: number = this.data.dati?.Id_hour ? this.data.dati.Id_hour : null
   taskDescription: string;
   subtaskDescription = this.data.dati != null ? this.data.dati.id_subtask_subtask?.descrizione : null
+  id:any;
 
 
-  overtime: Overtime = {
-    Hours: 0,
-    Date: this.getTodayDate(),
-    Id_user: this.getUserId()
-  }
   show: boolean;
   selectedvalue = this.data.dati !== null ? this.data.dati.Id_task_task.Id_task : null
   selectedSubvalue = 0
@@ -37,11 +34,12 @@ export class TasksDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { dati }, private dialogRef: MatDialogRef<DialogComponent>, private http_overtime: OvertimeService, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService, private http_subtasks: SubtaskService) {
     this.arrayTasks = this.http_tasks.getAllTasks
-    console.log(data)
+    this.http_hours.getLastId().subscribe(data=>{this.id = data})
   }
 
   ngOnInit() {
     this.hourData = {
+      Id_hour: this.Id_hour,
       Operator: this.getnameUser(),
       Date: this.data.dati?.Date ? this.data.dati.Date : this.getTodayDate(),
       Hour: this.data.dati?.Hour ? this.data.dati.Hour : 0,
@@ -51,9 +49,24 @@ export class TasksDialogComponent {
       id_subtask: null,
       Commit: this.data.dati?.Commit ? this.data.dati.Commit : null
     };
+    console.log(this.Id_hour)
+    this.overtime = {
+      Hours: 0,
+      Date: this.getTodayDate(),
+      Id_user: this.getUserId(),
+      Id_hour:this.id != null ? this.id : null
+    }
     this.getTaskDescription();
     this.getAllSubtasks()
 
+  }
+
+  getLastId():number{
+     this.http_hours.getLastId().subscribe(data=>{
+       return data
+
+     })
+    return null
   }
 
   getUserId() {
@@ -97,21 +110,22 @@ export class TasksDialogComponent {
 
   inserisciOra() {
 
-    if (this.show) {
-
-      this.overtime.Date = this.hourData.Date
-      this.http_overtime.InsertOvertimeHours(this.overtime).subscribe(data => {
-
-      })
-    }
-
     this.hourData.Id_user = this.getUserId()
     this.hourData.Hour = this.hourData.Hour + this.overtime.Hours
     this.hourData.Id_task = parseInt(this.selectedvalue)
     this.hourData.id_subtask = this.selectedSubvalue ? this.selectedSubvalue : null
     this.http_hours.addHours(this.hourData).subscribe((data) => {
     });
-    window.location.reload()
+    if (this.show) {
+
+      this.overtime.Date = this.hourData.Date
+      this.overtime.Id_hour= this.id + 1;
+      console.log(this.overtime)
+      this.http_overtime.InsertOvertimeHours(this.overtime).subscribe(data => {
+
+      })
+    }
+    // window.location.reload()
   }
 
   modificaOra(id_hour: number, data: Hours) {

@@ -1,4 +1,5 @@
 export interface Hours {
+  Id_hour:number,
   Operator: string;
   Description: string;
   Hour: number;

@@ -9,6 +9,7 @@ const UserController = require('../Controllers/UserController')
  */
 route.get('/:id/user', UserController.getAllUserbyId)
 route.get('/get/users', UserController.getAllUsers)
+route.get('/get/lastidHour',UserController.getLastId)
 route.post('/user/auth/signup', UserController.signup);
 route.post('/user/auth/login', UserController.login);
 route.get('/:id/hours', UserController.getallHoursById);

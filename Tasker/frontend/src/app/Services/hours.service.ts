@@ -31,4 +31,8 @@ export class HoursService {
   deleteHours(data): Observable<Hours> {
     return this.http.post<Hours>(`${environment_prod.BACKEND_URL}/delete/hours`, data);
   }
+
+  getLastId():Observable<Hours>{
+    return this.http.get<Hours>(`${environment_prod.BACKEND_URL}/get/lastidHour`)
+  }
 }

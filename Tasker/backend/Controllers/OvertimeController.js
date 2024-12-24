@@ -8,7 +8,8 @@ exports.InsertHour = async (req, res) => {
         const overtime = await app.models.overtime.create({
             Hours: req.body.Hours,
             Date: req.body.Date,
-            Id_user: req.body.Id_user
+            Id_user: req.body.Id_user,
+            Id_hour: req.body.Id_hour
         })
         res.status(201).send("Straordinario inserito correttamente!")
 
@@ -19,7 +20,6 @@ exports.InsertHour = async (req, res) => {
 
 exports.getOvertimeById = async (req, res) => {
     try {
-        console.log(req.params, "---------------------------------------------------------------------------")
         const overtime = await app.models.overtime.findAll(
             {
                 where:

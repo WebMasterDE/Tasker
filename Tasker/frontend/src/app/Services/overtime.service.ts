@@ -12,6 +12,7 @@ export class OvertimeService {
   constructor(private http: HttpClient) { }
 
   InsertOvertimeHours(data: Overtime) {
+    console.log("srv",data)
     return this.http.post<Overtime>(`${environment_prod.BACKEND_URL}/insert/overtime`, data);
   }
 

@@ -156,6 +156,20 @@ exports.addHours = async (req, res) => {
     }
 }
 
+exports.getLastId = async (req, res) => {
+    try{
+        const lastId = await app.models.hours.findOne({
+            attributes: ['Id_hour'],
+            order: [['Id_hour', 'DESC']],
+            limit: 1
+        })
+        return res.json(lastId.dataValues.Id_hour)
+    }catch (err) {
+        console.log(err);
+    }
+
+}
+
 exports.deleteHours = async (req, res) => {
     try {
         app.models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })

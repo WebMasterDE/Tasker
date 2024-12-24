@@ -22,7 +22,11 @@ module.exports = function(sequelize, DataTypes) {
         model: 'users',
         key: 'Id_user'
       }
-    }
+    },
+    Id_hour: { // Assicurati che questo campo sia incluso
+      type: DataTypes.INTEGER,
+      allowNull: true, // Modifica se il campo può essere nullo
+    },
   }, {
     sequelize,
     tableName: 'overtime',
@@ -41,6 +45,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "Id_user" },
+        ]
+      },
+      {
+        name: "overtime_hours_Id_hour_fk",
+        using: "BTREE",
+        fields: [
+          { name: "Id_hour" },
         ]
       },
     ]
