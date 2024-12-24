@@ -36,6 +36,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NewsComponent } from './Pages/news/news.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -51,6 +53,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     WindowDialogComponent,
     ManageUserComponent,
     OvertimeComponent,
+    NewsComponent,
   ],
   imports: [
     TableComponent,
@@ -77,7 +80,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatExpansionModule,
     MatSlideToggleModule,
     MatBottomSheetModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatCardModule
 
   ],
   providers: [LoadingService],

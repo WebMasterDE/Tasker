@@ -132,7 +132,7 @@ console.log(this.overtime)
 
       })
     }
-    // window.location.reload()
+    window.location.reload()
   }
 
   modificaOra(id_hour: number, data: Hours) {

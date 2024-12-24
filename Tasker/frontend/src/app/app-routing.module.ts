@@ -7,6 +7,7 @@ import { CalendarioComponent } from './Pages/calendario/Calendario.component';
 import { OreComponent } from './Pages/ore/ore.component';
 import { ManageUserComponent } from './Pages/manage-user/manage-user.component';
 import { OvertimeComponent } from './Pages/overtime/overtime.component';
+import {NewsComponent} from "./Pages/news/news.component";
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'ore', component: OreComponent },
   { path: 'overtime', component: OvertimeComponent },
   { path: '', redirectTo: '/calendario', pathMatch: 'full' },
-  { path: 'users', component: ManageUserComponent }
+  { path: 'users', component: ManageUserComponent },
+  {path:'news',component:NewsComponent},
 ];
 
 @NgModule({

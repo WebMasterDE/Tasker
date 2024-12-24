@@ -43,6 +43,12 @@
           <span style="color: white;">Contabilità</span>
         </span>
       </a>
+      <a *ngIf="this.permission != 3" mat-list-item routerLink="/news">
+        <span class="entry">
+          <i class="fa-regular fa-newspaper mx-2" style="font-size: 1.5rem;color: white;"></i>
+          <span style="color: white;">News</span>
+        </span>
+      </a>
       <hr style="width: 80%;margin: auto;color: white;">
       <a (click)="logout()" mat-list-item>
         <span class="entry">
