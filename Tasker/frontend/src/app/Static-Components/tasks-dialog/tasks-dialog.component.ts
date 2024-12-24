@@ -49,16 +49,24 @@ export class TasksDialogComponent {
       id_subtask: null,
       Commit: this.data.dati?.Commit ? this.data.dati.Commit : null
     };
-    console.log(this.Id_hour)
+    console.log(this.hourData)
+    this.getOvertimeByIdHour(this.Id_hour)
     this.overtime = {
       Hours: 0,
       Date: this.getTodayDate(),
       Id_user: this.getUserId(),
-      Id_hour:this.id != null ? this.id : null
+      Id_hour:this.id != null ? this.id : this.Id_hour
     }
+console.log(this.overtime)
     this.getTaskDescription();
     this.getAllSubtasks()
 
+  }
+
+  getOvertimeByIdHour(id){
+    return this.http_overtime.getOvertimeByIdHour(id).subscribe(data=>{
+      this.overtime.Hours = data.Hours
+    })
   }
 
   getLastId():number{
@@ -103,7 +111,6 @@ export class TasksDialogComponent {
   getAllSubtasks() {
     this.http_subtasks.getSubtasks().subscribe(data => {
       this.arraySubtasks = data
-      console.log(this.arraySubtasks)
 
     })
   }
@@ -139,6 +146,11 @@ export class TasksDialogComponent {
           return ''
         }
       })
+      if(this.show){
+        this.http_overtime.updateOvertimeHours(this.overtime).subscribe(data=>{
+          console.log(data)
+        })
+      }
       this.http_hours.updateHour(data, id_hour).subscribe(data => {
       })
     } catch (err) {

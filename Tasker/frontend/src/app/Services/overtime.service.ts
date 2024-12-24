@@ -20,4 +20,12 @@ export class OvertimeService {
     return this.http.get<Overtime[]>(`${environment_prod.BACKEND_URL}/get/${id}/${month}/${year}/overtime`)
   }
 
+  getOvertimeByIdHour(id): Observable<Overtime> {
+    return this.http.get<Overtime>(`${environment_prod.BACKEND_URL}/get/${id}/overtime`)
+  }
+
+  updateOvertimeHours(data: Overtime) {
+    return this.http.post<Overtime>(`${environment_prod.BACKEND_URL}/post/update/overtime`, data)
+  }
+
 }

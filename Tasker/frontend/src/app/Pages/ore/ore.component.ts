@@ -44,7 +44,6 @@ export class OreComponent {
 
 
   ngOnInit() {
-    console.log(this.datatable)
     this.getActualMonth()
     this.loading.show()
     this.getallTasks()
