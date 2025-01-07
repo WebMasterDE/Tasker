@@ -75,10 +75,10 @@ export class OreComponent {
       const today = new Date(timeElapsed);
       let actual_data = today.toLocaleDateString();
       let actual_month = parseInt(actual_data.split('/')[1])
+      console.log(actual_month)
 
 
-
-      for (let start_Month = 9; start_Month <= actual_month;) {
+      for (let start_Month = 0; start_Month <= actual_month;) {
         this.count_month.push(start_Month++);
 
       }
@@ -140,7 +140,7 @@ export class OreComponent {
     let data = JSON.parse(localStorage.getItem('data'))
     return data.id
   }
-  overtimeListInit(mese:string|null) {
+  overtimeListInit(mese: string | null) {
     const today = new Date();
 
     const enumMOnth = [
@@ -159,23 +159,25 @@ export class OreComponent {
     ]
     this.year = today.getFullYear();
     let month;
-    if(mese === null){
+    if (mese === null) {
       this.ArrayovertimeList = []
       month = String(today.getMonth() + 1).padStart(2, '0');
 
-    }else{
-      enumMOnth.forEach(el => {if(el.mese === mese){
-        this.ArrayovertimeList = []
-        month = el.nome
-      }})
+    } else {
+      enumMOnth.forEach(el => {
+        if (el.mese === mese) {
+          this.ArrayovertimeList = []
+          month = el.nome
+        }
+      })
     }
     this.http_overtime.getOvertimeHours(this.getUserId(), month, this.year).subscribe(data => {
       data.forEach(el => {
-        this.ArrayovertimeList.push({ Date: el.Date, Hours: el.Hours, Id_user: this.getUserId(), Id_hour:el.Id_hour })
+        this.ArrayovertimeList.push({ Date: el.Date, Hours: el.Hours, Id_user: this.getUserId(), Id_hour: el.Id_hour })
       })
     })
   }
-  overtimeList(mese:string|null) {
+  overtimeList(mese: string | null) {
     const today = new Date();
 
     const enumMOnth = [
@@ -194,21 +196,24 @@ export class OreComponent {
     ]
     this.year = today.getFullYear();
     let month;
-    if(mese === null){
+    if (mese === null) {
       this.ArrayovertimeList = []
       month = String(today.getMonth() + 1).padStart(2, '0');
 
-    }else{
-      enumMOnth.forEach(el => {if(el.mese === mese){
-        this.ArrayovertimeList = []
-        month = el.nome
-      }})
+    } else {
+      enumMOnth.forEach(el => {
+        if (el.mese === mese) {
+          this.ArrayovertimeList = []
+          month = el.nome
+        }
+      })
     }
     this.http_overtime.getOvertimeHours(this.getUserId(), month, this.year).subscribe(data => {
+      console.log(data)
       data.forEach(el => {
-        this.ArrayovertimeList.push({ Date: el.Date, Hours: el.Hours, Id_user: this.getUserId(), Id_hour:el.Id_hour })
+        this.ArrayovertimeList.push({ Date: el.Date, Hours: el.Hours, Id_user: this.getUserId(), Id_hour: el.Id_hour })
       })
-    this.openBottomSheet();
+      this.openBottomSheet();
     })
   }
 
@@ -216,7 +221,7 @@ export class OreComponent {
     this.bottomSheet.open(this.bottomSheetContent);
   }
 
-  closebottomSheet() :void{
+  closebottomSheet(): void {
     this.bottomSheet.dismiss(this.bottomSheetContent)
   }
 
