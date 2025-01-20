@@ -24,7 +24,7 @@ export class TasksDialogComponent {
   Id_hour: number = this.data.dati?.Id_hour ? this.data.dati.Id_hour : null
   taskDescription: string;
   subtaskDescription = this.data.dati != null ? this.data.dati.id_subtask_subtask?.descrizione : null
-  id:any;
+  id: any;
 
 
   show: boolean;
@@ -34,7 +34,7 @@ export class TasksDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { dati }, private dialogRef: MatDialogRef<DialogComponent>, private http_overtime: OvertimeService, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService, private http_subtasks: SubtaskService) {
     this.arrayTasks = this.http_tasks.getAllTasks
-    this.http_hours.getLastId().subscribe(data=>{this.id = data})
+    this.http_hours.getLastId().subscribe(data => { this.id = data })
   }
 
   ngOnInit() {
@@ -55,25 +55,25 @@ export class TasksDialogComponent {
       Hours: 0,
       Date: this.getTodayDate(),
       Id_user: this.getUserId(),
-      Id_hour:this.id != null ? this.id : this.Id_hour
+      Id_hour: this.id != null ? this.id : this.Id_hour
     }
-console.log(this.overtime)
+    console.log(this.overtime)
     this.getTaskDescription();
     this.getAllSubtasks()
 
   }
 
-  getOvertimeByIdHour(id){
-    return this.http_overtime.getOvertimeByIdHour(id).subscribe(data=>{
+  getOvertimeByIdHour(id) {
+    return this.http_overtime.getOvertimeByIdHour(id).subscribe(data => {
       this.overtime.Hours = data.Hours
     })
   }
 
-  getLastId():number{
-     this.http_hours.getLastId().subscribe(data=>{
-       return data
+  getLastId(): number {
+    this.http_hours.getLastId().subscribe(data => {
+      return data
 
-     })
+    })
     return null
   }
 
@@ -126,7 +126,7 @@ console.log(this.overtime)
     if (this.show) {
 
       this.overtime.Date = this.hourData.Date
-      this.overtime.Id_hour= this.id + 1;
+      this.overtime.Id_hour = this.id + 1;
       console.log(this.overtime)
       this.http_overtime.InsertOvertimeHours(this.overtime).subscribe(data => {
 
@@ -146,9 +146,14 @@ console.log(this.overtime)
           return ''
         }
       })
-      if(this.show){
-        this.http_overtime.updateOvertimeHours(this.overtime).subscribe(data=>{
+      if (this.show) {
+        this.http_overtime.getOvertimeByIdHour(this.overtime.Id_hour).subscribe((data) => {
           console.log(data)
+          if (data == null) {
+            this.http_overtime.InsertOvertimeHours(this.overtime).subscribe();
+          } else {
+            this.http_overtime.updateOvertimeHours(this.overtime).subscribe();
+          }
         })
       }
       this.http_hours.updateHour(data, id_hour).subscribe(data => {
@@ -156,7 +161,7 @@ console.log(this.overtime)
     } catch (err) {
       console.log(err)
     }
-    window.location.reload()
+    // window.location.reload()
   }
 
   getTaskDescription() {
