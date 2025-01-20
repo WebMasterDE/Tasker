@@ -52,7 +52,7 @@ export class TasksDialogComponent {
     console.log(this.hourData)
     this.getOvertimeByIdHour(this.Id_hour)
     this.overtime = {
-      Hours: 0,
+      Hours: 0.5,
       Date: this.getTodayDate(),
       Id_user: this.getUserId(),
       Id_hour: this.id != null ? this.id : this.Id_hour
@@ -152,6 +152,8 @@ export class TasksDialogComponent {
           if (data == null) {
             this.http_overtime.InsertOvertimeHours(this.overtime).subscribe();
           } else {
+            console.log(this.overtime.Date)
+            this.overtime.Date = this.hourData.Date
             this.http_overtime.updateOvertimeHours(this.overtime).subscribe();
           }
         })

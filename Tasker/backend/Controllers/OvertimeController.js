@@ -46,41 +46,42 @@ exports.getOvertimeByHourId = async (req, res) => {
             {
                 where:
                 {
-                     Id_hour: req.params.idHour,
+                    Id_hour: req.params.idHour,
                 }
             }
         )
-        if(res.status(200)){
+        if (res.status(200)) {
             res.json(overtime)
-        }else{
+        } else {
             console.log('si è verificato un errore nel recupero dell\'ora di straordinario')
         }
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
 
 exports.modifyHourOvertime = async (req, res) => {
     console.log(req.body)
-    try{
+    try {
         overtime = await app.models.overtime.update(
             {
-                Hours: req.body.Hours
+                Hours: req.body.Hours,
+                Date: req.body.Date
             },
             {
-                where:{
+                where: {
                     Id_hour: req.body.Id_hour
                 }
             }
         )
 
-        if(res.status(201)){
+        if (res.status(201)) {
             console.log('Straordinario aggiornato corretamente')
-        }else{
+        } else {
             console.log('Errore nell\'aggiornamento dello Straordinario')
         }
 
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 
