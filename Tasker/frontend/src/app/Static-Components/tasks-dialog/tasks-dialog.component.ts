@@ -52,7 +52,7 @@ export class TasksDialogComponent {
     console.log(this.hourData)
     this.getOvertimeByIdHour(this.Id_hour)
     this.overtime = {
-      Hours: 0.5,
+      Hours: 0,
       Date: this.getTodayDate(),
       Id_user: this.getUserId(),
       Id_hour: this.id != null ? this.id : this.Id_hour
