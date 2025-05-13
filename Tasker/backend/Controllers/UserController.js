@@ -119,6 +119,7 @@ exports.getallHoursById = async (req, res) => {
 
 exports.getallHours = async (req, res) => {
     try {
+        console.log(app.models)
 
         const Hours = await app.models.hours.findAll({
             include: [
@@ -135,7 +136,7 @@ exports.getallHours = async (req, res) => {
         console.log(error)
     }
 }
-
+//TODO
 exports.addHours = async (req, res) => {
     try {
         const hour = await app.models.hours.create({
@@ -147,29 +148,53 @@ exports.addHours = async (req, res) => {
             Id_user: req.body.Id_user,
             id_subtask: req.body.id_subtask,
             Id_task: req.body.Id_task
+        });
 
-        })
+        const subtask = await app.models.task_subtask.findOne({
+            where: {
+                id_task: req.body.Id_task,
+                id_subtask: req.body.id_subtask,
+            },
+            include: [{
+                model: app.models.tasks,
+            }, {
+                model: app.models.subtask,
+            }],
+        });
 
-        res.status(201).send("Ore inserite inserite correttamente!")
+        console.log(subtask)
+
+        let descrizioneCompleta = "";
+
+        // await app.models.timetable.create({
+        //     id_commessa: 0,//BODY
+        //     id_operatore: 0,//BODY
+        //     ore_lavoro: req.body.Hour,
+        //     data_lavoro: req.body.Date,
+        //     operatore_ins: 0,//BODY
+        //     note: descrizioneCompleta,
+        // });
+
+        res.status(201).send("Ore inserite correttamente!");
     } catch (err) {
         console.log(err)
     }
 }
 
 exports.getLastId = async (req, res) => {
-    try{
+    try {
         const lastId = await app.models.hours.findOne({
             attributes: ['Id_hour'],
             order: [['Id_hour', 'DESC']],
             limit: 1
         })
         return res.json(lastId.dataValues.Id_hour)
-    }catch (err) {
+    } catch (err) {
         console.log(err);
     }
 
 }
-
+//TODO
 exports.deleteHours = async (req, res) => {
     try {
         app.models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })
@@ -182,7 +207,7 @@ exports.deleteHours = async (req, res) => {
         console.log(err)
     }
 }
-
+//TODO
 exports.updateHour = async (req, res) => {
     try {
 

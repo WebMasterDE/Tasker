@@ -8,11 +8,11 @@ const Contract_of_employmentRoute = require('./routes/Contract_of_employmentRout
 const parser = require('body-parser');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
-const initModels = require('./Models/init-models');
+const initModels = require('./models/init-models.js');
 const shiftsRoute = require('./routes/shifts')
 const dotenv = require('dotenv').config();
-const app = express();
 
+const app = express();
 app.use(parser.json());
 app.use(cors());
 
@@ -20,40 +20,64 @@ app.use(cors());
 const Dbsequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PASSWORD, {
     host: process.env.HOST,
     dialect: 'mariadb',
-    port: process.env.PORT
+    port: process.env.PORT,
+    logging: false,
+});
+
+const dbDiven = new Sequelize(process.env.DBDIVEN, process.env.USER, process.env.PASSWORD, {
+    host: process.env.HOST,
+    dialect: 'mariadb',
+    port: process.env.PORT,
+    logging: false,
 });
 
 // Inizializza i modelli
-const models = initModels(Dbsequelize);
+const models = initModels(Dbsequelize, dbDiven);
 
 // Verifica connessione al database
-Dbsequelize.authenticate()
-    .then(() => {
-        console.log('Connessione al database riuscita.');
+Dbsequelize.authenticate().then(() => {
+    console.log('[TaskerAPI] Connessione al database di tasker riuscita.');
 
-        return Dbsequelize.sync();
-    })
-    .then(() => {
-        console.log('Modelli sincronizzati con il database.');
+    Dbsequelize.sync().then(() => {
+        console.log('[TaskerAPI] Models sincronizzati con il database di tasker.');
 
-        app.get('/api/', (req, res) => {
-            res.status(200).send("API working!");
+        dbDiven.authenticate().then(() => {
+            console.log('[TaskerAPI] Connessione al database di diven riuscita.');
+
+            dbDiven.sync().then(() => {
+                console.log('[TaskerAPI] Models sincronizzati con il database di diven.');
+
+
+                app.get('/api/', (req, res) => {
+                    res.status(200).send("API working!");
+                });
+
+                app.use('/api', userRoute);
+                app.use('/api', taskRoute);
+                app.use('/api', archivedRoute);
+                app.use('/api', shiftsRoute);
+                app.use('/api', overtimeRoute)
+                app.use('/api', Contract_of_employmentRoute)
+                app.use('/api', subtaskRoute)
+
+                app.listen(3000, () => {
+                    console.log('\x1b[32m%s\x1b[0m', `[TaskerAPI] Server avviato su ${process.env.HOST}:3000`);
+                });
+
+            }).catch((err) => {
+                console.error('\x1b[31m%s\x1b[0m', 'Impossibile sincronizzare i models con il database di diven:', err);
+            });
+
+        }).catch((err) => {
+            console.error('\x1b[31m%s\x1b[0m', 'Impossibile connettersi al database di diven:', err);
         });
 
-        app.use('/api', userRoute);
-        app.use('/api', taskRoute);
-        app.use('/api', archivedRoute);
-        app.use('/api', shiftsRoute);
-        app.use('/api', overtimeRoute)
-        app.use('/api', Contract_of_employmentRoute)
-        app.use('/api', subtaskRoute)
-
-        app.listen(3000, () => {
-            console.log(`Server avviato su ${process.env.HOST}:3000`);
-        });
-    })
-    .catch((err) => {
-        console.error('Impossibile connettersi al database:', err);
+    }).catch((err) => {
+        console.error('\x1b[31m%s\x1b[0m', 'Impossibile sincronizzare i models con il database di tasker:', err);
     });
+
+}).catch((err) => {
+    console.error('\x1b[31m%s\x1b[0m', 'Impossibile connettersi al database di tasker:', err);
+});
 
 module.exports.models = models;
