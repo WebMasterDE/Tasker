@@ -1,0 +1,22 @@
+<div class="p-3">
+
+  <h2 mat-dialog-title>Crea un nuovo utente</h2>
+  <mat-dialog-content class="mat-typography">
+    <h3>Nome utente:</h3>
+    <input [(ngModel)]="User.Name" class="form-control mb-4 d-block" placeholder="Inserisci un utente..." style="width: 400px;"
+           type="text">
+
+    <h3>Email:</h3>
+    <input [(ngModel)]="User.Email" class="form-control mb-4 d-block" placeholder="Inserisci un email..." style="width: 400px;"
+           type="text">
+
+    <h3>Password</h3>
+    <input [(ngModel)]="User.Password" class="form-control mb-4 d-block" placeholder="Inserisci una password..." style="width: 400px;"
+           type="password">
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Annulla</button>
+    <button (click)="SendSignup()" [mat-dialog-close]="true" cdkFocusInitial mat-button>Crea utente</button>
+  </mat-dialog-actions>
+</div>

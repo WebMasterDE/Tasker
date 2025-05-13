@@ -1,0 +1,16 @@
+services:
+  securecapita:
+    container_name: tasker_frontend
+    build: .
+    image: tasker_frontend
+    ports:
+      - 4201:4200
+    expose:
+      - 4201
+    networks:
+      - net1
+
+networks:
+  net1:
+    name: frontend_internalnet
+    external: true

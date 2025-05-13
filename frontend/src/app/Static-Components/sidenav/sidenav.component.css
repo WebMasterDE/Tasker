@@ -1,0 +1,48 @@
+h1 {
+  padding: 0 1rem;
+}
+
+h2 {
+  padding: 1rem;
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+
+
+}
+
+mat-sidenav-container {
+  height: 100%;
+  /* background-color: #0093E9; */
+  /* background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%); */
+
+}
+
+
+mat-sidenav-content {
+  padding-top: 3.5rem;
+
+  @media screen and (min-width: 600px) {
+    padding-top: 4rem;
+  }
+}
+
+mat-sidenav {
+  background-color: #0093E9;
+  width: 200px;
+
+}
+
+::ng-deep .mat-icon-button .mat-icon {
+  color: white;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+}

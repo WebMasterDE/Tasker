@@ -1,0 +1,28 @@
+.card {
+  width: 30rem;
+  height: 31rem;
+  border-radius: 40px;
+  -webkit-box-shadow: 10px 10px 5px 1px rgba(0, 0, 0, 0.17);
+  -moz-box-shadow: 10px 10px 5px 1px rgba(0, 0, 0, 0.17);
+  box-shadow: 10px 10px 5px 1px rgba(0, 0, 0, 0.17);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-family: Roboto, sans-serif;
+
+}
+
+.card-text {
+  font-size: 1.2rem;
+
+}
+
+mat-panel-description {
+  color: black !important;
+}
+
+.importo {
+  font-weight: bold;
+  color: gray;
+}

@@ -1,0 +1,89 @@
+<div class="container my-5 p-3 bg-white rounded-3 shadow">
+  <button (click)="openDialog(null)" extended mat-fab class="my-3">
+    <i class="fa-solid fa-plus fs-5 mr-1"></i>
+    <i class="fa-regular fa-clock fs-5 mx-1"></i>
+  </button>
+  <div class="d-flex justify-content-between align-items-center">
+
+      <h1 class="my-3" style="font-size: 2rem;"><b>{{this.year}}</b></h1>
+      <button class="d-block" mat-raised-button (click)="overtimeList(null)"><b>Ultimi straordinari fatti</b></button>
+  </div>
+<hr>
+  <mat-accordion style="border-radius: 50px;" *ngFor="let mese of month">
+    <mat-expansion-panel class="my-2" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="accordion-title"> {{mese}} </mat-panel-title>
+        <mat-panel-description>  </mat-panel-description>
+      </mat-expansion-panel-header>
+      <button class="d-block" mat-raised-button (click)="overtimeList(mese)"><b>straordinari del mese di {{mese}}</b></button>
+
+      <div *ngFor="let el of datatable">
+        <div class="d-flex justify-content-end align-items-center" *ngIf="el.mese == mese">
+          <p style="font-size: 1.1rem;" class="d-inline m-0 mx-1"><b>Ore totali: </b> </p>
+          <span style="font-size: 1.1rem;" class="badge rounded-pill text-bg-primary">{{el.ore_totali}}</span>
+        </div>
+        <table *ngIf="el.mese === mese"
+
+        [dataSource]="el.ore"
+        class="mat-elevation-z8 custom-table"
+        mat-table
+        style="margin-top: 50px"
+        >
+    <ng-container matColumnDef="Date">
+      <th *matHeaderCellDef mat-header-cell>Data</th>
+      <td *matCellDef="let element" mat-cell>{{ element.Date }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Operator">
+      <th *matHeaderCellDef mat-header-cell>Operatore</th>
+    <td *matCellDef="let element" mat-cell>{{ element.Operator }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Task_name">
+      <th *matHeaderCellDef mat-header-cell>Task</th>
+      <td *matCellDef="let element"
+      mat-cell>{{ element.Id_task_task.Task_name + ' ' + element.Id_task_task.Task_description }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="Description">
+      <th *matHeaderCellDef mat-header-cell>Note</th>
+      <td *matCellDef="let element" mat-cell style="white-space: pre-line">{{ element.Description }}</td>
+    </ng-container>
+  <ng-container matColumnDef="Hours">
+    <th *matHeaderCellDef mat-header-cell>Ore inserite</th>
+    <td *matCellDef="let element" mat-cell>{{ element.Hour }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Commit">
+    <th *matHeaderCellDef mat-header-cell>Commit</th>
+    <td *matCellDef="let element" mat-cell>{{ element.Commit }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Actions">
+    <th *matHeaderCellDef mat-header-cell>Azioni</th>
+    <td *matCellDef="let element" mat-cell>
+      <div class="d-flex">
+
+        <i (click)="openDialog(element)" class="fa-solid fa-pen style-modify-button" style="cursor: pointer; color: rgb(223, 151, 18);"></i>
+        <i (click)="delete(element)" class="fa-solid fa-circle-xmark fs-1 mx-2" style="cursor: pointer; color: red;"></i>
+      </div>
+
+    </td>
+  </ng-container>
+
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+</table>
+
+</div>
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<ng-template #bottomSheetContent>
+  <mat-selection-list>
+      <mat-list-option *ngFor="let el of ArrayovertimeList">{{el.Date}}  <b>{{el.Hours}} ore</b></mat-list-option>
+  </mat-selection-list>
+</ng-template>
+
+</div>
+<div class="d-flex justify-content-end mx-5 my-5"></div>
+<app-spinner></app-spinner>

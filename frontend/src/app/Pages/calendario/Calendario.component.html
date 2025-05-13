@@ -1,0 +1,20 @@
+<div
+  class="container-fluid p-4"
+  style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background-color: white"
+>
+  <mat-tab-group (selectedTabChange)="tabChanged($event)">
+    <mat-tab label="Ore lavorate">
+      <div style="background-color: rgb(255, 255, 255); border-radius: 20px;box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;" class="row w-75  m-auto p-2 mt-3">
+        <section class="example-section d-flex  justify-content-center ">
+          <mat-checkbox #checkboxRef  *ngFor="let el of user"  [(ngModel)]="el.checked" [disabled]="selectedUserId !== null && selectedUserId !== el.id" (change)="filterByUser(user)" class="example-margin">{{el.name}}</mat-checkbox>
+        </section>
+      </div>
+      <full-calendar [options]="calendarOptions" class="mt-2 mb-4"></full-calendar>
+    </mat-tab>
+    <mat-tab label="Turni di lavoro">
+      <!-- Carica il calendario solo quando la tab è attiva -->
+      <full-calendar *ngIf="shiftsTabActive" [options]="calendarOptionsShifts" class="my-4"
+                     id="shift-calendar"></full-calendar>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  {{ text }}
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="d-flex flex-column w-75">
+    <div class="d-flex justify-content-center">
+      <input *ngIf="typeinput != ''" [(ngModel)]="data.inputdata" [type]="typeinput"
+             class="form-control w-75 mb-4 d-block" max="22" min="8">
+    </div>
+    <div class="d-flex justify-content-center">
+      <button cdkFocusInitial mat-button mat-dialog-close>{{ btn_left }}</button>
+      <div class="mx-5"></div>
+      <button (click)="action()" mat-button mat-dialog-close>{{ btn_right }}</button>
+    </div>
+
+  </div>
+
+</mat-dialog-actions>
+
+

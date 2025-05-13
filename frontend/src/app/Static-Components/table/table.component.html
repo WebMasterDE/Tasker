@@ -1,0 +1,52 @@
+<button (click)="openDialog()" extended mat-fab>
+  <i class="fa-solid fa-plus fs-5 mr-1"></i>
+  <i class="fa-regular fa-note-sticky fs-5 mx-1"></i>
+</button>
+<table
+  [dataSource]="datatable"
+  class="mat-elevation-z8 custom-table"
+  mat-table
+  style="margin-top: 50px"
+>
+  <ng-container matColumnDef="Task_name">
+    <th *matHeaderCellDef mat-header-cell>Nome</th>
+    <td *matCellDef="let element" mat-cell>{{ element.Task_name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Task_description">
+    <th *matHeaderCellDef mat-header-cell>Descrizione</th>
+    <td *matCellDef="let element" mat-cell>{{ element.Task_description }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Task_creation">
+    <th *matHeaderCellDef mat-header-cell>Data di creazione</th>
+    <td *matCellDef="let element" mat-cell>{{ element.Task_creation }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="color">
+    <th *matHeaderCellDef mat-header-cell>Color</th>
+    <td *matCellDef="let element" [style]="'color: ' + element.color" mat-cell>{{ element.color }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Manage">
+    <th *matHeaderCellDef mat-header-cell>Manage</th>
+    <td *matCellDef="let element" mat-cell>
+      <!-- <i
+        *ngIf="route === '/tasks'"
+        class="fa-solid fa-check"
+        (click)="archiveRecord(element)"
+      ></i>
+      <i *ngIf="route === '/tasks'" class="fa-solid fa-pen mx-2"></i> -->
+      <i
+        (click)="openDialogWindow(element)"
+        *ngIf="route === '/tasks'"
+        class="fa-solid fa-trash-can"
+      ></i>
+    </td>
+  </ng-container>
+
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+</table>
+<div class="d-flex justify-content-end mx-5 my-5"></div>
+<app-spinner></app-spinner>
+

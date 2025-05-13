@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('../node_modules/bootstrap/dist/css/bootstrap.css');
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~tippy.js/dist/tippy.css';
+@import 'tippy.js/themes/light.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.fc-daygrid-day-number {
+  color: black;
+}
+
+.fc-col-header-cell-cushion {
+  text-decoration: none;
+  color: black;
+}
