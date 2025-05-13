@@ -1,40 +1,32 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('subtask', {
-    id: {
+  return sequelize.define('credito_debito', {
+    id_credito_debito: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    descrizione: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    ore_preventivate: {
+    credito: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    data_inizio: {
-      type: DataTypes.DATEONLY,
+    debito: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    data_fine: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    data_fine_prevista: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.ENUM('aperto','chiuso'),
+    data: {
+      type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: "aperto"
+      defaultValue: Sequelize.Sequelize.fn('current_timestamp')
+    },
+    rapporto_credito_debito: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'subtask',
+    tableName: 'credito_debito',
     timestamps: false,
     indexes: [
       {
@@ -42,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id" },
+          { name: "id_credito_debito" },
         ]
       },
     ]

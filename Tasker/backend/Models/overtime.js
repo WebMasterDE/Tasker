@@ -23,10 +23,14 @@ module.exports = function(sequelize, DataTypes) {
         key: 'Id_user'
       }
     },
-    Id_hour: { // Assicurati che questo campo sia incluso
+    Id_hour: {
       type: DataTypes.INTEGER,
-      allowNull: true, // Modifica se il campo può essere nullo
-    },
+      allowNull: true,
+      references: {
+        model: 'hours',
+        key: 'Id_hour'
+      }
+    }
   }, {
     sequelize,
     tableName: 'overtime',

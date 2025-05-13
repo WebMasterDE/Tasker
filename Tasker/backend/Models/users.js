@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    id_operatore: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
+    },
     Name: {
       type: DataTypes.STRING(255),
       allowNull: true

@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true
     },
+    id_commessa: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
+    },
     Task_description: {
       type: DataTypes.STRING(255),
       allowNull: true
