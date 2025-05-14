@@ -56,12 +56,12 @@ Dbsequelize.authenticate().then(() => {
                 app.use('/api', taskRoute);
                 app.use('/api', archivedRoute);
                 app.use('/api', shiftsRoute);
-                app.use('/api', overtimeRoute)
-                app.use('/api', Contract_of_employmentRoute)
-                app.use('/api', subtaskRoute)
+                app.use('/api', overtimeRoute);
+                app.use('/api', Contract_of_employmentRoute);
+                app.use('/api', subtaskRoute);
 
                 app.listen(3000, () => {
-                    console.log('\x1b[32m%s\x1b[0m', `[TaskerAPI] Server avviato su ${process.env.HOST}:3000`);
+                    console.log('\x1b[32m%s\x1b[0m', `[TaskerAPI] Server avviato sulla porta 3000`);
                 });
 
             }).catch((err) => {

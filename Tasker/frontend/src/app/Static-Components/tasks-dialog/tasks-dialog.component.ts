@@ -58,7 +58,7 @@ export class TasksDialogComponent {
     }
     console.log(this.overtime)
     this.getTaskDescription();
-    this.getAllSubtasks()
+    // this.getAllSubtasks()
 
   }
 
@@ -99,7 +99,7 @@ export class TasksDialogComponent {
   onSelected(value: string): void {
     this.selectedvalue = value;
     this.selectedtask = true
-
+    this.getAllSubtasks(parseInt(value));
   }
 
   onSelectedSub(value: string): void {
@@ -107,11 +107,12 @@ export class TasksDialogComponent {
 
   }
 
-  getAllSubtasks() {
-    this.http_subtasks.getSubtasks().subscribe(data => {
-      this.arraySubtasks = data
-
-    })
+  getAllSubtasks(id_task: number) {
+    this.http_subtasks.getSubtasksByTaskId(
+      id_task
+    ).subscribe(data => {
+      this.arraySubtasks = data;
+    });
   }
 
   inserisciOra() {

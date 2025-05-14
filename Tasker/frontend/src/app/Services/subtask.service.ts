@@ -10,8 +10,8 @@ export class SubtaskService {
 
   constructor(private http: HttpClient) { }
 
-  getSubtasks() {
-    return this.http.get<any>(`${environment_prod.BACKEND_URL}/get/subtask`);
+  getSubtasksByTaskId(id_task: number) {
+    return this.http.get<any>(`${environment_prod.BACKEND_URL}/subtasks/task/${id_task}`);
   }
 
 }
