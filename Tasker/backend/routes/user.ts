@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import * as userController from '../controllers/userController';
 
-const route: Router = express.Router();
+let route: Router = express.Router();
 
 
 route.route('/:id/user').get(userController.getAllUserbyId);

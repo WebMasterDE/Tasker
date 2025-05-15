@@ -1,21 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Model, where } from 'sequelize';
+import * as models from "../models/init-models";
 
 
 export const getAllUserbyId = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        const user = await app.models.users.findOne({ where: { Id_user: req.params.id } })
-        return res.json(user);
+        const user = await models.users.findOne({ where: { Id_user: req.params.id } });
+        return res.status(200).json(user);
     } catch (error) {
         console.log(error)
+        return res.status(500).json({ error: true });
     }
 };
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        const users = await app.models.users.findAll({ attributes: ['Id_User', 'Name', 'Email', 'Authorization'] });
+        const users = await models.users.findAll({ attributes: ['Id_User', 'Name', 'Email', 'Authorization'] });
         return res.json(users)
     } catch (err) {
         console.log(err)
@@ -34,11 +35,11 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
             Password: hashedpassw,
             Authorization: 3
         }
-        app.models.users.findOne({ where: { Email: newUser.Email } }).then(resp => {
+        models.users.findOne({ where: { Email: newUser.Email } }).then(resp => {
             if (resp) {
                 return console.log("utente gia registrato")
             } else {
-                return app.models.users.create(newUser).then(response => {
+                return models.users.create(newUser).then(response => {
                     console.log('utente registrato con successo')
                 }).catch(error => console.log(error))
             }
@@ -58,7 +59,7 @@ function generateToken(data) {
 }
 
 export const login = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-    const checkuser = await app.models.users.findOne({ where: { Email: req.body.Email } })
+    const checkuser = await models.users.findOne({ where: { Email: req.body.Email } })
     if (checkuser) {
         const isthesamepass = await bcrypt.compare(req.body.Password, checkuser.Password);
         if (isthesamepass) {
@@ -77,30 +78,30 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 
 export const getallHoursById = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        let Hours = Object
+        let Hours;
         if (req.params.id == '10') {
 
-            Hours = await app.models.hours.findAll({
+            Hours = await models.hours.findAll({
                 include: [
                     {
-                        model: app.models.tasks,
+                        model: models.tasks,
                         as: 'Id_task_task'
                     },
                     {
-                        model: app.models.subtask,
+                        model: models.subtask,
                         as: 'id_subtask_subtask'
                     },
                 ],
             })
         } else {
-            Hours = await app.models.hours.findAll({
+            Hours = await models.hours.findAll({
                 include: [
                     {
-                        model: app.models.tasks,
+                        model: models.tasks,
                         as: 'Id_task_task'
                     },
                     {
-                        model: app.models.subtask,
+                        model: models.subtask,
                         as: 'id_subtask_subtask'
                     }
                 ],
@@ -117,10 +118,10 @@ export const getallHoursById = async (req: Request, res: Response, next: NextFun
 
 export const getallHours = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        const Hours = await app.models.hours.findAll({
+        const Hours = await models.hours.findAll({
             include: [
                 {
-                    model: app.models.tasks,
+                    model: models.tasks,
                     as: 'Id_task_task'
                 }
             ],
@@ -139,17 +140,17 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
         let id_commessa = 0;
 
         if (req.body.id_subtask) {
-            const task_subtask = await app.models.task_subtask.findOne({
+            const task_subtask = await models.task_subtask.findOne({
                 where: {
                     id_task: req.body.Id_task,
                     id_subtask: req.body.id_subtask,
                 },
                 include: [{
-                    model: app.models.tasks,
+                    model: models.tasks,
                     as: "id_task_task",
                     required: true,
                 }, {
-                    model: app.models.subtask,
+                    model: models.subtask,
                     as: "id_subtask_subtask",
                     required: true,
                 }],
@@ -161,7 +162,7 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
                 id_commessa = task_subtask.id_task_task.id_commessa;
             } else {
                 // gestisco il caso in cui id_subtask è stato passato ma non è presente in task_subtask, questo avviene quando la subtask non è assegnata alla task id_task
-                const task = await app.models.tasks.findOne({
+                const task = await models.tasks.findOne({
                     where: {
                         Id_task: req.body.Id_task,
                     }
@@ -171,7 +172,7 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
                 id_commessa = task.id_commessa;
             }
         } else {
-            const task = await app.models.tasks.findOne({
+            const task = await models.tasks.findOne({
                 where: {
                     Id_task: req.body.Id_task,
                 }
@@ -187,7 +188,7 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
 
         console.log(descrizioneCompleta);
 
-        const user = await app.models.users.findOne({
+        const user = await models.users.findOne({
             where: {
                 Id_user: req.body.Id_user
             }
@@ -204,11 +205,11 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
 
         // console.log(obj);
 
-        // const timetable = await app.models.timetable.findAll({
+        // const timetable = await models.timetable.findAll({
         // });
         // console.log(timetable);
 
-        const timetable = await app.models.timetable.create({
+        const timetable = await models.timetable.create({
             id_commessa: id_commessa,
             id_operatore: user.id_operatore,
             ore_lavoro: req.body.Hour,
@@ -217,7 +218,7 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
             note: descrizioneCompleta,
         });
 
-        const hour = await app.models.hours.create({
+        const hour = await models.hours.create({
             Operator: req.body.Operator,
             Description: req.body.Description,
             Hour: req.body.Hour,
@@ -237,7 +238,7 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
 
 export const getLastId = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        const lastId = await app.models.hours.findOne({
+        const lastId = await models.hours.findOne({
             attributes: ['Id_hour'],
             order: [['Id_hour', 'DESC']],
             limit: 1
@@ -251,7 +252,7 @@ export const getLastId = async (req: Request, res: Response, next: NextFunction)
 //TODO
 export const deleteHours = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        app.models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })
+        models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })
         if (result === 1) {
             res.status(200).json({ message: 'Record deleted successfully' });
         } else {
@@ -265,7 +266,7 @@ export const deleteHours = async (req: Request, res: Response, next: NextFunctio
 export const updateHour = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
 
-        const updHours = app.models.hours.update({
+        const updHours = models.hours.update({
 
             Description: req.body.Description,
             Date: req.body.Date,
@@ -283,7 +284,7 @@ export const updateHour = async (req: Request, res: Response, next: NextFunction
 
 export const getAuthorization = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        const authorization = await app.models.users.findOne({
+        const authorization = await models.users.findOne({
             where: { Id_user: req.params.id },
             attributes: ['Authorization']
         })
@@ -295,7 +296,7 @@ export const getAuthorization = async (req: Request, res: Response, next: NextFu
 
 export const modifyPassword = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        const existingUser = await app.models.users.findOne({ where: { id_User: req.params.id } })
+        const existingUser = await models.users.findOne({ where: { id_User: req.params.id } })
         const hashedpassw = await bcrypt.hash(req.body.pass, 12)
         existingUser.update({
             Password: hashedpassw

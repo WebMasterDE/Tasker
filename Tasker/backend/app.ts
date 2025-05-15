@@ -5,20 +5,20 @@ import archivedRoute from './routes/archive';
 import overtimeRoute from './routes/overtime';
 import subtaskRoute from './routes/subtask';
 import Contract_of_employmentRoute from './routes/contract_of_employment';
+import shiftsRoute from './routes/shifts';
 import parser from 'body-parser';
 import cors from 'cors';
 import { Sequelize } from 'sequelize';
-import initModels from './models/init-models';
-import shiftsRoute from './routes/shifts';
+import { initModels } from './models/init-models';
 import dotenv from 'dotenv';
+import * as utils from './utils';
 
-dotenv.config();
+const dotEnv = dotenv.config();
+if (!utils.isValidDotEnv(dotEnv)) {
+    process.exit(-1);
+}
 
-const app = express();
-app.use(parser.json());
-app.use(cors());
-
-const taskerDB = new Sequelize(
+const sequelizeTasker = new Sequelize(
     process.env.DB || '',
     process.env.USER || '',
     process.env.PASSWORD || '',
@@ -30,7 +30,7 @@ const taskerDB = new Sequelize(
     }
 );
 
-const divenDB = new Sequelize(
+const sequelizeDiven = new Sequelize(
     process.env.DBDIVEN || '',
     process.env.USER || '',
     process.env.PASSWORD || '',
@@ -42,22 +42,26 @@ const divenDB = new Sequelize(
     }
 );
 
-const models = initModels(taskerDB, divenDB);
+const models = initModels(sequelizeTasker, sequelizeDiven);
+
+const app = express();
+app.use(parser.json());
+app.use(cors());
 
 // Test di connessione
-taskerDB.authenticate()
+sequelizeTasker.authenticate()
     .then(() => {
         console.log('[TaskerAPI] Connessione al database di tasker riuscita.');
 
-        return taskerDB.sync();
+        return sequelizeTasker.sync();
     })
     .then(() => {
         console.log('[TaskerAPI] Models sincronizzati con il database di tasker.');
-        return divenDB.authenticate();
+        return sequelizeDiven.authenticate();
     })
     .then(() => {
         console.log('[TaskerAPI] Connessione al database di diven riuscita.');
-        return divenDB.sync();
+        return sequelizeDiven.sync();
     })
     .then(() => {
         console.log('[TaskerAPI] Models sincronizzati con il database di diven.');
@@ -75,11 +79,11 @@ taskerDB.authenticate()
         app.use('/api', subtaskRoute);
 
         app.listen(3000, () => {
-            console.log('\x1b[32m%s\x1b[0m', `[TaskerAPI] Server avviato sulla porta 3000`);
+            console.log('\x1b[32m%s\x1b[0m', `[TaskerAPI] Server avviato sulla porta 3000`);//green
         });
     })
     .catch((err: Error) => {
-        console.error('\x1b[31m%s\x1b[0m', 'Errore durante l\'inizializzazione:', err);
+        console.error('\x1b[31m%s\x1b[0m', 'Errore durante l\'inizializzazione:', err);//red
     });
 
-export { models };
+export { models };//TODO non necessario penso
