@@ -101,14 +101,6 @@ export class fatturazione_commesse extends Model<fatturazione_commesseAttributes
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
         name: "FK_fatturazione_commesse_1",
         using: "BTREE",
         fields: [

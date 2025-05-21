@@ -1,51 +1,10 @@
-import { error } from 'console';
-import dotenv from 'dotenv';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
+import { AuthenticatedRequest, AppError } from './types/types';
+import { expressjwt as jwt } from "express-jwt";
+import config from './config';
 
 
 //------------------------------------------------------------------------------
-
-export const isValidDotEnv = (dotEnv: dotenv.DotenvConfigOutput): boolean => {
-    if (dotEnv.error) {
-        console.log('\x1b[31m%s\x1b[0m', "Unable to load \".env\" file. Please provide one to store the JWT secret key");//red
-        return false;
-    }
-    if (!process.env.JWT_SECRET) {
-        console.log('\x1b[31m%s\x1b[0m', "\".env\" file loaded but JWT_SECRET=<jwt_secret> key-value pair was not found");//red
-        return false;
-    }
-    if (!process.env.HOST) {
-        console.log('\x1b[31m%s\x1b[0m', "\".env\" file loaded but HOST=<host> key-value pair was not found");//red
-        return false;
-    }
-    if (!process.env.PORT) {
-        console.log('\x1b[31m%s\x1b[0m', "\".env\" file loaded but PORT=<port> key-value pair was not found");//red
-        return false;
-    }
-    if (!process.env.USER) {
-        console.log('\x1b[31m%s\x1b[0m', "\".env\" file loaded but USER=<user> key-value pair was not found");//red
-        return false;
-    }
-    if (!process.env.PASSWORD) {
-        console.log('\x1b[31m%s\x1b[0m', "\".env\" file loaded but PASSWORD=<password> key-value pair was not found");//red
-        return false;
-    }
-    if (!process.env.DB) {
-        console.log('\x1b[31m%s\x1b[0m', "\".env\" file loaded but DB=<db> key-value pair was not found");//red
-        return false;
-    }
-    if (!process.env.DBDIVEN) {
-        console.log('\x1b[31m%s\x1b[0m', "\".env\" file loaded but DBDIVEN=<dbdiven> key-value pair was not found");//red
-        return false;
-    }
-    return true;
-};
-
-//------------------------------------------------------------------------------
-
-export interface AppError extends Error {
-    status?: number;
-}
 
 export const errorHandler = (
     err: AppError,
@@ -56,7 +15,7 @@ export const errorHandler = (
     console.error(err);
     res.status(err.status || 500).json({
         error: true,
-        message: err.message || 'Internal Server Error',
+        message: 'Internal Server Error',
     });
 };
 
@@ -68,8 +27,8 @@ export const invalidEndpointHandler = (
     next: NextFunction
 ) => {
     res.status(404).json({
-        error: true, 
-        message: "Invalid endpoint" 
+        error: true,
+        message: "Invalid endpoint"
     });
 };
 
@@ -86,3 +45,41 @@ export const requestHandler = (
     console.log("Time: " + new Date().toLocaleString());
     next();
 };
+
+//------------------------------------------------------------------------------
+
+export const authorize = (authLevel: number): RequestHandler[] => {
+    return [
+        // authenticate JWT token and attach user to request object (req.auth)
+        (req: Request, res: Response, next: NextFunction) => {
+            jwt({ secret: config.jwtSecret, algorithms: ['HS256'] })(req, res, (err): void => {
+                if (err) {
+                    console.error(err);
+                    res.status(401).json({
+                        error: true,
+                        message: 'Token non valido o assente.',
+                    });
+                } else {
+                    next();
+                }
+            });
+        },
+
+        (req: Request, res: Response, next: NextFunction): void => {
+            const authReq = req as AuthenticatedRequest;
+
+            console.log("User id: " + authReq.auth.id);
+            console.log("User mail: " + authReq.auth.mail);
+            console.log("Auth Level: " + authReq.auth.authLevel);
+
+            if (authReq.auth.authLevel > authLevel) {
+                res.status(401).json({
+                    error: true,
+                    message: 'Non sei autorizzato ad accedere a questa risorsa.'
+                });
+            } else {
+                next();
+            }
+        }
+    ];
+}

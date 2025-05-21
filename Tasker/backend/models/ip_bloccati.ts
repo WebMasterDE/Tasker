@@ -75,14 +75,6 @@ export class ip_bloccati extends Model<ip_bloccatiAttributes, ip_bloccatiCreatio
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
         name: "ip_bloccati_ana_operatori_id_operatore_fk",
         using: "BTREE",
         fields: [

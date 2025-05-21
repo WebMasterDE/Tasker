@@ -1,28 +1,25 @@
 import express, { Request, Response } from 'express';
 import userRoute from './routes/user';
-import taskRoute from './routes/task';
-import archivedRoute from './routes/archive';
-import overtimeRoute from './routes/overtime';
-import subtaskRoute from './routes/subtask';
-import contract_of_employmentRoute from './routes/contract_of_employment';
-import shiftsRoute from './routes/shifts';
+import authRoute from './routes/auth';
+// import hoursRoute from './routes/hours';
+// import taskRoute from './routes/task';
+// import archivedRoute from './routes/archive';
+// import overtimeRoute from './routes/overtime';
+// import subtaskRoute from './routes/subtask';
+// import contract_of_employmentRoute from './routes/contract_of_employment';
+// import shiftsRoute from './routes/shifts';
 import parser from 'body-parser';
 import cors from 'cors';
 import { Sequelize } from 'sequelize';
 import { initModels } from './models/init-models';
-import dotenv from 'dotenv';
 import * as utils from './utils';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import passport from "passport";
+import passportHTTP = require('passport-http');
+import bcrypt from 'bcrypt';
+import config from './config';
 
-
-
-//------------------------------------------------------------------------------
-
-const dotEnv = dotenv.config();
-if (!utils.isValidDotEnv(dotEnv)) {
-    process.exit(-1);
-}
 
 //------------------------------------------------------------------------------
 
@@ -66,30 +63,66 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 //------------------------------------------------------------------------------
 
 const sequelizeTasker = new Sequelize(
-    process.env.DB || '',
-    process.env.USER || '',
-    process.env.PASSWORD || '',
+    config.db,
+    config.user,
+    config.password,
     {
-        host: process.env.HOST,
+        host: config.host,
         dialect: 'mariadb',
-        port: Number(process.env.PORT) || 3306,
+        port: config.port,
         logging: false,
     }
 );
 
 const sequelizeDiven = new Sequelize(
-    process.env.DBDIVEN || '',
-    process.env.USER || '',
-    process.env.PASSWORD || '',
+    config.dbDiven,
+    config.user,
+    config.password,
     {
-        host: process.env.HOST,
+        host: config.host,
         dialect: 'mariadb',
-        port: Number(process.env.PORT) || 3306,
+        port: config.port,
         logging: false,
     }
 );
 
 const models = initModels(sequelizeTasker, sequelizeDiven);
+
+//------------------------------------------------------------------------------
+
+passport.use(new passportHTTP.BasicStrategy(
+    function (mail, password, done) {
+        console.log("New login attempt from " + mail);
+
+        models.users.findOne({
+            where: { Email: mail }
+        }).then((user) => {
+            if (!user) {
+                return done({ status: 401, message: 'Invalid user' });
+            }
+
+            if (user.Password) {
+                bcrypt.compare(password, user.Password, function (err, result) {
+                    if (result) {
+                        return done(null, {
+                            id: user.Id_user,
+                            mail: user.Email,
+                            authLevel: user.Authorization
+                        });
+                    } else {
+                        return done({ status: 401, message: 'Email o password errate.' });
+                    }
+                });
+            } else {
+                return done({ status: 401, message: 'Email o password errate.' })
+            }
+        }).catch((err) => {
+            if (err) {
+                return done({ status: 500, message: err });
+            }
+        })
+    }
+));
 
 //------------------------------------------------------------------------------
 
@@ -113,12 +146,14 @@ app.route('/api/').get((req: Request, res: Response) => {
 
 // routes
 app.use('/api', userRoute);
-app.use('/api', taskRoute);
-app.use('/api', archivedRoute);
-app.use('/api', shiftsRoute);
-app.use('/api', overtimeRoute);
-app.use('/api', contract_of_employmentRoute);
-app.use('/api', subtaskRoute);
+app.use('/api', authRoute);
+// app.use('/api', hoursRoute);
+// app.use('/api', taskRoute);
+// app.use('/api', archivedRoute);
+// app.use('/api', shiftsRoute);
+// app.use('/api', overtimeRoute);
+// app.use('/api', contract_of_employmentRoute);
+// app.use('/api', subtaskRoute);
 
 // error handling middleware
 app.use(utils.errorHandler);
@@ -154,5 +189,3 @@ sequelizeTasker.authenticate()
     });
 
 //------------------------------------------------------------------------------
-
-// export { models };//TODO non necessario penso

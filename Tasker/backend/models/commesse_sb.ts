@@ -1165,14 +1165,6 @@ export class commesse_sb extends Model<commesse_sbAttributes, commesse_sbCreatio
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
         name: "Index_2",
         using: "BTREE",
         fields: [
