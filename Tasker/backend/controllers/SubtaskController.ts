@@ -1,23 +1,28 @@
-const { Op, Sequelize, where } = require('sequelize');
-const app = require('../app');
+import { Request, Response, NextFunction } from 'express';
+import * as models from "../models/init-models";
 
-exports.getSubtasksByTaskId = async (req, res) => {
+export const getSubtasksByTaskId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const subtasks = await app.models.subtask.findAll({
+        const subtasks = await models.subtask.findAll({
             include: [{
-                model: app.models.task_subtask,
+                model: models.task_subtask,
                 as: "task_subtasks",
                 required: true,
                 where: {
                     id_task: req.params.id_task,
                 },
             }],
-        })
+        });
 
-        res.json(subtasks)
+        res.status(200).json(subtasks);
 
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({ error: true });
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
     }
 }

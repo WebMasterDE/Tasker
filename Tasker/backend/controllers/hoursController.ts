@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as models from "../models/init-models";
 
 
-export const getallHoursById = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+export const getallHoursById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         let Hours;
         if (req.params.id == '10') {
@@ -36,13 +36,13 @@ export const getallHoursById = async (req: Request, res: Response, next: NextFun
                 where: { Id_user: req.params.id }
             })
         }
-        return res.json(Hours)
+        res.json(Hours)
     } catch (error) {
         console.log(error)
     }
 }
 
-export const getallHours = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+export const getallHours = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const Hours = await models.hours.findAll({
             include: [
@@ -54,13 +54,13 @@ export const getallHours = async (req: Request, res: Response, next: NextFunctio
 
         })
 
-        return res.json(Hours)
+        res.json(Hours)
     } catch (error) {
         console.log(error)
     }
 }
 //TODO
-export const addHours = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+export const addHours = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         let descrizioneParziale = "";
         let id_commessa = 0;
@@ -161,14 +161,15 @@ export const addHours = async (req: Request, res: Response, next: NextFunction):
         console.log(err)
     }
 }
-export const getLastId = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+
+export const getLastId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const lastId = await models.hours.findOne({
             attributes: ['Id_hour'],
             order: [['Id_hour', 'DESC']],
             limit: 1
         })
-        return res.json(lastId.dataValues.Id_hour)
+        res.json(lastId?.dataValues.Id_hour)
     } catch (err) {
         console.log(err);
     }
@@ -176,9 +177,9 @@ export const getLastId = async (req: Request, res: Response, next: NextFunction)
 }
 
 //TODO
-export const deleteHours = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+export const deleteHours = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        models.hours.destroy({ where: { Id_hour: req.body.Id_hour } })
+        let result = await models.hours.destroy({ where: { Id_hour: req.body.Id_hour } });
         if (result === 1) {
             res.status(200).json({ message: 'Record deleted successfully' });
         } else {
@@ -189,20 +190,18 @@ export const deleteHours = async (req: Request, res: Response, next: NextFunctio
     }
 }
 //TODO
-export const updateHour = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+export const updateHour = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-
-        const updHours = models.hours.update({
-
+        const updHours = await models.hours.update({
             Description: req.body.Description,
             Date: req.body.Date,
             Commit: req.body.Commit,
             Hour: req.body.Hour,
             Id_task: req.body.Id_task,
             id_subtask: req.body.id_subtask
+        }, { where: { Id_hour: req.params.idHour } });
 
-        }, { where: { Id_hour: req.params.idHour } })
-        return updHours
+        res.status(200).json(updHours);
     } catch (err) {
         console.log(err)
     }

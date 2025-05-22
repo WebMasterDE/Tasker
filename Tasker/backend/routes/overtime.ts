@@ -1,11 +1,17 @@
-const express = require('express');
-const route = express.Router();
-const OvertimeController = require('../Controllers/OvertimeController')
-const {getOvertimeByUserId} = require("../Controllers/OvertimeController");
+import express, { Router } from 'express';
+import * as overtimeController from '../controllers/overtimeController';
+import * as utils from '../utils';
 
-route.get('/get/:id/:month/:year/overtime', OvertimeController.getOvertimeByUserId);
-route.get('/get/:idHour/overtime',OvertimeController.getOvertimeByHourId);
-route.post('/insert/overtime', OvertimeController.InsertHour);
-route.post('/post/update/overtime',OvertimeController.modifyHourOvertime);
+let router: Router = express.Router();
 
-module.exports = route
+
+router.route('/get/:id/:month/:year/overtime').get(utils.authorize(3), overtimeController.getOvertimeByUserId);
+
+router.route('/get/:idHour/overtime').get(utils.authorize(3), overtimeController.getOvertimeByHourId);
+
+router.route('/insert/overtime').post(utils.authorize(3), overtimeController.InsertHour);
+
+router.route('/post/update/overtime').post(utils.authorize(3), overtimeController.modifyHourOvertime);
+
+
+export default router;

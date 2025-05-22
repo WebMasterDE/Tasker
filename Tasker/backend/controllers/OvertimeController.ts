@@ -1,88 +1,104 @@
-const { Op, Sequelize } = require('sequelize');
-const app = require('../app');
+import { Request, Response, NextFunction } from 'express';
+import * as models from "../models/init-models";
 
 
-exports.InsertHour = async (req, res) => {
+export const InsertHour = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const overtime = await app.models.overtime.create({
+        const overtime = await models.overtime.create({
             Hours: req.body.Hours,
             Date: req.body.Date,
             Id_user: req.body.Id_user,
             Id_hour: req.body.Id_hour
-        })
-        res.status(201).send("Straordinario inserito correttamente!")
+        });
 
-    } catch (err) {
-        console.log(err)
+        res.status(201).json({
+            error: false,
+            message: "Straordinario inserito correttamente!"
+        });
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
     }
 };
 
 
-exports.getOvertimeByUserId = async (req, res) => {
+export const getOvertimeByUserId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const overtime = await app.models.overtime.findAll(
-            {
-                where:
-                {
-                    Id_user: req.params.id,
-                    [Op.and]: [
-                        Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('Date')), req.params.year),
-                        Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('Date')), req.params.month)
-                    ]
-                }
-            })
-        return res.json(overtime);
-    } catch (error) {
-        console.log(error)
-    }
+        const overtime = await models.overtime.findAll({
+            where: {
+                Id_user: req.params.id,
+                [Op.and]: [
+                    Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('Date')), req.params.year),
+                    Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('Date')), req.params.month)
+                ]
+            }
+        });
+        res.status(200).json(overtime);
 
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
 }
 
 // Va a recuperarsi l'ora di straordinario dall'Id delle ore lavorate.
 // componente/i: task-dialog
-exports.getOvertimeByHourId = async (req, res) => {
+export const getOvertimeByHourId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const overtime = await app.models.overtime.findOne(
-            {
-                where:
-                {
-                    Id_hour: req.params.idHour,
-                }
+        const overtime = await models.overtime.findOne({
+            where: {
+                Id_hour: req.params.idHour,
             }
-        )
-        if (res.status(200)) {
-            res.json(overtime)
+        });
+
+        res.status(200).json(overtime);
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
         } else {
-            console.log('si è verificato un errore nel recupero dell\'ora di straordinario')
+            next({
+                message: String(err),
+            });
         }
-    } catch (err) {
-        console.log(err)
     }
 }
 
-exports.modifyHourOvertime = async (req, res) => {
+export const modifyHourOvertime = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     console.log(req.body)
     try {
-        overtime = await app.models.overtime.update(
-            {
-                Hours: req.body.Hours,
-                Date: req.body.Date
-            },
-            {
-                where: {
-                    Id_hour: req.body.Id_hour
-                }
+        const overtime = await models.overtime.update({
+            Hours: req.body.Hours,
+            Date: req.body.Date
+        }, {
+            where: {
+                Id_hour: req.body.Id_hour
             }
-        )
+        });
 
-        if (res.status(201)) {
-            console.log('Straordinario aggiornato corretamente')
+        res.status(201).json({
+            error: false,
+            message: "Straordinario aggiornato correttamente!"
+        });
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
         } else {
-            console.log('Errore nell\'aggiornamento dello Straordinario')
+            next({
+                message: String(err),
+            });
         }
-
-    } catch (err) {
-        console.log(err)
     }
-
 }

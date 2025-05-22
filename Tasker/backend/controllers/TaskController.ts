@@ -1,44 +1,67 @@
-const app = require('../app');
+import { Request, Response, NextFunction } from 'express';
+import * as models from "../models/init-models";
 
-exports.getTasks = async (req, res) => {
+export const getTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const alltask = await app.models.tasks.findAll()
-        res.json(alltask)
-    } catch (err) {
-        console.log(err)
+        const alltask = await models.tasks.findAll();
+        res.status(200).json(alltask);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
     }
 }
 
-exports.deleteTasks = async (req, res) => {
+export const deleteTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const deletesingleTask = await app.models.tasks.destroy({
+        const deletesingleTask = await models.tasks.destroy({
             where: {
                 Id_task: req.body.Id_task
             }
-        })
-        if (req.id) {
-            res.status(200).json(deletesingleTask)
+        });
+
+        res.status(201).json({
+            error: false,
+            message: "Task cancellato!"
+        });
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
         } else {
-            res.status(401)
+            next({
+                message: String(err),
+            });
         }
-    } catch (err) {
-        console.log(err)
     }
 }
 
-exports.addTasks = async (req, res) => {
+export const addTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         console.log(req.body)
-        app.models.tasks.create({
+        models.tasks.create({
             Task_name: req.body.Task_name,
+            id_commessa: 0,//TODO
             Task_description: req.body.Task_description,
             Task_creation: req.body.Task_creation,
-            userIdUser: req.body.Id_user,
             color: req.body.color,
-        })
+        });
 
-        res.status(201).send("Task effettuata correttamente!")
-    } catch (err) {
-        console.log(err)
+        res.status(201).json({
+            error: false,
+            message: "Task inserito"
+        });
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
     }
 }

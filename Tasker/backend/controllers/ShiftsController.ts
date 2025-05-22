@@ -1,35 +1,53 @@
-const app = require('../app');
+import { Request, Response, NextFunction } from 'express';
+import * as models from "../models/init-models";
 
-exports.insertShift = async (req, res) => {
+export const insertShift = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     console.log("--------------------------------------------", req.body)
     try {
-        const shift = await app.models.shifts.create({
+        const shift = await models.shifts.create({
             start_date: req.body.start_date,
             end_date: req.body.end_date,
             hour: req.body.hour,
             Id_user: req.body.Id_user
-        })
-        res.status(201).send("Turno inserito correttamente!")
+        });
 
-    } catch (err) {
-        console.log(err)
+        res.status(201).json({
+            error: false,
+            message: "Turno inserito correttamente!"
+        });
+
+   } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
     }
 }
 
-exports.getAllShifts = async (req, res) => {
+export const getAllShifts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const getshift = await app.models.shifts.findAll({
+        const getshift = await models.shifts.findAll({
             include: [
                 {
-                    model: app.models.users,
+                    model: models.users,
                     as: 'Id_user_user',
                     attributes: ['Name']
                 }
             ]
-        })
-        res.json(getshift)
+        });
 
-    } catch (err) {
-        console.log(err)
+        res.status(200).json(getshift);
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
     }
 }

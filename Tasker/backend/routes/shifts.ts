@@ -1,8 +1,12 @@
-const express = require('express');
-const route = express.Router();
-const ShiftController = require('../Controllers/ShiftsController')
+import express, { Router } from 'express';
+import * as shiftsController from '../controllers/shiftsController';
+import * as utils from '../utils';
 
-route.post('/insert/shift', ShiftController.insertShift)
-route.get('/get/shift', ShiftController.getAllShifts)
+let router: Router = express.Router();
 
-module.exports = route
+
+router.route('/insert/shift').post(utils.authorize(3), shiftsController.insertShift);
+
+router.route('/get/shift').get(utils.authorize(3), shiftsController.getAllShifts);
+
+export default router;

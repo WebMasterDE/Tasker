@@ -1,12 +1,16 @@
-const express = require('express');
-const route = express.Router();
-const Taskcontroller = require('../Controllers/TaskController')
-const {deleteTasks} = require("../Controllers/TaskController");
+import express, { Router } from 'express';
+import * as taskController from '../controllers/taskController';
+import * as utils from '../utils';
 
 
-route.get('/get/tasks', Taskcontroller.getTasks)
-route.post('/tasks/delete', Taskcontroller.deleteTasks)
-route.post('/tasks/create', Taskcontroller.addTasks)
+let router: Router = express.Router();
 
 
-module.exports = route
+router.route('/get/tasks').get(utils.authorize(3), taskController.getTasks);
+
+router.route('/tasks/delete').post(utils.authorize(3), taskController.deleteTasks);
+
+router.route('/tasks/create').post(utils.authorize(3), taskController.addTasks);
+
+
+export default router;

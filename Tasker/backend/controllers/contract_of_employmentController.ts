@@ -1,19 +1,24 @@
-const { Op, Sequelize } = require('sequelize');
-const app = require('../app');
+import { Request, Response, NextFunction } from 'express';
+import * as models from "../models/init-models";
 
 
-exports.getContractInfo = async (req, res) => {
+export const getContractInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const contract = await app.models.contract_of_employment.findOne(
-            {
-                where:
-                {
-                    Id_user: req.params.id,
-                }
-            })
-        return res.json(contract);
-    } catch (error) {
-        console.log(error)
-    }
+        const contract = await models.contract_of_employment.findOne({
+            where: {
+                Id_user: req.params.id,
+            }
+        });
 
+        res.status(200).json(contract);
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
 }

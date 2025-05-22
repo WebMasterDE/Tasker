@@ -1,8 +1,11 @@
-const express = require('express');
-const route = express.Router();
-const ArchiveController = require('../Controllers/ArchiveController')
+import express, { Router } from 'express';
+import * as archiveController from '../controllers/archiveController';
+import * as utils from '../utils';
 
-route.post('/archive/:id_task/:id_user', ArchiveController.addTasksToArchive)
-route.get('/archive/:id', ArchiveController.getArchive)
+let router: Router = express.Router();
 
-module.exports = route
+router.route('/archive/:id_task/:id_user').post(utils.authorize(1), archiveController.addTasksToArchive);
+
+router.route('/archive/:id').get(utils.authorize(3), archiveController.getArchive);
+
+export default router;

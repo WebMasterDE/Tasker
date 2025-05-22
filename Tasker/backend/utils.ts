@@ -12,6 +12,7 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
+    console.log('\x1b[31m%s\x1b[0m', "------------------------------------------------");//red
     console.error(err);
     res.status(err.status || 500).json({
         error: true,
@@ -68,12 +69,13 @@ export const authorize = (authLevel: number): RequestHandler[] => {
         (req: Request, res: Response, next: NextFunction): void => {
             const authReq = req as AuthenticatedRequest;
 
-            console.log("User id: " + authReq.auth.id);
-            console.log("User mail: " + authReq.auth.mail);
-            console.log("Auth Level: " + authReq.auth.authLevel);
+            console.log("Authorized");
+            console.log("  User id: " + authReq.auth.id);
+            console.log("  User mail: " + authReq.auth.mail);
+            console.log("  Auth Level: " + authReq.auth.authLevel);
 
             if (authReq.auth.authLevel > authLevel) {
-                res.status(401).json({
+                res.status(403).json({
                     error: true,
                     message: 'Non sei autorizzato ad accedere a questa risorsa.'
                 });
@@ -83,3 +85,5 @@ export const authorize = (authLevel: number): RequestHandler[] => {
         }
     ];
 }
+
+//------------------------------------------------------------------------------
