@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as models from "../models/init-models";
+import { Op, Sequelize } from 'sequelize';
 
 
 export const InsertHour = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

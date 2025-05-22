@@ -1,13 +1,13 @@
 import express, { Request, Response } from 'express';
 import userRoute from './routes/user';
 import authRoute from './routes/auth';
-// import hoursRoute from './routes/hours';
-// import taskRoute from './routes/task';
-// import archivedRoute from './routes/archive';
-// import overtimeRoute from './routes/overtime';
-// import subtaskRoute from './routes/subtask';
-// import contract_of_employmentRoute from './routes/contract_of_employment';
-// import shiftsRoute from './routes/shifts';
+import hoursRoute from './routes/hours';
+import taskRoute from './routes/task';
+import archivedRoute from './routes/archive';
+import overtimeRoute from './routes/overtime';
+import subtaskRoute from './routes/subtask';
+import contract_of_employmentRoute from './routes/contract_of_employment';
+import shiftsRoute from './routes/shifts';
 import parser from 'body-parser';
 import cors from 'cors';
 import { Sequelize } from 'sequelize';
@@ -147,13 +147,13 @@ app.route('/api/').get((req: Request, res: Response) => {
 // routes
 app.use('/api', userRoute);
 app.use('/api', authRoute);
-// app.use('/api', hoursRoute);
-// app.use('/api', taskRoute);
-// app.use('/api', archivedRoute);
-// app.use('/api', shiftsRoute);
-// app.use('/api', overtimeRoute);
-// app.use('/api', contract_of_employmentRoute);
-// app.use('/api', subtaskRoute);
+app.use('/api', hoursRoute);
+app.use('/api', taskRoute);
+app.use('/api', archivedRoute);
+app.use('/api', shiftsRoute);
+app.use('/api', overtimeRoute);
+app.use('/api', contract_of_employmentRoute);
+app.use('/api', subtaskRoute);
 
 // error handling middleware
 app.use(utils.errorHandler);
