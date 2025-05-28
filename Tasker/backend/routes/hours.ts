@@ -48,7 +48,7 @@ router.route('/last_id_hour').get(utils.authorize(3), hoursController.getLastId)
  *    tags:
  *      - Hours
  */
-router.route('/hours/user/:id_user').get(utils.authorize(3), hoursController.getallHoursById);
+router.route('/hours/user/:id_user').get(utils.authorize(3), hoursController.getallHoursByUserId);
 
 /**
  * @swagger
@@ -72,8 +72,8 @@ router.route('/hours').get(utils.authorize(3), hoursController.getallHours);
  * @swagger
  * /api/hour:
  *  post:
- *    summary: "add hour"
- *    description: "add hour"
+ *    summary: "add hour (affects DIVEN)"
+ *    description: "add hour (affects DIVEN)"
  *    requestBody:
  *      required: true
  *      content:
@@ -98,9 +98,6 @@ router.route('/hours').get(utils.authorize(3), hoursController.getallHours);
  *              Id_user:
  *                type: integer
  *                example: 8
- *              Operator:
- *                type: string
- *                example: "Gioele Zara"
  *              Hour:
  *                type: integer
  *                example: 8
@@ -127,9 +124,29 @@ router.route(
 /**
  * @swagger
  * /api/hour/{id_hour}:
+ *  get:
+ *    summary: "Get hour by id"
+ *    description: "Get hour by id"
+ *    parameters:
+ *       - name: id_hour
+ *         in: path
+ *         required: true
+ *         description: "Hour ID."
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ *      '401':
+ *        description: Unauthorized
+ *    security:
+ *       - Bearer: []
+ *    tags:
+ *      - Hours
  *  delete:
- *    summary: "Delete hour by id"
- *    description: "Delete hour by id"
+ *    summary: "Delete hour by id (affects DIVEN)"
+ *    description: "Delete hour by id (affects DIVEN)"
  *    parameters:
  *       - name: id_hour
  *         in: path
@@ -148,8 +165,8 @@ router.route(
  *    tags:
  *      - Hours
  *  put:
- *    summary: "Update hour by id"
- *    description: "Update hour by id"
+ *    summary: "Update hour by id (affects DIVEN)"
+ *    description: "Update hour by id (affects DIVEN)"
  *    parameters:
  *       - name: id_hour
  *         in: path
@@ -182,9 +199,6 @@ router.route(
  *              Id_user:
  *                type: integer
  *                example: 8
- *              Operator:
- *                type: string
- *                example: "Gioele Zara"
  *              Hour:
  *                type: integer
  *                example: 8
@@ -203,6 +217,9 @@ router.route(
  */
 router.route(
     '/hour/:id_hour'
+).get(
+    utils.authorize(3),
+    hoursController.getHourById
 ).delete(
     utils.authorize(2),
     hoursController.deleteHour

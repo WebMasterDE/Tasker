@@ -87,3 +87,8 @@ export const authorize = (authLevel: number): RequestHandler[] => {
 }
 
 //------------------------------------------------------------------------------
+
+export const canModify = (authReq: AuthenticatedRequest, userID: number): boolean => {
+    const ADMIN_AUTH = 1;
+    return authReq.auth.authLevel == ADMIN_AUTH || authReq.auth.id == userID;
+}

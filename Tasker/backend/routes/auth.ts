@@ -11,18 +11,18 @@ let router: Router = express.Router();
 
 /**
  * @swagger
- * /api/user/auth/login:
+ * /api/login:
  *  get:
  *    description: Use to request a user login
  *    responses:
  *      '200':
  *        description: A successful response
- *      '401':
- *        description: Unauthorized
+ *      '400':
+ *        description: Bad request
  *    tags:
  *      - Auth
  */
-router.route('/user/auth/login').get(passport.authenticate('basic', { session: false }), authController.login);
+router.route('/login').get(passport.authenticate('basic', { session: false }), authController.login);
 
 // router.route('/authorization/:id/user').get(authController.getAuthorization);
 

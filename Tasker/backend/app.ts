@@ -62,7 +62,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 //------------------------------------------------------------------------------
 
-const sequelizeTasker = new Sequelize(
+export const sequelizeTasker = new Sequelize(
     config.db,
     config.user,
     config.password,
@@ -74,7 +74,7 @@ const sequelizeTasker = new Sequelize(
     }
 );
 
-const sequelizeDiven = new Sequelize(
+export const sequelizeDiven = new Sequelize(
     config.dbDiven,
     config.user,
     config.password,
