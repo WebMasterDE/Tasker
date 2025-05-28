@@ -1,12 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import * as models from "../models/init-models";
-import { AuthenticatedRequest } from '../types/types';
 
 
 
 export const getUserbyId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const user = await models.users.findOne({ where: { Id_user: req.params.id } });
+        const user = await models.users.findOne({ where: { Id_user: req.params.id_user } });
         res.status(200).json(user);
     } catch (err: unknown) {
         if (err instanceof Error) {

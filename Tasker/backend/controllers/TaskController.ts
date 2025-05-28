@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as models from "../models/init-models";
 
-export const getTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getAllTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const alltask = await models.tasks.findAll();
         res.status(200).json(alltask);
@@ -18,9 +18,9 @@ export const getTasks = async (req: Request, res: Response, next: NextFunction):
 
 export const deleteTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const deletesingleTask = await models.tasks.destroy({
+        await models.tasks.destroy({
             where: {
-                Id_task: req.body.Id_task
+                Id_task: req.params.id_task
             }
         });
 
@@ -42,10 +42,9 @@ export const deleteTasks = async (req: Request, res: Response, next: NextFunctio
 
 export const addTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        console.log(req.body)
         models.tasks.create({
             Task_name: req.body.Task_name,
-            id_commessa: 0,//TODO
+            id_commessa: req.body.id_commessa,
             Task_description: req.body.Task_description,
             Task_creation: req.body.Task_creation,
             color: req.body.color,

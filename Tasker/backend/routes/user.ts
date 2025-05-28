@@ -7,12 +7,12 @@ let router: Router = express.Router();
 
 /**
  * @swagger
- * /api/{id}/user:
+ * /api/user/{id_user}:
  *  get:
  *    summary: "get user by id"
  *    description: "get user by id"
  *    parameters:
- *       - name: id
+ *       - name: id_user
  *         in: path
  *         required: true
  *         description: "User ID."
@@ -29,11 +29,11 @@ let router: Router = express.Router();
  *    tags:
  *      - Users
  */
-router.route('/:id/user').get(utils.authorize(3), userController.getUserbyId);
+router.route('/user/:id_user').get(utils.authorize(3), userController.getUserbyId);
 
 /**
  * @swagger
- * /api/get/users:
+ * /api/users:
  *  get:
  *    summary: "get all users"
  *    description: "get all users"
@@ -47,7 +47,7 @@ router.route('/:id/user').get(utils.authorize(3), userController.getUserbyId);
  *    tags:
  *      - Users
  */
-router.route('/get/users').get(utils.authorize(3), userController.getAllUsers);
+router.route('/users').get(utils.authorize(3), userController.getAllUsers);
 
 
 export default router;
