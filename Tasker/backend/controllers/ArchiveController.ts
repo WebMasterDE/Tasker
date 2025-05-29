@@ -10,7 +10,6 @@ export const getArchive = async (req: Request, res: Response, next: NextFunction
             }
         })
         res.status(200).json(alltask);
-        
     } catch (err: unknown) {
         if (err instanceof Error) {
             next(err);

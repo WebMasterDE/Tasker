@@ -15,6 +15,100 @@ export const getSubtasksByTaskId = async (req: Request, res: Response, next: Nex
         });
 
         res.status(200).json(subtasks);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
+}
+//TODO
+export const addSubtaskToTask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
+}
+//TODO
+export const deleteSubtaskFromTask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
+}
+//TODO
+export const addSubtask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
+}
+
+export const getSubtaskById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const subtask = await models.subtask.findOne({
+            where: {
+                id: req.params.id_subtask,
+            },
+        });
+
+        res.status(200).json(subtask);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
+}
+//TODO
+export const updateSubtask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            next(err);
+        } else {
+            next({
+                message: String(err),
+            });
+        }
+    }
+}
+//TODO
+export const deleteSubtask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+
 
     } catch (err: unknown) {
         if (err instanceof Error) {

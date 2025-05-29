@@ -22,7 +22,6 @@ export const getallHoursByUserId = async (req: Request, res: Response, next: Nex
             where: { Id_user: req.params.id_user }
         });
 
-
         res.status(200).json(hours);
     } catch (err: unknown) {
         if (err instanceof Error) {
@@ -123,10 +122,12 @@ export const addHour = async (req: Request, res: Response, next: NextFunction): 
                 } else {
                     await tDiven.rollback();
                     await tTasker.rollback();
+
                     res.status(400).json({
                         error: true,
                         message: "Task non trovata"
                     });
+                    return;
                 }
             }
         } else {
@@ -143,10 +144,12 @@ export const addHour = async (req: Request, res: Response, next: NextFunction): 
             } else {
                 await tDiven.rollback();
                 await tTasker.rollback();
+
                 res.status(400).json({
                     error: true,
                     message: "Task non trovata"
                 });
+                return;
             }
         }
 
@@ -164,10 +167,12 @@ export const addHour = async (req: Request, res: Response, next: NextFunction): 
         if (!user) {
             await tDiven.rollback();
             await tTasker.rollback();
+
             res.status(400).json({
                 error: true,
                 message: "Utente non trovato"
             });
+            return;
         }
 
         const authReq = req as AuthenticatedRequest;
@@ -180,18 +185,22 @@ export const addHour = async (req: Request, res: Response, next: NextFunction): 
         if (!authUser?.id_operatore) {
             await tDiven.rollback();
             await tTasker.rollback();
+
             res.status(400).json({
                 error: true,
                 message: "Non sei autorizzato ad inserire ore"
             });
+            return;
         }
         if (!utils.canModify(authReq, req.body.Id_user)) {
             await tDiven.rollback();
             await tTasker.rollback();
+
             res.status(400).json({
                 error: true,
                 message: "Non sei autorizzato ad inserire ore per questo utente"
             });
+            return;
         }
 
 
@@ -293,6 +302,7 @@ export const deleteHour = async (req: Request, res: Response, next: NextFunction
             } else {
                 await tDiven.rollback();
                 await tTasker.rollback();
+
                 res.status(403).json({
                     error: true,
                     message: 'You are not authorized to delete this record'
@@ -301,6 +311,7 @@ export const deleteHour = async (req: Request, res: Response, next: NextFunction
         } else {
             await tDiven.rollback();
             await tTasker.rollback();
+
             res.status(404).json({
                 error: true,
                 message: 'Record not found'
@@ -376,6 +387,7 @@ export const updateHour = async (req: Request, res: Response, next: NextFunction
                                 error: true,
                                 message: "Task non trovata"
                             });
+                            return;
                         }
                     }
                 } else {
@@ -397,6 +409,7 @@ export const updateHour = async (req: Request, res: Response, next: NextFunction
                             error: true,
                             message: "Task non trovata"
                         });
+                        return;
                     }
                 }
 
@@ -419,6 +432,7 @@ export const updateHour = async (req: Request, res: Response, next: NextFunction
                         error: true,
                         message: "Utente non trovato"
                     });
+                    return;
                 }
 
                 const authReq = req as AuthenticatedRequest;
@@ -436,6 +450,7 @@ export const updateHour = async (req: Request, res: Response, next: NextFunction
                         error: true,
                         message: "Non sei autorizzato ad inserire ore"
                     });
+                    return;
                 }
                 if (!utils.canModify(authReq, req.body.Id_user)) {
                     await tDiven.rollback();
@@ -445,6 +460,7 @@ export const updateHour = async (req: Request, res: Response, next: NextFunction
                         error: true,
                         message: "Non sei autorizzato ad inserire ore per questo utente"
                     });
+                    return;
                 }
 
                 const timetable = await models.timetable.update({

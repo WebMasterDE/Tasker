@@ -104,6 +104,7 @@ export const createMissingHoursDiven = async (req: Request, res: Response, next:
                     error: true,
                     message: "Non sei autorizzato ad inserire ore"
                 });
+                return;
             }
 
             const timetable = await models.timetable.create({

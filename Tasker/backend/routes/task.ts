@@ -27,8 +27,8 @@ router.route('/tasks').get(utils.authorize(3), taskController.getAllTasks);
  * @swagger
  * /api/task:
  *  post:
- *    summary: "get user by id"
- *    description: "get user by id"
+ *    summary: "add a task (checks DIVEN)"
+ *    description: "add a task (checks DIVEN)"
  *    requestBody:
  *      required: true
  *      content:

@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as models from "../models/init-models";
+import * as app from '../app';
+
 
 export const getAllTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -41,20 +43,43 @@ export const deleteTasks = async (req: Request, res: Response, next: NextFunctio
 }
 
 export const addTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const tDiven = await app.sequelizeDiven.transaction();
+    const tTasker = await app.sequelizeTasker.transaction();
     try {
-        models.tasks.create({
+        let commessa = await models.commesse.findOne({
+            where: { id_commessa: req.body.id_commessa },
+            transaction: tDiven
+        });
+        if (!commessa) {
+            await tDiven.rollback();
+            await tTasker.rollback();
+
+            res.status(400).json({
+                error: true,
+                message: 'Commessa non trovata'
+            });
+            return;
+        }
+
+        await models.tasks.create({
             Task_name: req.body.Task_name,
             id_commessa: req.body.id_commessa,
             Task_description: req.body.Task_description,
             Task_creation: req.body.Task_creation,
             color: req.body.color,
-        });
+        }, { transaction: tTasker });
+
+        await tDiven.commit();
+        await tTasker.commit();//non è garantita la consistenza dei dati se il commit fallisce dopo il commit di tDiven
 
         res.status(201).json({
             error: false,
             message: "Task inserito"
         });
     } catch (err: unknown) {
+        await tDiven.rollback();
+        await tTasker.rollback();
+
         if (err instanceof Error) {
             next(err);
         } else {

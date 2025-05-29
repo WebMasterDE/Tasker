@@ -49,5 +49,49 @@ router.route('/user/:id_user').get(utils.authorize(3), userController.getUserbyI
  */
 router.route('/users').get(utils.authorize(3), userController.getAllUsers);
 
+/**
+ * @swagger
+ * /api/user:
+ *  post:
+ *    summary: "add an users (checks DIVEN)"
+ *    description: "add an users (checks DIVEN)"
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            required:
+ *              - mail
+ *            properties:
+ *              mail:
+ *                type: string
+ *                example: "m.rossi@divisionenergia.it"
+ *              password:
+ *                type: string
+ *                format: password
+ *              name:
+ *                type: string
+ *                example: "Mario Rossi"
+ *              authLevel:
+ *                type: integer
+ *                description: "Authorization level of the user (1: Admin, 2: User, 3: Viewer)"
+ *                example: 2
+ *              id_operatore:
+ *                type: integer
+ *                description: "Id operatore in gestionale DIVEN"
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ *      '401':
+ *        description: Unauthorized
+ *    security:
+ *       - Bearer: []
+ *    tags:
+ *      - Users
+ */
+router.route('/user').post(utils.authorize(1), userController.addUser);
+
+
 
 export default router;
