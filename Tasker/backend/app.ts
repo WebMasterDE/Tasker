@@ -8,6 +8,7 @@ import overtimeRoute from './routes/overtime';
 import subtaskRoute from './routes/subtask';
 import contract_of_employmentRoute from './routes/contract_of_employment';
 import shiftsRoute from './routes/shifts';
+import extraRoute from './routes/extra';
 import parser from 'body-parser';
 import cors from 'cors';
 import { Sequelize } from 'sequelize';
@@ -154,6 +155,7 @@ app.use('/api', shiftsRoute);
 app.use('/api', overtimeRoute);
 app.use('/api', contract_of_employmentRoute);
 app.use('/api', subtaskRoute);
+app.use('/api', extraRoute);
 
 // error handling middleware
 app.use(utils.errorHandler);
