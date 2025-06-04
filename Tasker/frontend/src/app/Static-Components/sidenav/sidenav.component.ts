@@ -45,12 +45,12 @@ export class SidenavComponent {
     let value;
 
     if (id) {
+      //TODO
+      // this.auth.userAuthorization(id.id).subscribe((val) => {
+      //   value = val
 
-      this.auth.userAuthorization(id.id).subscribe((val) => {
-        value = val
-
-        this.permission = value.Authorization
-      })
+      //   this.permission = value.Authorization
+      // })
     } else {
       this.route.navigate(['/signup'])
     }

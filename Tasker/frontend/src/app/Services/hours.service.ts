@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Hours } from 'src/Model/Hours';
 import { environment_prod } from '../environment/environtments'
+import * as utilities from '../utils/utilities';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +14,27 @@ export class HoursService {
   constructor(private http: HttpClient) {
   }
 
-  getHours(id: string) {
-    return this.http.get(`${environment_prod.BACKEND_URL}/${id}/hours`);
+  getHours(userId: number) {
+    return this.http.get(`${environment_prod.BACKEND_URL}/hours/user/${userId}`, utilities.createOptions());
   }
 
   getAllHours() {
-    return this.http.get(`${environment_prod.BACKEND_URL}/hours`)
+    return this.http.get(`${environment_prod.BACKEND_URL}/hours`, utilities.createOptions())
   }
 
   addHours(data: Hours) {
-    return this.http.post<Hours>(`${environment_prod.BACKEND_URL}/create/hours`, data);
+    return this.http.post<Hours>(`${environment_prod.BACKEND_URL}/hour`, data, utilities.createOptions());
   }
 
-  updateHour(data: Hours, id_hour: number) {
-    return this.http.post<Hours>(`${environment_prod.BACKEND_URL}/update/${id_hour}/hour`, data)
+  updateHour(data: Hours, hourId: number) {
+    return this.http.put<Hours>(`${environment_prod.BACKEND_URL}/hour/${hourId}`, data, utilities.createOptions())
   }
 
-  deleteHours(data): Observable<Hours> {
-    return this.http.post<Hours>(`${environment_prod.BACKEND_URL}/delete/hours`, data);
+  deleteHours(hourId: number): Observable<any> {
+    return this.http.delete<any>(`${environment_prod.BACKEND_URL}/hour/${hourId}`, utilities.createOptions());
   }
 
-  getLastId():Observable<Hours>{
-    return this.http.get<Hours>(`${environment_prod.BACKEND_URL}/get/lastidHour`)
+  getLastId(): Observable<Hours> {
+    return this.http.get<Hours>(`${environment_prod.BACKEND_URL}/get/last_id_hour`, utilities.createOptions())
   }
 }

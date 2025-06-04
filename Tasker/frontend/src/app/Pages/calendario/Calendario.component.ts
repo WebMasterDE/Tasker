@@ -21,7 +21,7 @@ export class CalendarioComponent implements OnInit {
   @ViewChild('shiftCalendar') shiftCalendar: FullCalendarComponent;
   @ViewChildren('checkboxRef') checkboxes: QueryList<ElementRef>;
 
-  id_user: string
+  id_user: number;
   datacalendar;
   hour: string
   datas;
@@ -64,8 +64,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog, private users: User_serviceService, private render: Renderer2) {
-    let data = JSON.parse(localStorage.getItem('data'))
-    this.id_user = data.id
+    this.id_user = users.tokenData.id;
   }
 
 
@@ -117,13 +116,12 @@ export class CalendarioComponent implements OnInit {
   }
 
   insertShift(element) {
-    let user_id = localStorage.getItem('data')
-    let id = JSON.parse(user_id)
+    let id = this.users.tokenData.id
     let data: Shift = {
       start_date: element.dateStr,
       end_date: null,
       hour: parseInt(this.datas.data.inputdata),
-      Id_user: id.id,
+      Id_user: id,
       Id_user_user: null
     }
     this.http_shift.insertShift(data).subscribe()
@@ -184,7 +182,7 @@ export class CalendarioComponent implements OnInit {
 
 
     if (this.selectedUserId) {
-      this.http_hour.getHours(this.selectedUserId.toString()).subscribe((val) => {
+      this.http_hour.getHours(this.selectedUserId).subscribe((val) => {
         this.alldatacalendar = [];
         this.calendarOptions.events = [];
         this.datacalendar = val
