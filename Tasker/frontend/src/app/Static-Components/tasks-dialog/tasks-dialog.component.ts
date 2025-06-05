@@ -9,6 +9,7 @@ import { OvertimeService } from 'src/app/Services/overtime.service';
 import { Overtime } from 'src/Model/Overtime';
 import { SubtaskService } from 'src/app/Services/subtask.service';
 import { Subtasks } from 'src/Model/Subtasks';
+import { User_serviceService } from 'src/app/Services/auth.service';
 
 @Component({
   selector: 'app-tasks-dialog',
@@ -32,7 +33,16 @@ export class TasksDialogComponent {
   selectedSubvalue = 0
   selectedtask: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { dati }, private dialogRef: MatDialogRef<DialogComponent>, private http_overtime: OvertimeService, private http_hours: HoursService, private http_tasks: TasksService, private loading: LoadingService, private http_subtasks: SubtaskService) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { dati },
+    private dialogRef: MatDialogRef<DialogComponent>,
+    private http_overtime: OvertimeService,
+    private http_hours: HoursService,
+    private http_tasks: TasksService,
+    private loading: LoadingService,
+    private http_subtasks: SubtaskService,
+    private userHTTP: User_serviceService
+  ) {
     this.arrayTasks = this.http_tasks.getAllTasks
     this.http_hours.getLastId().subscribe(data => { this.id = data })
   }
@@ -49,7 +59,7 @@ export class TasksDialogComponent {
       id_subtask: null,
       Commit: this.data.dati?.Commit ? this.data.dati.Commit : null
     };
-    this.getOvertimeByIdHour(this.Id_hour)
+    this.getOvertimeByIdHour(this.Id_hour);
     this.overtime = {
       Hours: 0,
       Date: this.getTodayDate(),
@@ -64,7 +74,9 @@ export class TasksDialogComponent {
 
   getOvertimeByIdHour(id) {
     return this.http_overtime.getOvertimeByIdHour(id).subscribe(data => {
-      this.overtime.Hours = data.Hours
+      if (data) {
+        this.overtime.Hours = data.Hours;
+      }
     })
   }
 
@@ -77,8 +89,7 @@ export class TasksDialogComponent {
   }
 
   getUserId() {
-    let data = JSON.parse(localStorage.getItem('data'))
-    return data.id
+    return this.userHTTP.tokenData.id;
   }
 
   getTodayDate(): string {
@@ -86,13 +97,12 @@ export class TasksDialogComponent {
   }
 
   getnameUser() {
-    let data = JSON.parse(localStorage.getItem('data'))
+    let data = this.userHTTP.tokenData.mail;
 
-    if (data.name) {
-
-      return data.name
+    if (data) {
+      return data;
     } else {
-      return ''
+      return '';
     }
   }
 

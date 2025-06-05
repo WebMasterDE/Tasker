@@ -6,7 +6,7 @@ import { Logindata } from "../../Model/Logindata";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment_prod } from '../environment/environtments';
 import { jwtDecode } from "jwt-decode";
-import { LoginResponse, TokenData } from 'src/Model/types';
+import { DefaultResponse, LoginResponse, TokenData } from 'src/Model/types';
 import * as utilities from '../utils/utilities';
 
 
@@ -22,7 +22,7 @@ export class User_serviceService {
     }
 
     // GET  user by id
-    getUser(userId: string): Observable<User> {
+    getUser(userId: number): Observable<User> {
         return this._http.get<User>(`${environment_prod.BACKEND_URL}/user/${userId}`, utilities.createOptions());
     }
 
@@ -31,9 +31,16 @@ export class User_serviceService {
         return this._http.get<User[]>(`${environment_prod.BACKEND_URL}/users`, utilities.createOptions())
     }
 
-    // POST send data to backend for registration
-    sendUser(data): Observable<User> {
-        return this._http.post<User>(`${environment_prod.BACKEND_URL}/user/auth/signup`, data, utilities.createOptions())
+    // POST 
+    addUser(mail: string, password: string, name: string, id_operatore: number, authLevel: number | null): Observable<User> {
+        let body = {
+            mail: mail,
+            password: password,
+            name: name,
+            id_operatore: id_operatore,
+            authLevel: authLevel ? authLevel : 3, // Default authorization level
+        };
+        return this._http.post<User>(`${environment_prod.BACKEND_URL}/user`, body, utilities.createOptions());
     }
 
     // GET retrive the token from login
@@ -64,14 +71,22 @@ export class User_serviceService {
         );
     }
 
-    IsloggedIn(): boolean {
-        let getsessionstorage = localStorage.getItem("token");
-        if (getsessionstorage != null) {
-            this.tokenData = jwtDecode<TokenData>(getsessionstorage);
-            return true
-        } else {
-            return false
-        }
+    testToken(): Observable<DefaultResponse> {
+        return this._http.get<DefaultResponse>(
+            `${environment_prod.BACKEND_URL}/token/test`,
+            utilities.createOptions()
+        ).pipe(
+            tap((res: LoginResponse) => {
+                let getsessionstorage = localStorage.getItem("token");
+                this.tokenData = jwtDecode<TokenData>(getsessionstorage);
+            }),
+            catchError(error => {
+                localStorage.removeItem('token');
+
+                // Propaga l'errore al chiamante
+                return throwError(() => error);
+            })
+        );
     }
 
 

@@ -64,7 +64,6 @@ export class CalendarioComponent implements OnInit {
   }
 
   constructor(private http_hour: HoursService, private load: LoadingService, private http_shift: ShiftService, public dialog: MatDialog, private users: User_serviceService, private render: Renderer2) {
-    this.id_user = users.tokenData.id;
   }
 
 

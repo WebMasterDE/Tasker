@@ -35,6 +35,6 @@ export class HoursService {
   }
 
   getLastId(): Observable<Hours> {
-    return this.http.get<Hours>(`${environment_prod.BACKEND_URL}/get/last_id_hour`, utilities.createOptions())
+    return this.http.get<Hours>(`${environment_prod.BACKEND_URL}/last_id_hour`, utilities.createOptions())
   }
 }

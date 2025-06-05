@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {User_serviceService} from 'src/app/Services/auth.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { User_serviceService } from 'src/app/Services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +14,13 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    if (this.auth.IsloggedIn() == false) {
-      this.router.navigate(['/signup']);
-    }
+    this.auth.testToken().subscribe({
+      next: (res) => {
+        //do nothing, token is valid
+      },
+      error: (err) => {
+        this.router.navigate(['/signup']);
+      }
+    });
   }
 }

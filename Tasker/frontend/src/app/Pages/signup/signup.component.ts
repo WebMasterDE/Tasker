@@ -20,9 +20,14 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.http_user.IsloggedIn()) {
-      this.router.navigate(['/calendario']);
-    }
+    this.http_user.testToken().subscribe({
+      next: (res) => {
+        this.router.navigate(['/calendario']);
+      },
+      error: (err) => {
+        //Do nothing, user is not logged in
+      }
+    });
   }
 
   login() {

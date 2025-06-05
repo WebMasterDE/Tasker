@@ -1,18 +1,18 @@
-import {Component, Input} from '@angular/core';
-import {Task} from "../../../Model/Task"
-import {MatTableModule} from "@angular/material/table";
-import {TasksService} from '../../Services/tasks.service'
-import {MatDialog} from "@angular/material/dialog";
-import {FormsModule} from "@angular/forms";
-import {User_serviceService} from 'src/app/Services/auth.service';
-import {ArchiveService} from 'src/app/Services/archive.service';
-import {NavigationEnd, Router} from '@angular/router';
-import {Archive} from 'src/Model/Archive';
-import {CommonModule} from '@angular/common';
-import {WindowDialogComponent} from '../window-dialog/window-dialog.component';
-import {SpinnerComponent} from 'src/app/utils/spinner/spinner.component';
-import {LoadingService} from 'src/app/Services/loading.service';
-import {MatButtonModule} from '@angular/material/button';
+import { Component, Input } from '@angular/core';
+import { Task } from "../../../Model/Task"
+import { MatTableModule } from "@angular/material/table";
+import { TasksService } from '../../Services/tasks.service'
+import { MatDialog } from "@angular/material/dialog";
+import { FormsModule } from "@angular/forms";
+import { User_serviceService } from 'src/app/Services/auth.service';
+import { ArchiveService } from 'src/app/Services/archive.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { Archive } from 'src/Model/Archive';
+import { CommonModule } from '@angular/common';
+import { WindowDialogComponent } from '../window-dialog/window-dialog.component';
+import { SpinnerComponent } from 'src/app/utils/spinner/spinner.component';
+import { LoadingService } from 'src/app/Services/loading.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-table',
@@ -138,6 +138,14 @@ export class TableComponent {
         </div>
 
         <div class="input-group mb-3 d-flex flex-column">
+          <label>Id commessa associata</label>
+          <input type="number" class="form-control w-100" name="commessaId" [(ngModel)]="singletask.id_commessa"
+                 placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
+
+        <div class="input-group mb-3 d-flex flex-column">
           <label>Colore</label>
           <input type="color" class="form-control" style="width:10%" name="color" [(ngModel)]="singletask.color"
                  placeholder="inserisci" aria-label="inserisci" aria-describedby="basic-addon2">
@@ -156,7 +164,7 @@ export class TableComponent {
   standalone: true
 })
 export class DialogComponent {
-  singletask: Task = {Task_name: "", Task_description: "", Task_creation: this.getTodayDate(), color: ''}
+  singletask = { Task_name: "", Task_description: "", Task_creation: this.getTodayDate(), color: '', id_commessa: "" };
 
   constructor(private http: TasksService) {
   }

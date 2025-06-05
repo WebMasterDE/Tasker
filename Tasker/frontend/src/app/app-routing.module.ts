@@ -10,15 +10,16 @@ import { OvertimeComponent } from './Pages/overtime/overtime.component';
 import { NewsComponent } from "./Pages/news/news.component";
 
 const routes: Routes = [
+  { path: '', redirectTo: '/calendario', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'calendario', component: CalendarioComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'archived', component: TasksArchiveComponent },
   { path: 'ore', component: OreComponent },
   { path: 'overtime', component: OvertimeComponent },
-  { path: '', redirectTo: '/calendario', pathMatch: 'full' },
   { path: 'users', component: ManageUserComponent },
   { path: 'news', component: NewsComponent },
+  { path: '**', redirectTo: '/calendario', pathMatch: 'full' },
 ];
 
 @NgModule({
