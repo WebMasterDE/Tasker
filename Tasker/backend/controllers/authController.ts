@@ -53,6 +53,13 @@ export const login = async (req: any, res: Response, next: NextFunction): Promis
 
 }
 
+export const testToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    res.status(200).json({
+        error: false,
+        message: 'Token valido',
+    });
+}
+
 
 
 
