@@ -9,6 +9,7 @@ import { LoadingService } from 'src/app/Services/loading.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { OvertimeService } from 'src/app/Services/overtime.service';
 import { Overtime } from 'src/Model/Overtime';
+import { User_serviceService } from 'src/app/Services/auth.service';
 
 
 @Component({
@@ -36,7 +37,16 @@ export class OreComponent {
   ArrayovertimeList: Overtime[] = []
 
   month: Array<string> = []
-  constructor(public dialog: MatDialog, private http_hours: HoursService, private http_overtime: OvertimeService, private router: Router, private http_task: TasksService, private loading: LoadingService, private bottomSheet: MatBottomSheet) {
+  constructor(
+    public dialog: MatDialog,
+    private http_hours: HoursService,
+    private http_overtime: OvertimeService,
+    private router: Router,
+    private http_task: TasksService,
+    private loading: LoadingService,
+    private bottomSheet: MatBottomSheet,
+    private userHTTP: User_serviceService
+  ) {
     this.getroute();
 
   }
@@ -44,12 +54,18 @@ export class OreComponent {
 
 
   ngOnInit() {
-    this.getActualMonth()
-    this.loading.show()
-    this.getallTasks()
-    this.overtimeListInit(null)
-    this.closebottomSheet();
-
+    this.userHTTP.testToken().subscribe({
+      next: (res) => {
+        this.getActualMonth();
+        this.loading.show();
+        this.getallTasks();
+        this.overtimeListInit(null);
+        this.closebottomSheet();
+      },
+      error: (err) => {
+        this.router.navigate(['/signup']);
+      }
+    });
   }
 
   getActualMonth() {
@@ -75,7 +91,7 @@ export class OreComponent {
       const today = new Date(timeElapsed);
       let actual_data = today.toLocaleDateString();
       let actual_month = parseInt(actual_data.split('/')[1])
-      console.log(actual_month)
+      console.log("mese corrente:", actual_month)
 
 
       for (let start_Month = 0; start_Month <= actual_month;) {
@@ -106,10 +122,8 @@ export class OreComponent {
 
   getHours(mesi) {
     try {
-      let dataStorage = localStorage.getItem('data');
-      let id = JSON.parse(dataStorage)
 
-      this.http_hours.getHours(id.id).subscribe((data: Array<any>) => {
+      this.http_hours.getHours(this.getUserId()).subscribe((data: Array<any>) => {
         data.forEach(dati => {
 
           this.datatable.forEach(el => {
@@ -123,9 +137,9 @@ export class OreComponent {
                 el.ore = ore_filtrate
                 el.ore_totali = el.ore.reduce((acc, elem) => acc + elem.Hour, 0)
               }
-            })
-          })
-        })
+            });
+          });
+        });
 
       });
       this.loading.hide()
@@ -137,9 +151,9 @@ export class OreComponent {
   }
 
   getUserId() {
-    let data = JSON.parse(localStorage.getItem('data'))
-    return data.id
+    return this.userHTTP.tokenData.id;
   }
+
   overtimeListInit(mese: string | null) {
     const today = new Date();
 

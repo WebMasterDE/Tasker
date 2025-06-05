@@ -3,16 +3,24 @@
   <h2 mat-dialog-title>Crea un nuovo utente</h2>
   <mat-dialog-content class="mat-typography">
     <h3>Nome utente:</h3>
-    <input [(ngModel)]="User.Name" class="form-control mb-4 d-block" placeholder="Inserisci un utente..." style="width: 400px;"
-           type="text">
+    <input [(ngModel)]="User.Name" class="form-control mb-4 d-block" placeholder="Inserisci un utente..."
+      style="width: 400px;" type="text">
 
     <h3>Email:</h3>
-    <input [(ngModel)]="User.Email" class="form-control mb-4 d-block" placeholder="Inserisci un email..." style="width: 400px;"
-           type="text">
+    <input [(ngModel)]="User.Email" class="form-control mb-4 d-block" placeholder="Inserisci un email..."
+      style="width: 400px;" type="text">
 
     <h3>Password</h3>
-    <input [(ngModel)]="User.Password" class="form-control mb-4 d-block" placeholder="Inserisci una password..." style="width: 400px;"
-           type="password">
+    <input [(ngModel)]="User.Password" class="form-control mb-4 d-block" placeholder="Inserisci una password..."
+      style="width: 400px;" type="password">
+
+    <h3>Id operatore</h3>
+    <input [(ngModel)]="User.id_operatore" class="form-control mb-4 d-block" placeholder="Id operatore"
+      style="width: 400px;" type="number">
+
+    <h3>Livello autorizzazione</h3>
+    <input [(ngModel)]="User.Authorization" class="form-control mb-4 d-block" placeholder="Livello autorizzazione"
+      style="width: 400px;" type="number" min="1" max="3">
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">

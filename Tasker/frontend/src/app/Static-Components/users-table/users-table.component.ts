@@ -1,14 +1,14 @@
-import {CommonModule} from '@angular/common';
-import {Component, inject, OnInit} from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
-import {User_serviceService} from 'src/app/Services/auth.service';
-import {User} from 'src/Model/User';
-import {MatButtonModule} from '@angular/material/button';
-import {UserDialogComponent} from '../user-dialog/user-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
-import {LoadingService} from 'src/app/Services/loading.service';
-import {WindowDialogComponent} from '../window-dialog/window-dialog.component';
-import {SpinnerComponent} from "../../utils/spinner/spinner.component";
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
+import { User_serviceService } from 'src/app/Services/auth.service';
+import { User } from 'src/Model/User';
+import { MatButtonModule } from '@angular/material/button';
+import { UserDialogComponent } from '../user-dialog/user-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { LoadingService } from 'src/app/Services/loading.service';
+import { WindowDialogComponent } from '../window-dialog/window-dialog.component';
+import { SpinnerComponent } from "../../utils/spinner/spinner.component";
 
 @Component({
   selector: 'app-users-table',
@@ -62,7 +62,8 @@ export class UsersTableComponent implements OnInit {
         btn_right: 'Invia',
         typeinput: 'password',
         action: () => {
-          return this.http_user.changePassword(this.datas.data.inputdata, id.toString())
+          //TODO
+          // return this.http_user.changePassword(this.datas.data.inputdata, id.toString())
         }
       },
       width: '20%',
