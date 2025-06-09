@@ -5,7 +5,8 @@
 
 export const environment_prod = {
   production: false,
-  BACKEND_URL: 'http://localhost:3000/api'
+  // BACKEND_URL: 'http://localhost:3000/api'
+  BACKEND_URL: 'https://tasker.divisionenergia.it/api'
 };
 // FUNC
 
