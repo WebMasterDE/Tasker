@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD node ./app.js && pm2-runtime dist/app.js
+CMD node dist/app.js && pm2-runtime dist/app.js
