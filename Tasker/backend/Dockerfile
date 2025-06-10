@@ -1,6 +1,6 @@
 FROM node:20.11.1
 
-WORKDIR /usr/src/dist/app
+WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install\
@@ -11,4 +11,6 @@ COPY . .
 
 EXPOSE 3000
 
-CMD node dist/app.js && pm2-runtime dist/app.js
+CMD ls
+
+CMD node ./app.js && pm2-runtime ./app.js
