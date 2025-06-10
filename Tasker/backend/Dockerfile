@@ -1,6 +1,6 @@
 FROM node:20.11.1
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/dist/app
 COPY package*.json ./
 
 RUN npm install\
