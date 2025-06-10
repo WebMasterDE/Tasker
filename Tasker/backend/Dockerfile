@@ -11,4 +11,6 @@ COPY . .
 
 EXPOSE 3000
 
-CMD node ./app.js && pm2-runtime ./app.js
+CMD npm run build && pm2-runtime dist/app.js
+
+##CMD node ./app.js && pm2-runtime dist/app.js
