@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import * as shiftsController from '../controllers/shiftsController';
+import * as shiftsController from '../controllers/ShiftsController';
 import * as utils from '../utils';
 
 let router: Router = express.Router();

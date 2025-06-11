@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import * as archiveController from '../controllers/archiveController';
+import * as archiveController from '../controllers/ArchiveController';
 import * as utils from '../utils';
 
 let router: Router = express.Router();

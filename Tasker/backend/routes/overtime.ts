@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import * as overtimeController from '../controllers/overtimeController';
+import * as overtimeController from '../controllers/OvertimeController';
 import * as utils from '../utils';
 
 let router: Router = express.Router();
