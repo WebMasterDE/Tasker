@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import * as subtaskController from '../controllers/subtaskController';
+import * as subtaskController from '../controllers/SubtaskController';
 import * as utils from '../utils';
 
 
