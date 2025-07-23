@@ -60,7 +60,9 @@ export class el_personas extends Model<el_personasAttributes, el_personasCreatio
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "nome_personas" },
+          { name: "nome_personas",
+            length: 255
+          },
         ]
       },
     ]
