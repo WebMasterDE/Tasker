@@ -55,7 +55,7 @@ export class TasksDialogComponent {
       Hour: this.data.dati?.Hour ? this.data.dati.Hour : 0,
       Description: this.data.dati?.Description ? this.data.dati.Description : '',
       Id_task: this.selectedvalue !== null ? parseInt(this.selectedvalue) : null,
-      Id_user: null,
+      Id_user: this.data.dati?.Id_user,
       id_subtask: null,
       Commit: this.data.dati?.Commit ? this.data.dati.Commit : null
     };
@@ -137,7 +137,6 @@ export class TasksDialogComponent {
 
       this.overtime.Date = this.hourData.Date
       this.overtime.Id_hour = this.id + 1;
-      console.log(this.overtime)
       this.http_overtime.InsertOvertimeHours(this.overtime).subscribe(data => {
 
       })
@@ -158,11 +157,9 @@ export class TasksDialogComponent {
       })
       if (this.show) {
         this.http_overtime.getOvertimeByIdHour(this.overtime.Id_hour).subscribe((data) => {
-          console.log('overtime', data)
           if (data == null) {
             this.http_overtime.InsertOvertimeHours(this.overtime).subscribe();
           } else {
-            console.log('entr')
             this.overtime.Date = this.hourData.Date
             this.http_overtime.updateOvertimeHours(this.overtime).subscribe();
           }

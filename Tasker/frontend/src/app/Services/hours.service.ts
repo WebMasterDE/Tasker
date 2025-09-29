@@ -30,8 +30,9 @@ export class HoursService {
     return this.http.put<Hours>(`${environment_prod.BACKEND_URL}/hour/${hourId}`, data, utilities.createOptions())
   }
 
-  deleteHours(hourId: number): Observable<any> {
-    return this.http.delete<any>(`${environment_prod.BACKEND_URL}/hour/${hourId}`, utilities.createOptions());
+  deleteHours(hourId: Hours): Observable<any> {
+    console.log(hourId.Id_hour)
+    return this.http.delete<any>(`${environment_prod.BACKEND_URL}/hour/${hourId.Id_hour}`, utilities.createOptions());
   }
 
   getLastId(): Observable<Hours> {
