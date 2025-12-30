@@ -1,11 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import * as models from "../models/init-models";
 import * as app from '../app';
+import { where } from 'sequelize';
 
 
 export const getAllTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const alltask = await models.tasks.findAll();
+        const alltask = await models.tasks.findAll({
+            where: { status: 'aperto' }
+        });
         res.status(200).json(alltask);
     } catch (err: unknown) {
         if (err instanceof Error) {

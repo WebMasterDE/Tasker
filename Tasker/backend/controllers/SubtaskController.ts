@@ -12,6 +12,9 @@ export const getSubtasksByTaskId = async (req: Request, res: Response, next: Nex
                     id_task: req.params.id_task,
                 },
             }],
+            where: {
+                status: 'aperto',
+            }
         });
 
         res.status(200).json(subtasks);

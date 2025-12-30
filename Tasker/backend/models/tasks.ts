@@ -13,6 +13,7 @@ export interface tasksAttributes {
   createdAt?: Date;
   updatedAt?: Date;
   color?: string;
+  status?: 'aperto' | 'chiuso';
 }
 
 export type tasksPk = "Id_task";
@@ -29,6 +30,7 @@ export class tasks extends Model<tasksAttributes, tasksCreationAttributes> imple
   createdAt?: Date;
   updatedAt?: Date;
   color?: string;
+  status?: 'aperto' | 'chiuso';
 
   // tasks hasMany hours via Id_task
   hours!: hours[];
@@ -94,6 +96,11 @@ export class tasks extends Model<tasksAttributes, tasksCreationAttributes> imple
     color: {
       type: DataTypes.STRING(25),
       allowNull: true
+    },
+    status: {
+      type: DataTypes.ENUM('aperto','chiuso'),
+      allowNull: false,
+      defaultValue: 'aperto'
     }
   }, {
     sequelize,
